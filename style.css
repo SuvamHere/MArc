@@ -77,4 +77,54 @@ body::-webkit-scrollbar {
 .screen.active {
     display: flex;
 }
+.arcade-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--ink);
+    background: var(--purple);
+    border: 3px solid var(--ink);
+    padding: 6px 14px;
+    display: inline-block;
+    letter-spacing: 0.05rem;
+    margin-bottom: 1.75rem;
+    box-shadow: 4px 4px 0 var(--ink);
+    transform: rotate(-2deg);
+}
 
+.section-tag {
+    display: inline-block;
+    background: var(--ink);
+    color: var(--yellow);
+    border: 3px solid var(--ink);
+    padding: 6px 14px;
+    display: inline-block;
+    letter-spacing: 0.05rem;
+    margin-bottom: 1.75rem;
+    box-shadow: 4px 4px 0 var(--ink);
+    transform: rotate(-1deg);
+}
+
+.section-tag {
+    display: inline-block;
+    background: var(--ink);
+    color: var(--yellow);
+    border: 3px solid var(--ink);
+    padding: 4px 14px;
+    font-weight: 900;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 1.25rem;
+}
+
+.title-accent { color: var(--blue);}
+.title-hollow {
+    -webkit-text-stroke: 3px var(--ink);
+    color: transparent;
+    display: block;
+}
+.title-solid {
+    color:var(--ink);
+    display: block;
+}
