@@ -6,10 +6,30 @@
     --ink: #111111;
     --red: #ff6a67;
     --yellow: #ffdd3c;
+    --blue: #179FF5;
     --purple: #b39dff;
     --accent: var(--red);
     --shadow: #111111;
     --text: #111111;
 
     --gird: rgba(17,17,17,0.07);
+}
+
+html, body {
+    height: 100%;
+    font-family: 'Space Grotesk', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+    scrollbar-width: none;
+}
+
+.screen {
+    display: none;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.screen.active {
+    
 }
