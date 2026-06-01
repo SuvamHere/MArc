@@ -1,0 +1,15 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+:root {
+    --bg: #fffdf6;
+    --surface: #ffffff;
+    --ink: #111111;
+    --red: #ff6a67;
+    --yellow: #ffdd3c;
+    --purple: #b39dff;
+    --accent: var(--red);
+    --shadow: #111111;
+    --text: #111111;
+
+    --gird: rgba(17,17,17,0.07);
+}
