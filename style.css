@@ -31,5 +31,7 @@ html, body {
 }
 
 .screen.active {
-    
+    display: flex;
+    flex-direction: column;
 }
+
