@@ -4,10 +4,12 @@
     --bg: #fffdf6;
     --surface: #ffffff;
     --ink: #111111;
+
     --red: #ff6a67;
     --yellow: #ffdd3c;
     --blue: #179FF5;
     --purple: #b39dff;
+
     --accent: var(--red);
     --shadow: #111111;
     --text: #111111;
@@ -24,14 +26,22 @@ html, body {
     scrollbar-width: none;
 }
 
-.screen {
+body:: -webkit-scrollbar {
     display: none;
-    min-height: 100vh;
-    width: 100%;
 }
 
-.screen.active {
-    display: flex;
-    flex-direction: column;
+.custom-cursor-trail {
+    position: fixed;
+    width: 15px;
+    height: 15px;
+    background-color: var(--red);
+    border: 3px solid var(--ink);
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    display: none;
+    box-shadow: 2px 2px 0 var(--ink);
+    transition: transform 0.11s cubic-bezier(0.175,0.0885,0.32,1.275), background-color 0.15s ease;
 }
+
 
