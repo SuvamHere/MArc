@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suvam's Arcade</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700;900&family=Space+Mono:wght@400;700&display=block">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <div id="screen-landing" class="screen active">
+        <div class="landing-inner">
+            <div class="arcade-tag">// MArc v1.0 //</div>
+            <h1 class="arcade-title">
+                <span class="title-solid">PLAY</span>
+                <span class="title-hollow">GAMES</span>
+            </h1>
+            <p class="arcade-sub">Math * Code * Circuits -- pick your fight.</p>
+            <button class="btn-primary" id="btn-enter">Enter the Arcade: </button>
+        </div>
+        <div class="landing-deco" aria-hidden="true">
+            <span class="deco-star">★</span>
+        </div>
+    </div>
+
+    <div id="screen-username" class="screen">
+        <div class="username-inner">
+            <div class="arcade-tag">WHO ARE YOU?</div>
+            <h2 class="gate-title">PICK YOUR <br><span class="title-accent">NICKNAME.</span></h2>
+            <p class="gate-sub">No signup . No email. Just a name. </p>
+            <div class="username-form">
+                <input 
+                type="text"
+                id="username-input"
+                class="username-field"
+                placeholder="e.g. tungtungtungsahur"
+                maxlength="20"
+                autocomplete="off"
+                spellcheck="false"
+                >
+                <div class="username-hint" id="username-hint"></div>
+                <button class="btn-primary" id="btn-play">LET'S PLAY</button>
+            </div>    
+        </div>
+    </div>
+    
+    <div id="screen-select" class="screen">
+ 
+    <nav class="arcade-nav">
+      <div class="nav-logo">SUVAM'S ARCADE</div>
+      <div class="nav-right">
+        <span class="nav-username" id="nav-username"></span>
+        <button class="btn-change" id="btn-change">CHANGE NAME</button>
+      </div>
+    </nav>
+ 
+    <div class="select-inner">
+ 
+      <div class="select-header">
+        <span class="section-tag">SELECT GAME</span>
+        <h2 class="select-title">CHOOSE YOUR<br><span class="title-accent">BATTLEFIELD.</span></h2>
+      </div>
+ 
+      <div class="games-grid">
+ 
+        <div class="game-card" data-game="numstrike">
+          <div class="game-card-header yellow">
+            <span class="game-icon">💥</span>
+            <span class="game-difficulty">EASY → HARD</span>
+          </div>
+          <div class="game-card-body">
+            <h3 class="game-name">NUMSTRIKE</h3>
+            <p class="game-desc">Equations fall from the sky. Solve them before they hit the ground. Miss three — game over.</p>
+            <div class="game-meta">
+              <span class="game-tag">Math</span>
+              <span class="game-tag">Timed</span>
+              <span class="game-tag">Streak</span>
+            </div>
+            <div class="game-score">
+              YOUR BEST: <span class="score-val" id="score-numstrike">---</span>
+            </div>
+            <button class="btn-play-game" data-target="games/numstrike/index.html">PLAY →</button>
+          </div>
+        </div>
+ 
+        <div class="game-card" data-game="codecrash">
+          <div class="game-card-header teal">
+            <span class="game-icon">💻</span>
+            <span class="game-difficulty">MEDIUM</span>
+          </div>
+          <div class="game-card-body">
+            <h3 class="game-name">CODECRASH</h3>
+            <p class="game-desc">Code runs line by line then crashes. Find the bug before the clock runs out.</p>
+            <div class="game-meta">
+              <span class="game-tag">Coding</span>
+              <span class="game-tag">Reaction</span>
+              <span class="game-tag">Accuracy</span>
+            </div>
+            <div class="game-score">
+              YOUR BEST: <span class="score-val" id="score-codecrash">---</span>
+            </div>
+            <button class="btn-play-game" data-target="games/codecrash/index.html">PLAY →</button>
+          </div>
+        </div>
+ 
+        <div class="game-card" data-game="wirefixer">
+          <div class="game-card-header lime">
+            <span class="game-icon">⚡</span>
+            <span class="game-difficulty">HARD</span>
+          </div>
+          <div class="game-card-body">
+            <h3 class="game-name">WIREFIXER</h3>
+            <p class="game-desc">A circuit has one broken connection. Find and fix it before the system shuts down.</p>
+            <div class="game-meta">
+              <span class="game-tag">Circuits</span>
+              <span class="game-tag">Logic</span>
+              <span class="game-tag">Visual</span>
+            </div>
+            <div class="game-score">
+              YOUR BEST: <span class="score-val" id="score-wirefixer">---</span>
+            </div>
+            <button class="btn-play-game" data-target="games/wirefixer/index.html">PLAY →</button>
+          </div>
+        </div>
+ 
+      </div>
+    
+</body>
+</html>
