@@ -128,3 +128,33 @@ body::-webkit-scrollbar {
     color:var(--ink);
     display: block;
 }
+
+.btn-primary {
+    background: var(--yellow);
+    color: var(--ink);
+    border: 3.9px solid var(--ink);
+    padding: 16px 36px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 900;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    box-shadow: 8px 8px 0 var(--shadow);
+    transition: transform 0.1s cubic-bezier(0.16,1,0.3,1),
+                box-shadow 0.1s cubic-bezier(0.16,1,0.3,1);
+    display: inline-block;
+    text-decoration: none;
+    position: relative;
+    outline: none;
+}
+
+.btn-primary:hover {
+    transform: translate(-2px,-2px);
+    box-shadow: 10px 10px 0 var(--shadow);
+}
+
+.btn-primary:active {
+    transform: translate(8px,8px);
+    box-shadow: 0px 0px 0 var(--shadow);
+}
