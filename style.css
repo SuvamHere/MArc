@@ -196,3 +196,24 @@ body::-webkit-scrollbar {
     margin-bottom: 2.5rem;
     opacity: 0.8;
 }
+
+.landing-deco {
+    position:absolute;
+    top: -2.75rem;
+    right: -2.75rem;
+    z-index: 3;
+}
+
+.deco-star {
+    font-size: 5rem;
+    color: var(--red);
+    display: block;
+    animation: structuralSpin 16s linear inifinite;
+    -webkit-text-stroke: 3px var(--ink);
+    line-height: 1;
+    text-shadow: 5px 5px 0 var(--ink);
+}
+@keyframes structuralSpin {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(360deg);}
+}
