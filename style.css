@@ -307,9 +307,9 @@ body::-webkit-scrollbar {
     padding:0'
 }
 .arcade-nav {
-    postion: relative;
+    position: relative;
     z-index: 10;
-    broder-bottom: 4px solid var(--ink);
+    border-bottom: 4px solid var(--ink);
     background: var(--surface);
     display: flex;
     align-items: center;
@@ -562,7 +562,7 @@ body::-webkit-scrollbar {
     text-transform: uppercase;
 }
 
-.lb-row:last-child (border-bottom:none;)
+.lb-row:last-child {border-bottom:none;}
 
 .lb-rank {
     font-family: 'Space Mono', monospace;
