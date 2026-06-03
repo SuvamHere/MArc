@@ -588,3 +588,14 @@ body::-webkit-scrollbar {
     justify-content: center;
     opacity: 0.6;
 }
+
+@media (max-width:768px) {
+    .games-grid { grid-template-columns: 1fr;}
+    .arcade-title {font-size: clamp(3rem,14vw,5rem);}
+    .arcade-nav {padding:0 1rem; height: 72px;}
+    .nav-right {gap: 0.75rem;}
+    .select-inner { padding: 2rem 1rem;}
+    .landing-inner, .username-inner {padding:3rem 1.25rem; box-shadow: 10px 10px 0 var(--ink);}
+    .landing-deco {top:-1.75rem; right: -1.75rem;}
+    .deco-star {font-size:larger 3.5rem;}
+}
