@@ -524,3 +524,67 @@ body::-webkit-scrollbar {
     background: var(--red);
     color: var(--ink);
 }
+
+.leaderboard-warp {
+    border: 4px solid var(--ink);
+    box-shadow: 10px 10px 0 var(--ink);
+    background: var(--surface);
+    max-width: 540px;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: transform 0.5s cubic-bezier(0.16,1,0.3,1) 0.4s, opacity 0.5s ease 0.4s;
+}
+
+#screen-select.active .leaderboard-wrap {opacity:1; transform: translateY(0);}
+
+.leaderboard-header {
+    border-bottom: 4px solid var(--ink);
+    background: var(--purple);
+    padding: 1.5rem
+}
+
+.leaderboard-list {
+    padding: 1rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.lb-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 0;
+    border-bottom: 2px dashed var(--grid);
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--ink);
+    text-transform: uppercase;
+}
+
+.lb-row:last-child (border-bottom:none;)
+
+.lb-rank {
+    font-family: 'Space Mono', monospace;
+    background: var(--blue);
+    color: var(--ink);
+    border: 2px solid var(--ink);
+    font-size: 0.8rem;
+    padding: 2px 8px;
+    min-width: 36px;
+    text-align: center;
+    box-shadow: 2px 2px 0 var(--ink);
+}
+
+.lb-name {flex:1; padding:0 1.25rem; font-weight: 700;}
+.lb-score { font-family:'Space Mono',monospace; font-weight: 900; color: var(--red);}
+
+.lb-placeholder {
+    color: var(--ink);
+    font-size: 0.85rem;
+    text-align: center;
+    font-style: italic;
+    text-transform: none;
+    justify-content: center;
+    opacity: 0.6;
+}
