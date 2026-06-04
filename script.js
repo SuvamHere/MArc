@@ -97,3 +97,20 @@ function initUsername() {
         if (e.key === 'Enter') btnPlay.click();
     });
 }
+
+functioninitGameSelect() {
+    document.getElementById('btn-change').addEventListener('click', ()=> {
+        localStorage.removeItem('arcade-username');
+        document.getElementById('username-input').value = '';
+        document.getElementById('username-hint').textContent = '';
+        showScreen('username');
+    });
+
+    document.querySelectorAll('btn-play-game').forEach(btn => {
+        btn.addEventListener('click',e => {
+            e.stopPropagation();
+            const target = btn.getAttribute('data-target');
+        
+        })
+    })
+} 
