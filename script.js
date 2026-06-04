@@ -205,3 +205,5 @@ function init() {
     }
 
 }
+
+docment.addEventListener('DOMContentLoaded', init);
