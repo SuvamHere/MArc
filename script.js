@@ -29,3 +29,10 @@ function getUsername() {
 function saveUsername(name) {
     localStorage.setItem('arcade-username', name);
 }
+
+function validUsername(name) {
+    if (name.length < 3) return {ok:false,msg:'Too short - minimum 3 characters'};
+    if (name.length > 20) return {ok:false,msg:'Too long - maximum 20 characters '};
+    if (!/^[a-zA-Z0-9_]+$/.test(name)) return {ok:false, msg: 'Only letters, numbers and underscores'};
+    return {ok:true,msg:'Looking fine'};
+}
