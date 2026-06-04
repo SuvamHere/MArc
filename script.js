@@ -180,6 +180,10 @@ function bindGraphParallax(){
 
         const backdrop = activeScreen.querySelector('graph-grid-backdrop');
         if (!backdrop) return;
-        
-    })
+
+        const shiftX = (e.clientX / window.innerWidth - 0.5) * -15;
+        const shiftY = (e.clientY / window.innerHeight - 0.5) * -15;
+
+        backdrop.style.transform = `translate(${shiftX}px, ${shiftY}px) scale(1.05)`;
+    });
 }
