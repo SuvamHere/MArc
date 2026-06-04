@@ -138,4 +138,9 @@ function setupCursorTrail() {
     let mouse = {x: 0, y: 0};
     let current = {x: 0, y: 0};
     const lerpFactor = 0.2;
+
+    window.addEventListener('mousemove', (e) => {
+        mouse.x =e.clientX;
+        mouse.y =e.clientY;
+    });
 }
