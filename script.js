@@ -36,3 +36,18 @@ function validUsername(name) {
     if (!/^[a-zA-Z0-9_]+$/.test(name)) return {ok:false, msg: 'Only letters, numbers and underscores'};
     return {ok:true,msg:'Looking fine'};
 }
+
+function loadPersonalScores() {
+    const games =['numstrike','codecrash', 'wirefixer'];
+    games.forEach(game => {
+        const best = localStorage.getItem(`best-${game}`) || '---';
+        const el = document.getElementById(`score-${game}`);
+        if (el) el.textContent = best;
+    });
+}
+
+function updateNavUsername(name) {
+    const el = document.getElementById('nav-username');
+    if (el) el.textContent = name;
+}
+
