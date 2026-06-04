@@ -172,3 +172,14 @@ function setupCursorTrail() {
         }
     });
 }
+
+function bindGraphParallax(){
+    window.addEventListener('mousemove', (e) => {
+        const activeScreen = document.querySelector('screen.active');
+        if (!activeScreen) return;
+
+        const backdrop = activeScreen.querySelector('graph-grid-backdrop');
+        if (!backdrop) return;
+        
+    })
+}
