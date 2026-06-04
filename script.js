@@ -196,6 +196,12 @@ function init() {
     initLanding();
     initUsername();
     initGameSelect();
-    
-    
+
+    const existing = getUsername();
+    if (existing) {
+        updateNavUsername(existing);
+        loadPersonalScores();
+        showScreen('select');
+    }
+
 }
