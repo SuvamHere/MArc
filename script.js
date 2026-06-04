@@ -14,7 +14,7 @@ function showScreen(name) {
     activeScreen.classList.add('active');
 
     if (name === 'select') {
-        const bg = activeScreen.querySelector('graph-grid-backdrop');
+        const bg = activeScreen.querySelector('.graph-grid-backdrop');
         if (bg) {
             bg.style.transform = 'scale(1.05) rotate(0.5deg)';
             setTimeout(() => { bg.style.transform = 'scale(1.01) rotate(0deg)'; }, 400);
@@ -30,7 +30,7 @@ function saveUsername(name) {
     localStorage.setItem('arcade-username', name);
 }
 
-function validUsername(name) {
+function validateUsername(name) {
     if (name.length < 3) return {ok:false,msg:'Too short - minimum 3 characters'};
     if (name.length > 20) return {ok:false,msg:'Too long - maximum 20 characters '};
     if (!/^[a-zA-Z0-9_]+$/.test(name)) return {ok:false, msg: 'Only letters, numbers and underscores'};
@@ -98,22 +98,44 @@ function initUsername() {
     });
 }
 
-functioninitGameSelect() {
-    document.getElementById('btn-change').addEventListener('click', ()=> {
-        localStorage.removeItem('arcade-username');
-        document.getElementById('username-input').value = '';
-        document.getElementById('username-hint').textContent = '';
-        showScreen('username');
-    });
+function initGameSelect() {
+    const changeBtn = document.getElementById('btn-change');
+    if (changeBtn) {
+        changeBtn.addEventListener('click', ()=> {
+            localStorage.removeItem('arcade-username');
+            updateNavUsername('');
+            document.getElementById('username-input').value = '';
+            document.getElementById('username-hint').textContent = '';
+            showScreen('username');
+        });
+    }
 
-    document.querySelectorAll('btn-play-game').forEach(btn => {
-        btn.addEventListener('click',e => {
+    document.querySelectorAll('.btn-play-game').forEach(btn => {
+        btn.addEventListener('click', e => {
             e.stopPropagation();
             const target = btn.getAttribute('data-target');
             if (target) {
                 btn.style.transform = 'scale(0.95)';
-                setTimeout(() => {window.location.href = target;}, 100);
+                setTimeout(() => { window.location.href = target; }, 100);
             }
         });
     });
-} 
+}
+
+function deployGraphbackdrops() {
+    Object.values(screens).forEach(screen => {
+        const backdrop = document.createElement('div');
+        backdrop.className = 'graph-grid-backdrop';
+        screen.insertBefore(backdrop, screen.firstChild);
+    });
+}
+
+function setupCursorTrail() {
+    const trail = document.createElement('div');
+    trail.className = 'custom-cursor-trail';
+    document.body.appendChild(trail);
+
+    let mouse = {x: 0, y: 0};
+    let current = {x: 0, y: 0};
+    
+}
