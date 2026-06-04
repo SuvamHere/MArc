@@ -184,6 +184,18 @@ function bindGraphParallax(){
         const shiftX = (e.clientX / window.innerWidth - 0.5) * -15;
         const shiftY = (e.clientY / window.innerHeight - 0.5) * -15;
 
-        backdrop.style.transform = `translate(${shiftX}px, ${shiftY}px) scale(1.05)`;
+        backdrop.style.transform = `translate(${shiftX}px, ${shiftY}px) scale(1.02)`;
     });
+}
+
+function init() {
+    deployGraphbackdrops();
+    setupCursorTrail();
+    bindGraphParallax();
+
+    initLanding();
+    initUsername();
+    initGameSelect();
+    
+    
 }
