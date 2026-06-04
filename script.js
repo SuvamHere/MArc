@@ -12,4 +12,12 @@ function showScreen(name) {
     });
     const activeScreen = screens[name];
     activeScreen.classList.add('active');
+
+    if (name === 'select') {
+        const bg = activeScreen.querySelector('graph-grid-backdrop');
+        if (bg) {
+            bg.style.transform = 'scale(1.05) rotate(0.5deg)';
+            setTimeout(() => { bg.style.transform = 'scale(1.01) rotate(0deg)'; }, 400);
+        }
+    }
 }
