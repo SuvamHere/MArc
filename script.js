@@ -21,3 +21,11 @@ function showScreen(name) {
         }
     }
 }
+
+function getUsername() {
+    return localStorage.getItem('arcade-username') || '';
+}
+
+function saveUsername(name) {
+    localStorage.setItem('arcade-username', name);
+}
