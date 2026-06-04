@@ -48,8 +48,34 @@
                 <button id="btn-back-over" class="btn-secondary">BACK TO ARCADE MENU</button>
             </div>
         </div>
+ <div id="game-ui" class="hidden">
 
-        <div id="game-ui" class="hidden">
-
-    </body>
+    
+     <div id="hud">
+      <div class="hud-left">
+        <button id="btn-back-hud" class="hud-btn">← ARCADE</button>
+      </div>
+      <div class="hud-center">
+        <div class="hud-item">
+          <span class="hud-label">SCORE</span>
+          <span class="hud-value" id="hud-score">0</span>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">LEVEL</span>
+          <span class="hud-value" id="hud-level">1</span>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">STREAK</span>
+          <span class="hud-value streak-val" id="hud-streak">0×</span>
+        </div>
+      </div>
+      <div class="hud-right">
+        <div id="lives-display">
+          <span class="life" id="life-1">♥</span>
+          <span class="life" id="life-2">♥</span>
+          <span class="life" id="life-3">♥</span>
+        </div>
+      </div>
+    </div>
+</body>
 </html>
