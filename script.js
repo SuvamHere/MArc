@@ -66,3 +66,34 @@ function initLanding() {
     });
 }
 
+function initUsername() {
+    const input = document.getElementById('username-input');
+    const hint = document.getElementById('username-hint');
+    const btnPlay = document.getElementById('btn-play');
+
+    input.addEventListener('input', ()=> {
+        const val = input.value.trim().toUpperCase();
+        input.value = val;
+        const result = validateUsername(val);
+        hint.textContent = val.length > 0 ? result.msg : '';
+        hint.className = 'username-hint' + (result.ok ? 'ok': val.length > 0 ? 'error': '');
+    });
+    btnPlay.addEventListener('click', () => {
+        const val = input.value.trim();
+        const result = validateUsername(val);
+        if (!result.ok) {
+            hint.textContent = result.msg;
+            hint.className = 'username-hint error';
+            input.focus();
+            return;
+        }
+        saveUsername(val);
+        updateNavUsername(val);
+        loadPersonalScores();
+        showScreen('select');
+    });
+
+    input.addEventListener('keydown', e => {
+        if (e.key === 'Enter') btnPlay.click();
+    });
+}
