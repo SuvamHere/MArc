@@ -51,3 +51,18 @@ function updateNavUsername(name) {
     if (el) el.textContent = name;
 }
 
+function initLanding() {
+    const existing = getUsername();
+    const enterBtn = document.getElementById('btn-enter');
+
+    enterBtn.addEventListener('click', ()=> {
+        if (existing) {
+            updateNavUsername(existing);
+            loadPersonalScores();
+            showScreen('select');
+        } else {
+            showScreen('username');
+        }
+    });
+}
+
