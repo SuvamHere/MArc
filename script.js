@@ -135,12 +135,40 @@ function setupCursorTrail() {
     trail.className = 'custom-cursor-trail';
     document.body.appendChild(trail);
 
-    let mouse = {x: 0, y: 0};
-    let current = {x: 0, y: 0};
-    const lerpFactor = 0.2;
+    let mouse = { x: 0, y: 0 };
+    let current = { x: 0, y: 0 };
+    const lerpFactor = 0.2; // I added this factor to control the smooth elastic stiffness of the follow animation
 
     window.addEventListener('mousemove', (e) => {
-        mouse.x =e.clientX;
-        mouse.y =e.clientY;
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+    });
+
+    // I built a continuous tracking loop here using requestAnimationFrame for crisp performance
+    function processTrailLoop() {
+        current.x += (mouse.x - current.x) * lerpFactor;
+        current.y += (mouse.y - current.y) * lerpFactor;
+
+        trail.style.left = `${current.x}px`;
+        trail.style.top = `${current.y}px`;
+
+        requestAnimationFrame(processTrailLoop);
+    }
+    requestAnimationFrame(processTrailLoop);
+
+    // I added hover listeners right here so that the custom box expands and changes color on clickable elements
+    const activeSelectors = 'button, input, .game-card, .btn-change';
+    document.addEventListener('mouseover', (e) => {
+        if (e.target.closest(activeSelectors)) {
+            trail.style.transform = 'translate(-50%, -50%) scale(1.6) rotate(45deg)';
+            trail.style.backgroundColor = 'var(--red)';
+        }
+    });
+
+    document.addEventListener('mouseout', (e) => {
+        if (e.target.closest(activeSelectors)) {
+            trail.style.transform = 'translate(-50%, -50%) scale(1) rotate(0deg)';
+            trail.style.backgroundColor = 'var(--yellow)';
+        }
     });
 }
