@@ -110,7 +110,10 @@ functioninitGameSelect() {
         btn.addEventListener('click',e => {
             e.stopPropagation();
             const target = btn.getAttribute('data-target');
-        
-        })
-    })
+            if (target) {
+                btn.style.transform = 'scale(0.95)';
+                setTimeout(() => {window.location.href = target;}, 100);
+            }
+        });
+    });
 } 
