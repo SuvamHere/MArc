@@ -137,5 +137,5 @@ function setupCursorTrail() {
 
     let mouse = {x: 0, y: 0};
     let current = {x: 0, y: 0};
-    
+    const lerpFactor = 0.2;
 }
