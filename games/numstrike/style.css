@@ -137,3 +137,8 @@ html, body {
     transform: translate(-5px,-5px);
     box-shadow: 11px 11px 0 var(--shadow);
 }
+
+.btn-primary:active {
+    transform: translate(8px,8px);
+    box-shadow: 0 0 0 var(--shadow);
+}
