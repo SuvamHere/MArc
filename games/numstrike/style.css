@@ -238,3 +238,13 @@ html, body {
     flex-shrink: 0;
     z-index: 10;
 }
+.hud-left,
+.hud-right {
+    min-width: 142px;
+}
+
+.hud-right {
+    display: flex;
+    justify-content: flex-end;
+    
+}
