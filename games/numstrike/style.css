@@ -81,3 +81,11 @@ html, body {
     background: var(--red);
     color: var(--surface);
 }
+
+.overlay-title {
+    font-size: clamp(36px,8vw,64px);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+}
