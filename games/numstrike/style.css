@@ -113,3 +113,23 @@ html, body {
     padding: 3px 8px;
     background: var(--bg);
 }
+
+.btn-primary {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    background: var(--yellow);
+    color: var(--ink);
+    border: 4px;
+    box-shadow: 8px 8px 0 var(--shadow);
+    padding: 14px 28px;
+    align-self: stretch;
+    text-align: center;
+    transition:
+        transform 0.1s cubic-bezier(0.16,1,0.3,1),
+        box-shadow 0.1s cubic-bezier(0.16,1,0.3,1);
+}
+
