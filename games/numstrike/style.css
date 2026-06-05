@@ -314,4 +314,17 @@ html, body {
     transform: scale(0.7);
 }
 
+#game-canvas {
+    flex: 1;
+    display: block;
+    width: 100%;
+}
 
+#input-bar {
+    height: 64px;
+    display: flex;
+    align-items: center;
+    background: var(--surface);
+    border-top: 3px solid var(--ink);
+    flex-shrink: 0;
+}
