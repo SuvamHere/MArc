@@ -349,9 +349,45 @@ html, body {
     font-size: 22px;
     font-weight: 700;
     color: var(--ink);
-    padding: 0 16px;
+    padding: 0 16px;;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     caret-color: var(--red);
 }
 
+#answer-input::placeholder {
+    color: var(--ink);
+    opacity: 0.2;
+    font-size: 14px;
+    letter-spacing: 0.12em;
+
+}
+#btn-submit {
+    height: 100%;
+    padding: 0 28px;
+    background: var(--red);
+    color: var(--surface);
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: none;
+    border-left: 3px solid var(--ink);
+    cursor: pointer;
+    flex-shrink:0;
+    transition: background 0.08s;
+}
+
+#btn-submit:hover {background:var(--ink);}
+#btn-submit:active {background: var(--ink); opacity: 0.8;}
+
+#answer-input.correct-flash {
+    color: var(--yellow);
+    background: var(--ink);
+}
+
+#answer-input.wrong-flash {
+    color: var(--surface);
+    background: var(--red);
+}
