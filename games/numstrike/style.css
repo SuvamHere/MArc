@@ -116,7 +116,7 @@ html, body {
 
 .btn-primary {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 700;
     letter-spacing: 0.05em;
     text-transform: uppercase;
@@ -141,4 +141,23 @@ html, body {
 .btn-primary:active {
     transform: translate(8px,8px);
     box-shadow: 0 0 0 var(--shadow);
+}
+
+.btn-secondary {
+    font-family: 'Space Mono', monospace;
+    font-size: 15.5px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor:pointer;
+    background: trasparent;
+    color: var(--ink);
+    border: 3px solid var(--ink);
+    box-shadow: 4px 4px 0 var(--shadow);
+    padding: 10px 20px;
+    align-self:stretch;
+    text-align: center;
+    transition:
+        transform 0.1s cubic-bezier(0.16,1,0.3,1),
+        box-shadow 0.1s cubic-bezier(0.16,1,0.3,1);
 }
