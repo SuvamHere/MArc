@@ -18,3 +18,9 @@ const finalBest = document.getElementById('final-best');
 const finallevel = document.getElementById('final-level');
 const finalstreak = document.getElementById('final-streak');
 const newBestBanner = document.getElementById('new-best-banner');
+
+const lifeEls= [
+    document.getElementById('life-1'),
+    document.getElementById('life-2'),
+    document.getElementById('life-3'),
+];
