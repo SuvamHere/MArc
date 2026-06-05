@@ -170,3 +170,12 @@ html, body {
     transform: translate(4px,4px);
     box-shadow: 0 0 0 var(--shadow);
 }
+
+.result-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    width: 100%;
+    border: 3px solid var(--ink);
+
+}
