@@ -24,3 +24,14 @@ const lifeEls= [
     document.getElementById('life-2'),
     document.getElementById('life-3'),
 ];
+const COLORS = {
+    bg: '#ffffdf6',
+    surface: '#ffffff',
+    ink: '#111111',
+    red: '#ff6a67',
+    yellow: '#ffdd3c',
+    blue: '#179ff5',
+    purple:  '#b39dff',   
+    green:   '#5edd8e',
+    grid:    'rgba(17,17,17,0.07)',
+}
