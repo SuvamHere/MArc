@@ -1,0 +1,11 @@
+:root {
+    --bg: #fffdf6;
+    --surface: #ffffff;
+    --ink: #111111;
+    --red: #ff6a67;
+    --yellow: #ffdd3c;
+    --blue: #179ff5;
+    --purple: #b39dff;
+    --shadow: #111111;
+    --grid: rgba(17,17,17,0.08);
+}
