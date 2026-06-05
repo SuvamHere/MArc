@@ -23,3 +23,15 @@ html, body {
     font-family: 'Space Grotesk', sans-serif;
     color: var(--ink);
 }
+
+.hidden {display:none !important;}
+
+.overlay-grid-bg {
+    background-imag: radial-gradient(
+        circle,
+        rgba(17,17,17,0.15) 1px,
+        trasparent 1px
+    );
+    background-size: 36px 36px;
+    background-position: center center;
+}
