@@ -27,11 +27,22 @@ html, body {
 .hidden {display:none !important;}
 
 .overlay-grid-bg {
-    background-imag: radial-gradient(
+    background-image: radial-gradient(
         circle,
         rgba(17,17,17,0.15) 1px,
         trasparent 1px
     );
     background-size: 36px 36px;
     background-position: center center;
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
