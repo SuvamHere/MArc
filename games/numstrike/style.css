@@ -293,3 +293,5 @@ html, body {
         box-shadow 0.1s cubic-bezier(0.16,1,0.3,1);
 }
 
+.hud-btn:hover {transform: translate(-1.5px,-1.5px); box-shadow: 4px 4px 0 var(--shadow);}
+.hud-btn:active {transform: translate(3.5px,3.5px); box-shadow: 0 0 0 ;}
