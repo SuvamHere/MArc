@@ -328,3 +328,30 @@ html, body {
     border-top: 3px solid var(--ink);
     flex-shrink: 0;
 }
+
+#input-prefix {
+    font-family: 'Space Mono', monospace;
+    font-size: 18px;
+    font-weight:700;
+    opacity: 0.4;
+    padding: 0 0 0 20px;
+    user-select: none;
+    flex-shrink: 0;
+    color: var(--ink);
+}
+#answer-input {
+    flex: 1;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline:none;
+    font-family: 'Space Mono', monospace;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+    padding: 0 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    caret-color: var(--red);
+}
+
