@@ -133,3 +133,7 @@ html, body {
         box-shadow 0.1s cubic-bezier(0.16,1,0.3,1);
 }
 
+.btn-primary:hover {
+    transform: translate(-5px,-5px);
+    box-shadow: 11px 11px 0 var(--shadow);
+}
