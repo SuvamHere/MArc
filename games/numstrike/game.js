@@ -99,3 +99,7 @@ function saveBestScore(score) {
     }
     return false;
 }
+
+function spawnRate() {
+    return Math.max(MIN_SPAWN_RATE,BASE_SPAWN_RATE - (state.level -1)* SPAWN_REDUCE);
+}
