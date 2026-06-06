@@ -391,3 +391,43 @@ html, body {
     color: var(--surface);
     background: var(--red);
 }
+
+#key-hints { 
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 20px;
+    background: var(--bg);
+    border-top: 2px solid var(--ink);
+    flex-shrink: 0;
+    flex-wrap: wrap;
+ }
+.hint-item { 
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 400;
+    color: var(--ink);
+    opacity: 0.55;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+ }
+.hiny-item strong { 
+    font-weight: 700;
+    opacity: 1;
+    color: var(--red);
+}
+.hint-item kbd { 
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    background: var(--surface);
+    border: 1.5px solid var(--ink);
+    letter-spacing: 0.05em;
+    box-shadow: 1px 1px 0 var(--ink); 
+}
+.hint-sep { 
+    font-size: 14px;
+    opacity: 0.25;
+    color: var(--ink);
+    user-select: none;
+ }
