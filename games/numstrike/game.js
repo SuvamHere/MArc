@@ -38,3 +38,8 @@ const COLORS = {
 }
 
 const EQ_COLORS = [COLORS.red, COLORS.blue, COLORS.purple];
+
+const BASE_FALL_SPEED = 0.6;
+
+const BASE_SPAWN_RATE = 230;
+
