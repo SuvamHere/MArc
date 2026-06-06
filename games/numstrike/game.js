@@ -103,3 +103,15 @@ function saveBestScore(score) {
 function spawnRate() {
     return Math.max(MIN_SPAWN_RATE,BASE_SPAWN_RATE - (state.level -1)* SPAWN_REDUCE);
 }
+
+function resizeCanvas() {
+    const hud = document.getElementById('hud');
+    const keyHints = document.getElementById('key-hints');
+    const inpBar = document.getElementById('input-bar');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight
+                    -hud.offsetHeight
+                    -(KeyHints ? KeyHints.offsetHeight : 0)
+                    -inputBar.offsetHeight;
+}
