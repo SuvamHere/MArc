@@ -118,3 +118,11 @@ function resizeCanvas() {
 function generateEquation() {
     const lvl = state.level;
 }
+
+let pool;
+if (lvl <= 2) pool = ['add_easy', 'sub_easy','add_easy','sub_easy','add_easy'];
+else if (lvl <= 4) pool = ['add_med','sub_hard','mul_easy','add_med','sub_med','mul_med'];
+else if (lvl <= 6) pool = ['mul_med','sub_hard','mul_med','div_easy','sq_easy','add_hard'];
+else if (lvl <= 8) pool = ['mul_med','div_med','sq_easy','combo_add','combo_sub','div_med'];
+else  pool = ['mul_hard','div_hard','add_hard','sub_med','sq_med','cube','combo_add','combo_sub','percent'];
+
