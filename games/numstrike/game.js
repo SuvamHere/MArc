@@ -91,3 +91,11 @@ function rand(min,max) {
 function getBestScore() {
     return parseInt(localStorage.getItem('best-numstrike') || '0',10);
 }
+function saveBestScore(score) {
+    const prev = getBestScore();
+    if (score > prev) {
+        localStorage.setItem('best-numstrike',String(score));
+        return true;
+    }
+    return false;
+}
