@@ -84,3 +84,6 @@ function restState() {
     state.levelFlash = 0;
     state.prelevel = 1;
 }
+function rand(min,max) {
+    return Math.floor(Math.random() * (max-min +1))+min;
+}
