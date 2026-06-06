@@ -89,5 +89,5 @@ function rand(min,max) {
 }
 
 function getBestScore() {
-    return (localStorage.getItem('best-numstrike') || '0',10);
+    return parseInt(localStorage.getItem('best-numstrike') || '0',10);
 }
