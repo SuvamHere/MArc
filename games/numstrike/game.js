@@ -115,3 +115,6 @@ function resizeCanvas() {
                     -(KeyHints ? KeyHints.offsetHeight : 0)
                     -inputBar.offsetHeight;
 }
+function generateEquation() {
+    const lvl = state.level;
+}
