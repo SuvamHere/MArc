@@ -34,4 +34,7 @@ const COLORS = {
     purple:  '#b39dff',  
     green:   '#5edd8e',
     grid:    'rgba(17,17,17,0.07)',
+    
 }
+
+const EQ_COLORS = [COLORS.red, COLORS.blue, COLORS.purple];
