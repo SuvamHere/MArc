@@ -31,7 +31,7 @@ const COLORS = {
     red: '#ff6a67',
     yellow: '#ffdd3c',
     blue: '#179ff5',
-    purple:  '#b39dff',   
+    purple:  '#b39dff',  
     green:   '#5edd8e',
     grid:    'rgba(17,17,17,0.07)',
 }
