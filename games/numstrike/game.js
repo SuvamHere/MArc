@@ -43,3 +43,16 @@ const BASE_FALL_SPEED = 0.6;
 
 const BASE_SPAWN_RATE = 230;
 
+const SPEED_PER_LEVEL = 0.2;
+
+const SPAWN_REDUCE = 22;
+
+const MIN_SPAWN_RATE = 45;
+
+const LEVEL_UP_SCORE = 200;
+
+const EXPLOSION_FRAMES = 25;
+
+const LEVEL_FLASH_FRAMES = 50;
+
+const LIVES = 3;
