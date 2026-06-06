@@ -124,5 +124,81 @@ if (lvl <= 2) pool = ['add_easy', 'sub_easy','add_easy','sub_easy','add_easy'];
 else if (lvl <= 4) pool = ['add_med','sub_hard','mul_easy','add_med','sub_med','mul_med'];
 else if (lvl <= 6) pool = ['mul_med','sub_hard','mul_med','div_easy','sq_easy','add_hard'];
 else if (lvl <= 8) pool = ['mul_med','div_med','sq_easy','combo_add','combo_sub','div_med'];
-else  pool = ['mul_hard','div_hard','add_hard','sub_med','sq_med','cube','combo_add','combo_sub','percent'];
+else  pool = ['mul_hard','div_med','add_hard','sub_med','sq_med','cube','combo_add','combo_sub','percent'];
 
+const type = pool[Math.floor(Math.random()* pool.length)];
+
+let a,b,c,answer,text;
+
+if (type === 'add_easy') {
+    a = rand(4,20); b= rand(4,20);
+    answer = a+b; text = `${a} + ${b} =?`;
+}
+else if (type === 'sub-easy') {
+    a= rand(10,40); b= rand(10,40);
+    answer = a-b; text= `${a} - ${b} =?`;
+    
+}
+else if (type === 'add_med') {
+    a= rand(10,99); b= rand(10,99);
+    answer = a+b; text= `${a} + ${b} =?`;
+}
+else if (type === 'sub_med') {
+    a= rand(30,99); b= rand(30,99);
+    answer = a-b; text= `${a} - ${b} =?`;
+}    
+else if (type === 'add_hard') {
+    a=rand(100,999); b=rand(100,999);
+    answer = a+b; text= `${a} + ${b} =?`;
+}
+else if (type === 'sub_hard') {
+    a=rand(100,999); b=rand(100,999);
+    answer = a-b; text= `${a} - ${b} =?`;
+}
+else if (type === 'mul_easy') {
+    a=rand(2,9); b=rand(2,9);
+    answer = a*b; text= `${a} x ${b} =?`;
+}
+else if (type === 'mul_med') {
+    a=rand(5,13); b=rand(4,9);
+    answer = a*b; text= `${a} x ${b} =?`;
+}
+else if (type === 'mul_hard') {
+    a=rand(11,15); b=rand(3,13);
+    answer = a*b; text= `${a} x ${b} =?`;
+}
+else if (type === 'div_easy') {
+    a=rand(2,9); b=rand(2,9);
+    a=b*answer; text= `${a} ÷${b} =? `;
+}
+else if (type === 'div_med') {
+    a=rand(6,20); b=rand(4,12);
+    a=b*answer; text= `${a} ÷${b} =? `;
+}
+else if (type === 'sq_easy') {
+    a=rand(2,10); 
+    answer = a*a; text =`${a}² = ?`;
+}
+else if (type === 'sq_med') {
+    a=rand(10,16);
+    answer = a*a; text =`${a}² = ?`;
+}
+else if (type === 'cube') {
+    a=rand(2,7);
+    answer= a*a*a; text=`${a}³ = ?`;
+}
+else if (type === 'combo_add') {
+    a=rand(2,9); b=rand(2,8); c=rand(1,67);
+    answer=a*b+c; text=`${a}x${b}+${c}`;
+}
+else if (type === 'combo_sub') {
+    a=rand(2,10); b=rand(2,10); c=rand(1,Math.min(16,a*b-1));
+    answer=a*b-c; text = `${a}×${b}-${c}=?`;
+}
+else {
+    const pcts = [10,20,25,50];
+    const pct = pcts[Math.floor(Math.random()*pcts.length)];
+    b=rand(1,12)*20;
+    answer =(pct/100)*b;
+    text = `${pct}% of ${b}=?`;
+}
