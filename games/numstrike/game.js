@@ -56,3 +56,17 @@ const EXPLOSION_FRAMES = 25;
 const LEVEL_FLASH_FRAMES = 50;
 
 const LIVES = 3;
+
+const state = {
+    running: false,
+    score: 0,
+    lives: LIVES,
+    level: 1,
+    streak: 0,
+    bestStreak: 0,
+    frameCount: 0,
+    equations: [],
+    explosions: [],
+    levelFlash: 0,
+    preLevel: 1,
+}
