@@ -70,3 +70,17 @@ const state = {
     levelFlash: 0,
     preLevel: 1,
 }
+
+function restState() {
+    state.running = false;
+    state.score = 0;
+    state.lives = LIVES;
+    state.level = 1;
+    state.streak = 0;
+    state.bestStreak = 0;
+    state.frameCount = 0;
+    state.equations = [];
+    state.explosions = [];
+    state.levelFlash = 0;
+    state.prelevel = 1;
+}
