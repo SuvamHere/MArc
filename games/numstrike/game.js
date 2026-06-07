@@ -202,3 +202,6 @@ else {
     answer =(pct/100)*b;
     text = `${pct}% of ${b}=?`;
 }
+const cardWidth = Math.max(EQ_W, text.length *12 + 28);
+
+const color = EQ_COLORS[Math.floor(Math.random() * EQ_COLORS.length)];
