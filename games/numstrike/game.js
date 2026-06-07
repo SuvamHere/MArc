@@ -221,3 +221,15 @@ return {
     colorWidth,
     id: Date.now() + Math.random(),
 } 
+function drawGrid() {
+    ctx.strokeStyle = COLORS.grid;
+    ctx.lineWidth = 1;
+    const gap = 36;
+
+    for (let x = 0; x<= canvas.width; x += gap) {
+        ctx.beginPath(); ctx.moveTp(x,0); ctx.lineTo(x,canvas.height); ctx.stroke();
+    }
+    for (let y = 0; y <= canvas.height; y += gap) {
+        ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(canvas.width,y); ctx.stroke();
+    }
+}
