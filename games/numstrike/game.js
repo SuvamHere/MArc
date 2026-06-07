@@ -232,4 +232,13 @@ function drawGrid() {
     for (let y = 0; y <= canvas.height; y += gap) {
         ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(canvas.width,y); ctx.stroke();
     }
+} 
+
+function drawDangerZone() {
+    const h = 80;
+    const gr = ctx.createLinearGradient(0,canvas.height -h,0,canvas.height); 
+    gr.addColorStop(0, 'rgba(255,106,103,0)');
+    gr.addColorStop(1,'rgba(255,106,103,0.22)');
+    ctx.fillStyle = gr;
+    ctx.fillRect(0,canvas.height - h, canvas.width, h);
 }
