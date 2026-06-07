@@ -220,4 +220,4 @@ return {
     speed,
     colorWidth,
     id: Date.now() + Math.random(),
-}
+} 
