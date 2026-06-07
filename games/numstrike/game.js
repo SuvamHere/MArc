@@ -208,3 +208,16 @@ const color = EQ_COLORS[Math.floor(Math.random() * EQ_COLORS.length)];
 
 const maxX = Math.max(20,canvas.width - cardWidth -20);
 const x = Math.random() * maxX + 20;
+
+const speed = BASE_FALL_SPEED + (state.level - 1) * SPEED_PER_LEVEL;
+
+return {
+    text,
+    answer,
+    color,
+    x,
+    y: -EQ_H - 10, 
+    speed,
+    colorWidth,
+    id: Date.now() + Math.random(),
+}
