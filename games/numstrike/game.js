@@ -205,3 +205,6 @@ else {
 const cardWidth = Math.max(EQ_W, text.length *12 + 28);
 
 const color = EQ_COLORS[Math.floor(Math.random() * EQ_COLORS.length)];
+
+const maxX = Math.max(20,canvas.width - cardWidth -20);
+const x = Math.random() * maxX + 20;
