@@ -389,4 +389,8 @@ function loop() {
 
 function submitAnswer() {
     if (!state.running) return;
+
+    const raw = input.value.trim();
+    const answer = parseInt(raw,10);
+    input.value = '';
 }
