@@ -252,4 +252,8 @@ function drawEquation(eq) {
 
     ctx.fillStyle = color;
     ctx.fillRect(x,y,w,h);
+
+    ctx.strokeStyle = COLORS.ink;
+    ctx.lineWidth = 3;
+    ctx.strokeRect(x,y,w,h);
 }
