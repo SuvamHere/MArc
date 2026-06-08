@@ -347,4 +347,13 @@ function update() {
     if (state.frameCount % spawnRate() === 0 ) {
         state.equations.push(generateEquation());
     }
+
+    for (let i = state.equations.length - 1; i>= 0; i--) {
+        state.equations[i].y += state.equations[i].speed;
+
+        if (state.equations[i].y > canvas.height) {
+            state.equations.splice(i,1);
+            loselife();
+        }
+    }
 }
