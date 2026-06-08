@@ -361,4 +361,5 @@ function update() {
         state.explosions[i].frame--;
         if (state.explosions[i].frame <= 0) state.explosions.splice(i,1);
     }
+    if (state.levelFlash > 0 ) state.levelFlash-- ;
 }
