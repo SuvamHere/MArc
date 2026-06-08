@@ -291,4 +291,8 @@ function drawExplosion(ex) {
     ctx.font = 'bold 16px "Space Mono", monospace';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
+
+    ctx.strokeStyle = COLORS.ink;
+    ctx.lineWidth = 4;
+    ctx.strokeText('+' + ex.points, ex.x, labelY);
 }
