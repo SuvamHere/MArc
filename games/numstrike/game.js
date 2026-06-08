@@ -313,4 +313,9 @@ function drawLevelFlash() {
 
     ctx.fillStyle = COLORS.yellow;
     ctx.fillRect(0,0,canvas.width,barH);
+    
+    ctx.strokeStyle = COLORS.ink;
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(0,barH); ctx.lineTo(canvas.width,barH);
 }
