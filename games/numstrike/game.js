@@ -356,4 +356,9 @@ function update() {
             loselife();
         }
     }
+
+    for (let i = state.explosions.length - 1; i>= 0; i--) {
+        state.explosions[i].frame--;
+        if (state.explosions[i].frame <= 0) state.explosions.splice(i,1);
+    }
 }
