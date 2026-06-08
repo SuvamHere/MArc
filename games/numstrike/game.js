@@ -286,5 +286,9 @@ function drawExplosion(ex) {
     ctx.beginPath();
     ctx.arc(ex.x, ex.y, radius*0.55, 0, Math.PI *2);
     ctx.stroke();
-    
+
+    const labelY = ex.y - radius* 0.5 - progress * 22;
+    ctx.font = 'bold 16px "Space Mono", monospace';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
 }
