@@ -298,4 +298,10 @@ function drawExplosion(ex) {
 
     ctx.fillStyle = ringColor;
     ctx.fillText('+' + ex.points, ex.x, labelY);
+
+    ctx.restore();
+}
+
+function drawLevelFlash() {
+    if (state.levelFlash <= 0) return;
 }
