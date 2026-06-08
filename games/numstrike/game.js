@@ -318,4 +318,12 @@ function drawLevelFlash() {
     ctx.lineWidth = 3;
     ctx.beginPath();
     ctx.moveTo(0,barH); ctx.lineTo(canvas.width,barH);
+
+    ctx.fillStyle = COLORS.ink;
+    ctx.font = 'bold 28px "Space Grotesk", sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(`LEVEL ${state.level}`,canvas.width/2, barH/2);
+
+    ctx.restore;
 }
