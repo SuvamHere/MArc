@@ -362,4 +362,11 @@ function update() {
         if (state.explosions[i].frame <= 0) state.explosions.splice(i,1);
     }
     if (state.levelFlash > 0 ) state.levelFlash-- ;
+    if(state.score >= state.level * LEVEL_UP_SCORE) {
+        state.level++;
+        if (state.level > state.preLevel) {
+            state.levelFlash = LEVEL_FLASH_FRAMES;
+            state.preLevel = state.level;
+        }
+    }
 }
