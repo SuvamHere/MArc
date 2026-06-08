@@ -256,4 +256,10 @@ function drawEquation(eq) {
     ctx.strokeStyle = COLORS.ink;
     ctx.lineWidth = 3;
     ctx.strokeRect(x,y,w,h);
+
+    ctx.fillStyle = COLORS.ink;
+    ctx.font = 'bold 17px "Space Mono", monospace ';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(text, x+w/2,y+h/2);
 }
