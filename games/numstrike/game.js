@@ -411,4 +411,18 @@ function submitAnswer() {
                     : state.streak >= 7 ? 2.0
                     : state.steak >= 4 ? 1.5
                     : 1.0;
+    
+    const points = Math.round(10* state.level * multiplier);
+    state.score += points; 
+    
+    state.explosions.push({
+        x: eq.x + eq.cardWidth/2,
+        y: eq.y + EQ_H/2,
+        frame: EXPLOSION_FRAMES,
+        points,
+        streak: state.streak,
+    });
+
+    state.equations.splice(idx,1);
+    flashInput('correct');
 }
