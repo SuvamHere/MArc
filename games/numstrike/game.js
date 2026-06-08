@@ -406,4 +406,9 @@ function submitAnswer() {
     const eq = state.equations[idx];
     state.streak++;
     if(state.streak > state.bestStreak) state.bestStreak = state.streak;
+
+    const multiplier = state.streak >= 10 ? 2.5
+                    : state.streak >= 7 ? 2.0
+                    : state.steak >= 4 ? 1.5
+                    : 1.0;
 }
