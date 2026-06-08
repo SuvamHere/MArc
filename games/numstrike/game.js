@@ -402,4 +402,8 @@ function submitAnswer() {
     flashInput('wrong');
     return;
     }
+
+    const eq = state.equations[idx];
+    state.streak++;
+    if(state.streak > state.bestStreak) state.bestStreak = state.streak;
 }
