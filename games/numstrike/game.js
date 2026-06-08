@@ -333,4 +333,10 @@ function draw() {
 
     ctx.fillStyle = COLORS.bg;
     ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    drawGrid();
+    drawDangerZone();
+    state.equations.forEach(eq => drawEquation(eq));
+    state.explosions.forEach(ex => drawExplosion(ex));
+    drawLevelFlash();
 }
