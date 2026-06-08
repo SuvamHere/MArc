@@ -370,3 +370,9 @@ function update() {
         }
     }
 }
+
+function updateHUD() {
+    hudScore.textContent = state.score;
+    hudLevel.textContent = state.level;
+    hudStreak.textContent = state.streak + 'x';
+}
