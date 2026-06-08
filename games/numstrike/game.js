@@ -295,4 +295,7 @@ function drawExplosion(ex) {
     ctx.strokeStyle = COLORS.ink;
     ctx.lineWidth = 4;
     ctx.strokeText('+' + ex.points, ex.x, labelY);
+
+    ctx.fillStyle = ringColor;
+    ctx.fillText('+' + ex.points, ex.x, labelY);
 }
