@@ -242,3 +242,14 @@ function drawDangerZone() {
     ctx.fillStyle = gr;
     ctx.fillRect(0,canvas.height - h, canvas.width, h);
 } 
+
+function drawEquation(eq) {
+    const { x,y, cardWidth: w, color, text} =eq;
+    const h = EQ_H;
+
+    ctx.fillStyle = COLORS.ink;
+    ctx.fillRect(x+5,y+5,w,h);
+
+    ctx.fillStyle = color;
+    ctx.fillRect(x,y,w,h);
+}
