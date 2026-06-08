@@ -397,4 +397,9 @@ function submitAnswer() {
     if (isNaN(answer)) return;
 
     const idx= state.equations.findIndex(eq => eq.answer === answer);
+
+    if (idx === -1) {
+    flashInput('wrong');
+    return;
+    }
 }
