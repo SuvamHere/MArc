@@ -395,4 +395,6 @@ function submitAnswer() {
     input.value = '';
 
     if (isNaN(answer)) return;
+
+    const idx= state.equations.findIndex(eq => eq.answer === answer);
 }
