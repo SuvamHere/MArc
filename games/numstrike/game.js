@@ -304,4 +304,13 @@ function drawExplosion(ex) {
 
 function drawLevelFlash() {
     if (state.levelFlash <= 0) return;
+
+    const alpha = state.levelFlash / LEVEL_FLASH_FRAMES;
+    const barH = 64;
+
+    ctx.save();
+    ctx.globalAlpha = alpha;
+
+    ctx.fillStyle = COLORS.yellow;
+    ctx.fillRect(0,0,canvas.width,barH);
 }
