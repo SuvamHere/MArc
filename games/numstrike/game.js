@@ -386,3 +386,7 @@ function loop() {
     updateHUD();
     requestAnimationFrame(loop);
 }
+
+function submitAnswer() {
+    if (!state.running) return;
+}
