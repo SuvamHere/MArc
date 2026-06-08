@@ -375,4 +375,14 @@ function updateHUD() {
     hudScore.textContent = state.score;
     hudLevel.textContent = state.level;
     hudStreak.textContent = state.streak + 'x';
+
+    lifeEls.forEach((el,i) => el.classList.toggle('lost',i>=state.lives));
+}
+
+function loop() {
+    if (!state.running) return;
+    update();
+    draw();
+    updateHUD();
+    requestAnimationFrame(loop);
 }
