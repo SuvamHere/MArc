@@ -241,4 +241,4 @@ function drawDangerZone() {
     gr.addColorStop(1,'rgba(255,106,103,0.22)');
     ctx.fillStyle = gr;
     ctx.fillRect(0,canvas.height - h, canvas.width, h);
-}
+} 
