@@ -330,4 +330,7 @@ function drawLevelFlash() {
 
 function draw() {
     ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    ctx.fillStyle = COLORS.bg;
+    ctx.fillRect(0,0,canvas.width,canvas.height);
 }
