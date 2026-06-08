@@ -426,3 +426,10 @@ function submitAnswer() {
     state.equations.splice(idx,1);
     flashInput('correct');
 }
+
+function flashInput(type) {
+    input.classList.remove('correct-flash','wrong-flash');
+    void input.offsetWidth;
+    input.classList.add(type === 'correct' ?'correct-flash': 'wrong-flash');
+    setTimeout(()=> input.classList.remove('correct-flash', 'wrong-flash'), 200); 
+}
