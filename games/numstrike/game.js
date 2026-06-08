@@ -263,3 +263,21 @@ function drawEquation(eq) {
     ctx.textBaseline = 'middle';
     ctx.fillText(text, x+w/2,y+h/2);
 }
+
+function drawExplosion(ex) {
+    const progress = 1 - (ex.frame /EXPLOSION_FRAMES);
+    const radius = progress *60 + 10;
+    const alpha = 1 - progress;
+
+    const ringColor = ex.streak >= 7 ? COLORS.green
+                    : ex.streak >= 4 ? COLORS.blue
+                    : COLORS.yellow;
+    
+    ctx.save();
+    ctx.globalAlpha = alpha;
+
+    ctx.lineWidth = 5;
+    ctx.beginPath();
+    ctx.arc(ex.x, ex.y, radius, 0, Math.PI *2);
+    ctx.stroke();
+}
