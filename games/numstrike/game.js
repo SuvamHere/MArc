@@ -280,4 +280,11 @@ function drawExplosion(ex) {
     ctx.beginPath();
     ctx.arc(ex.x, ex.y, radius, 0, Math.PI *2);
     ctx.stroke();
+
+    ctx.strokeStyle = COLORS.ink;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(ex.x, ex.y, radius*0.55, 0, Math.PI *2);
+    ctx.stroke();
+    
 }
