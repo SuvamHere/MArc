@@ -340,3 +340,11 @@ function draw() {
     state.explosions.forEach(ex => drawExplosion(ex));
     drawLevelFlash();
 }
+
+function update() {
+    state.frameCount ++;
+
+    if (state.frameCount % spawnRate() === 0 ) {
+        state.equations.push(generateEquation());
+    }
+}
