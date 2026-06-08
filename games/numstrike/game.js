@@ -393,4 +393,6 @@ function submitAnswer() {
     const raw = input.value.trim();
     const answer = parseInt(raw,10);
     input.value = '';
+
+    if (isNaN(answer)) return;
 }
