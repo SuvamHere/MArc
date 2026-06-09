@@ -482,4 +482,12 @@ document.getElementById('btn-back-bud').addEventListener('click', ()=> {
     state.running = false;
     gameUI.classList.add('hidden');
     overlayStart.classList.add('active');
-})
+});
+
+input.addEventListener('keydown', e=> {
+    if(e.key === 'Enter') submitAnswer();
+});
+
+window.addEventListener('resize', ()=> {
+    if (state.running) resizeCanvas();
+});
