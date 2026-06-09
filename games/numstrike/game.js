@@ -465,3 +465,21 @@ function endGame() {
     gameUI.classList.add('hidden');
     overlayGameover.classList.add('active');
 }
+
+function goToArcade() {
+    window.location.href = 'MARC/index.html';
+}
+
+
+document.getElementById('btn-start').addEventListener('click', startGame);
+document.getElementById('btn-restart').addEventListener('click', startGame);
+document.getElementById('btn-back-start').addEventListener('click',goToArcade);
+document.getElementById('btn-back-over').addEventListener('click', goToArcade);
+
+document.getElementById('btn-submit').addEventListener('click', submitAnswer);
+
+document.getElementById('btn-back-bud').addEventListener('click', ()=> {
+    state.running = false;
+    gameUI.classList.add('hidden');
+    overlayStart.classList.add('active');
+})
