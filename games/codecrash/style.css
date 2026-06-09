@@ -113,3 +113,47 @@ body::before {
     padding: 3px 8px;
     background: var(--bg);
 }
+
+.btn-primary {
+    font-family:'Space Grotesk', sans-serif;
+    font-size: 16px;
+    font-weight:700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    background: var(--yellow);
+    color:var(--ink);
+    border: 4px solid var(--ink);
+    box-shadow: 8px 8px 0 var(--shadow);
+    padding: 14px 28px;
+    align-self: stretch;
+    text-align: center;
+    transition:
+                transform 0.1s cubic-bezier(0.16,1,0.3,1),
+                box-shadow 0.1s cubic-bezier(0.16,1,0.3,1),
+}
+
+.btn-primary:hover {transform: translate(-2px,-2px); box-shadow: 10px 10px 0 var(--shadow);}
+.btn-primary:active {transform: translate(8px,8px); box-shadow: 0 0 0 var(--shadow);}
+
+.btn-secondary {
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    background: transparent;
+    color: var(--ink);
+    border: 3px solid var(--ink);
+    box-shadow: 4px 4px 0 var(--shadow);
+    padding: 10px 20px;
+    align-self: stretch;
+    text-align: center;
+    transition:
+                transform 0.1s cubic-bezier(0.16,1,0.3,1),
+                box-shadow 0.1s cubic-bezier(0.16,1,0.3,1);
+}
+
+.btn-secondary:hover {transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--shadow);}
+.btn-secondary:active {transform:translate(4px,4px); box-shadow: 0 0 0 var(--shadow);}
