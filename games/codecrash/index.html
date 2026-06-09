@@ -1,89 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" content="width=device-width, initial-scale = 1.0">
-    <title>CODECRASH -Suvam's MArc</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CODECRASH — Suvam's Arcade</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700;900&family=Space+Mono:wght@400;700&display=block" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700;900&family=Space+Mono:wght@400;700&display=block" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="overlay-start" class="overlay active">
-        <div class="overlay-box">
-            <div class="overlay-tag">CODECRASH</div>
-            <h1 class="overlay-title">CODE<br>RUNS.<br>FIND<br>THE BUG.</h1>
-            <p class="overlay-desc">
-                A broken code snippet appears. Four lines are highlighted.
-                Click the one with the bug before time runs out.
-            </p>
-            <div class="overlay-meta">
-                <span class="meta-item"> CLICK THE BUG </span>
-                <span class="meta-item">TIMER SHRINKS</span>
-                <span class="meta-item">STREAK BONUS</span>
-            </div>
-            <button id="btn-start" class="btn-primary">START GAME -</button>
-            <button id="btn-back-start" class="btn-secondary">BACK TO ARCADE</button>
+  <div id="overlay-start" class="overlay active">
+    <div class="overlay-box">
+      <div class="overlay-tag">CODECRASH</div>
+      <h1 class="overlay-title">CODE<br>RUNS.<br>FIND<br>THE BUG.</h1>
+      <p class="overlay-desc">
+        A broken code snippet appears. Four lines are highlighted.
+        Click the one with the bug before time runs out.
+      </p>
+      <div class="overlay-meta">
+        <span class="meta-item">CLICK THE BUG</span>
+        <span class="meta-item">TIMER SHRINKS</span>
+        <span class="meta-item">STREAK BONUS</span>
+      </div>
+      <button id="btn-start" class="btn-primary">START GAME →</button>
+      <button id="btn-back-start" class="btn-secondary">← BACK TO ARCADE</button>
+    </div>
+  </div>
+
+  <div id="overlay-gameover" class="overlay">
+    <div class="overlay-box">
+      <div class="overlay-tag gameover-tag">GAME OVER</div>
+      <h2 class="overlay-title">BUG<br>WON.</h2>
+
+      <div class="result-grid">
+        <div class="result-item">
+          <span class="result-label">SCORE</span>
+          <span class="result-value" id="final-score">0</span>
         </div>
+        <div class="result-item">
+          <span class="result-label">BEST</span>
+          <span class="result-value" id="final-best">0</span>
+        </div>
+        <div class="result-item">
+          <span class="result-label">ROUND</span>
+          <span class="result-value" id="final-round">1</span>
+        </div>
+        <div class="result-item">
+          <span class="result-label">BEST STREAK</span>
+          <span class="result-value" id="final-streak">0</span>
+        </div>
+      </div>
+
+      <div id="new-best-banner" class="new-best hidden">★ NEW BEST SCORE ★</div>
+
+      <button id="btn-restart" class="btn-primary">PLAY AGAIN →</button>
+      <button id="btn-back-over" class="btn-secondary">← BACK TO ARCADE</button>
+    </div>
+  </div>
+
+
+  <div id="game-ui" class="hidden">
+
+    <div id="hud">
+
+      <div class="hud-left">
+        <button id="btn-back-hud" class="hud-btn">← ARCADE</button>
+        <span class="hud-title">// CODECRASH</span>
+      </div>
+
+      <div class="hud-center">
+        <div class="hud-item">
+          <span class="hud-label">SCORE</span>
+          <span class="hud-value" id="hud-score">0</span>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">ROUND</span>
+          <span class="hud-value" id="hud-round">1</span>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">STREAK</span>
+          <span class="hud-value streak-val" id="hud-streak">0×</span>
+        </div>
+      </div>
+
+      <!-- Right side: lives displayed as X marks -->
+      <div class="hud-right">
+        <span class="life" id="life-1">✕</span>
+        <span class="life" id="life-2">✕</span>
+        <span class="life" id="life-3">✕</span>
+      </div>
+
     </div>
 
-    <div id="overlay-gameover" class="overlay">
-        <div class="overlay-box">
-            <div class="overlay-tag-gameover-tag">GAME OVER</div>
-            <h2 class="overlay-title">BUG<br>WON.</h2>
-            <div class="result-grid">
-                <div class="result-item">
-                    <span class="result-label">SCORE</span>
-                    <span class="result-value" id="final-score">0</span>
-                </div>
-                <div class="result-item">
-                    <span class="result-label">BEST</span>
-                    <span class="result-value" id="final-best">0</span>
-                </div>
-                <div class="result-item">
-                    <span class="result-item">ROUND</span>
-                    <span class="result-value" id="final-round">1</span>
-                </div>
-                <div class="result-item">
-                    <span class="result-label">BEST STREAK</span>
-                    <span class="result-value" id="final-streak">0</span>
-                </div>
-            </div>
-            <div id="new-best-banner" class="new-best-hidden">★ NEW BEST SCORE ★</div>
+    <div id="game-area">
 
-            <button id="btn-restart" class="btn-primary">PLAY AGAIN</button>
-            <button id="btn-back-over" class="btn-secondary">BACK TO ARCADE</button>
+      <div class="context-pill">
+        <span class="context-tag">CRASH</span>
+        <span class="context-text" id="context-text">Loading...</span>
+      </div>
+
+      <div class="code-block" id="code-block">
+
+        <div class="code-titlebar">
+          <div class="code-titlebar-dots">
+            <div class="dot dot-red"></div>
+            <div class="dot dot-yellow"></div>
+            <div class="dot dot-green"></div>
+          </div>
+          <span class="code-filename" id="code-filename">buggy.py</span>
+          <span class="code-lang-tag" id="code-lang-tag">Python</span>
         </div>
+
+        <div class="code-body" id="code-body"></div>
+
+      </div>
+      <div class="timer-wrap">
+        <div class="timer-label-row">
+          <span class="timer-label">TIME REMAINING</span>
+          <span class="timer-seconds" id="timer-seconds">5.0s</span>
+        </div>
+        <div class="timer-track">
+          <div class="timer-bar" id="timer-bar"></div>
+        </div>
+      </div>
+
+    </div>
+    <div id="status-bar">
+      <span class="status-hint"><span>CLICK</span> the line with the bug</span>
+      <span class="status-round" id="status-round">ROUND 1</span>
     </div>
 
-    <div id="game-ui" class="hidden">
-        <div id="hud">
-            <div class="hud-left">
-                <button id="btn-back-hud" class="hud-btn">ARCADE</button>
-                <span class="hud-title">//CODECRASH</span>
-            </div>
-
-            <div class="hud-center">
-                <div class="hud-item">
-                    <span class="hud-label">SCORE</span>
-                    <span class="hud-value" id="hud-score">0</span>
-                </div>
-                <div class="hud-item">
-                    <span class="hud-label">ROUND</span>
-                    <span class="hud-value" id="hud-round">1</span>
-                </div>
-                <div class="hud-item">
-                    <span class="hud-label">STREAK</span>
-                    <span class="hud-value-streak-val" id="hud-streak">0x</span>
-                </div>
-            </div>
-
-            <div class="hud-right">
-                <span class="life" id="life-1">X</span>
-                <span class="life" id="life-2">X</span>
-                <span class="life" id="life-3">X</span>
-            </div>
-        </div>
-    </div>
+  </div>
+  <script src="game.js"></script>
 </body>
-
 </html>
