@@ -157,3 +157,33 @@ body::before {
 
 .btn-secondary:hover {transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--shadow);}
 .btn-secondary:active {transform:translate(4px,4px); box-shadow: 0 0 0 var(--shadow);}
+
+.result-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    width: 16px;
+    background: var(--bg);
+    border: 1px solid var(--ink);
+}
+.result-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 16px;
+    background: var(--bg);
+    border: 1px solid var(--ink);
+}
+.result-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.55;
+}
+.result-value {
+    font-family: 'Space Mono', monospace;
+    font-size: 28px;
+    font-weight: 700;
+}
