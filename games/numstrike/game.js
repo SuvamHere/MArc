@@ -5,9 +5,9 @@ const ctx= canvas.getContext('2d');
 const input= document.getElementById('answer-input');
 
 const overlayStart = document.getElementById('overlay-start');
-const overlayGameover = document.getElementById(overlay-gameover);
+const overlayGameover = document.getElementById('overlay-gameover');
 
-const gameUI = Document.getElementById('game-ui');
+const gameUI = document.getElementById('game-ui');
 
 const hudScore = document.getElementById('hud-score');
 const hudLevel = document.getElementById('hud-level');
