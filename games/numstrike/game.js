@@ -433,3 +433,25 @@ function flashInput(type) {
     input.classList.add(type === 'correct' ?'correct-flash': 'wrong-flash');
     setTimeout(()=> input.classList.remove('correct-flash', 'wrong-flash'), 200); 
 }
+
+function startGame() {
+    resetState();
+
+    overlayStart.classList.remove('active');
+    overlayGameover.classList.remove('active');
+    gameUI.classList.remove('hidden');
+
+    requestAnimationFrame(()=> {
+        resizeCanvas();
+        state.running = true;
+        input.focus();
+        loop();
+    });
+}
+
+function endGame() {
+    state.runnning = false;
+
+    const isNewBest = saveBestScore(state.score);
+    const best = getBestScore();
+}
