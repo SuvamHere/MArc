@@ -1,4 +1,4 @@
-'use script'
+'use strict'
 
 const canvas= document.getElementById('game-canvas');
 const ctx= canvas.getContext('2d');
@@ -467,7 +467,7 @@ function endGame() {
 }
 
 function goToArcade() {
-    window.location.href = 'MARC/index.html';
+    window.location.href = 'games/numstrike/index.html';
 }
 
 
