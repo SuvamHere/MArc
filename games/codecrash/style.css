@@ -275,3 +275,14 @@ body::before {
     font-weight: 700;
     line-height: 1.1;
 }
+.hud-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 160px;
+    justify-content: flex-end;
+}
+.streak-val {
+    color: var(--yellow);
+    -webkit-text-stroke: 1px var(--ink);
+}
