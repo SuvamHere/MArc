@@ -206,3 +206,12 @@ body::before {
     from {transform: scale(1);}
     to {transform: scale(1.02);}
 }
+
+#game-ui {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    max-height: 100vh;
+}
