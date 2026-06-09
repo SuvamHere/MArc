@@ -117,7 +117,7 @@ function resizeCanvas() {
 }
 function generateEquation() {
     const lvl = state.level;
-}
+
 
 let pool;
 if (lvl <= 2) pool = ['add_easy', 'sub_easy','add_easy','sub_easy','add_easy'];
@@ -201,7 +201,7 @@ else {
     b=rand(1,12)*20;
     answer =(pct/100)*b;
     text = `${pct}% of ${b}=?`;
-}
+}}
 const cardWidth = Math.max(EQ_W, text.length *12 + 28);
 
 const color = EQ_COLORS[Math.floor(Math.random() * EQ_COLORS.length)];
