@@ -454,4 +454,14 @@ function endGame() {
 
     const isNewBest = saveBestScore(state.score);
     const best = getBestScore();
+
+    finalscore.textContent = state.score;
+    finalBest.textContent = best;
+    finalstreak.textContent = state.level;
+    finalstreak.textContent = state.bestStreak;
+
+    newBestBanner.classList.toggle('hidden', !isNewBest);
+
+    gameUI.classList.add('hidden');
+    overlayGameover.classList.add('active');
 }
