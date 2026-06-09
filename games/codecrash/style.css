@@ -23,3 +23,18 @@ html,body {
     color: var(--ink);
     font-family: 'Space Grotesk', sans-serif;
 }  
+
+body::before {
+    content:'';
+    position:fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+        to bottom,
+        transparent,
+        transparent 3px,
+        rgba(17,17,0.035) 3px,
+        rgba(17,17,0.035) 4px,
+    );
+    pointer-events:none;
+    z-index:0;
+}
