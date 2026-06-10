@@ -371,3 +371,35 @@ body::before {
     font-weight: 700;
     opacity: 0.8;
 }
+
+.code-block {
+    width: 100%;
+    max-width: 720px;
+    background: #1a1a1a;
+    border: 3px solid var(--ink);
+    box-shadow: 8px 8px 0 var(--shadow);
+    flex-shrink: 0;
+}
+
+.code-titlebar {
+    width: 100%;
+    max-width: 720px;
+    background: #1a1a1a;
+    border: 3px solid var(--ink);
+    box-shadow: 8px 8px 0 var(--shadow);
+    flex-shrink: 0;
+}
+
+.code-titlebar-dots {
+    display: flex;
+    gap: 6px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+.dot-red {background: var(--red);}
+.dot-yellow {background: var(--yellow);}
+.dot-green {background: var(--green);}
