@@ -403,3 +403,10 @@ body::before {
 .dot-red {background: var(--red);}
 .dot-yellow {background: var(--yellow);}
 .dot-green {background: var(--green);}
+
+.code-filename {
+    font-family: 'Space Mono',monospace;
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.06em;
+}
