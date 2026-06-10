@@ -322,3 +322,16 @@ body::before {
 .hud-btn:acitve { transform: translate(3px,3px);
                 box-shadow: 0 0 0;
 }
+
+
+#game-area {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 24px;
+    gap: 17px;
+    overflow-y: auto
+}
