@@ -553,3 +553,36 @@ body::before {
     background: var(--yellow);
     transition: background 0.4s;
 }
+
+
+#status-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 48px;
+    padding: 0 24px;
+    background: var(--ink);
+    border-top: 3px solid var(--ink);
+    flex-shrink: 0;
+    position: relative;
+    z-index: 10;
+}
+.status-hint {
+    font-family: 'Space Mono',monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,246,0.4);
+}
+.status-hint span {
+    color: var(--yellow);
+}
+.status-round {
+    font-family: 'Space Mono',monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,253,246,0.28);
+}
