@@ -434,3 +434,56 @@ body::before {
     border-left: 4px solid transparent;
     transition: background 0.1s;
 }
+
+.line-num {
+    min-width:48px;
+    padding: 12px 14px 12px 16px;
+    text-align: right;
+    color: rgba(255,255,255,0.2);
+    font-size: 12px;
+    user-select: none;
+    flex-shrink: 0;
+    border-right: 1px solid #2a2a2a;
+}
+.line-code {
+    padding: 12px 20px;
+    color: rgba(255,255,255,0.82);
+    flex: 1;
+    white-space: pre;
+}
+.line-dim .line-code {color:rgba(255,255,255,0.28);}
+.line-dim.line-num {color: rgba(255,255,255,0.1);}
+
+.line-highlighted {
+    background: rgba(255,255,255,0.04);
+    border-left-color: var(--yellow);
+    cursor: pointer;
+}
+.line-highlighted .line-num {
+    color: rgba(255,221,60,0.7);
+}
+.line-highlighted:hover {
+    background:rgba(255,221,60,0.08);
+}
+
+.line-correct {
+  background: rgba(94, 221, 142, 0.18);
+  border-left-color: var(--green);
+  cursor: default;
+}
+
+.line-correct .line-num {
+  color: var(--green);
+  opacity: 1;
+}
+
+.line-wrong {
+  background: rgba(255, 106, 103, 0.2);
+  border-left-color: var(--red);
+  cursor: default;
+}
+
+.line-wrong .line-num {
+  color: var(--red);
+  opacity: 1;
+}
