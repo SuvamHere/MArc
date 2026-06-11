@@ -487,3 +487,25 @@ body::before {
   color: var(--red);
   opacity: 1;
 }
+
+.kw{
+    color:#c792ea;
+}
+.fn {
+    color: #82aaff;
+}
+.str {
+    color: #c3e88d;
+}
+.num {
+    color: #f78c6c;
+}
+.cm {
+    color:#546e7a;
+}
+.op {
+    color:#89ddff;
+}
+.va {
+    color: rgba(255,255,255,0.82);
+}
