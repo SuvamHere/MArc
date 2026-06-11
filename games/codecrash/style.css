@@ -509,3 +509,47 @@ body::before {
 .va {
     color: rgba(255,255,255,0.82);
 }
+
+.timer-wrap {
+    width: 100%;
+    max-width: 720px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex-shrink:0;
+}
+
+.timer-label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.timer-label {
+    font-family: 'Space Mono',monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.4;
+}
+.timer-seconds {
+    font-family:'Space Mono',monospace;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--red);
+    transition: color 0.3s;
+}
+.timer-track {
+    width: 100%;
+    height: 10px;
+    background: rgba(17,17,17,0.1);
+    border: 2px solid var(--ink);
+    box-shadow: 3px 3px 0 var(--shadow);
+}
+
+.timer-bar {
+    height: 100%;
+    width: 100%;
+    background: var(--yellow);
+    transition: background 0.4s;
+}
