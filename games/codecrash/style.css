@@ -410,3 +410,27 @@ body::before {
     color: rgba(255,255,255,0.4);
     letter-spacing: 0.06em;
 }
+
+.code-lang-tag {
+    font-family: 'Space Mono',monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--blue);
+    color: var(--ink);
+    padding: 3px 8px;
+}
+.code-body {
+    padding: 8px 0;
+    background: #1a1a1a;
+}
+.code-line {
+    display:flex;
+    align-items: stretch;
+    font-family: 'Space Mono',monospace;
+    font-size:14px;
+    line-height: 1;
+    border-left: 4px solid transparent;
+    transition: background 0.1s;
+}
