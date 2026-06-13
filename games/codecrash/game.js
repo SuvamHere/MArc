@@ -57,6 +57,8 @@ const TEMPLATES = [
         const correct = vals.reduce((a,b) => a+b,0);
 
         const bugInit = diff === 'easy' ? '1' : String(randInt(2,5));
+        const listLit = '[' + vals.join(',') + ']';
+
         return {
             context: `Sum all numbers in a list - expected ${correct}`,
             filename: `${fn}.py`,
@@ -65,11 +67,40 @@ const TEMPLATES = [
                 {code:`def ${fn}(${lst}):`,highlight:false},
                 {code:`    ${tot} = ${bugInit}`, highlight:true},
                 {code:`    for x in ${lst}:`, highlight:false},
+                {code:`       ${tot} +=x`,highlight:true},
                 {code:` return${tot}`,highlight:true},
-                {code:`print(${fn}(${lst}))  # expected ${correct}`, highlight:true},
+                {code:``, highlight: false},
+                {code:`print(${fn}(${listLit}))  # expected ${correct}`, highlight:true},
             ],
             bugLineIndex:1,
         };
     },
 
+    function pyFindMax(diff) {
+        const fn = 'find_max';
+        const lst = pick(py_lists);
+        const mv = pick(['mx','best','top','peak']);
+        const vals = Array.from({length: randInt(2,9)}, ()=> randInt(-12,22));
+        const correct = Math.max(...vals);
+        const listLit = '[' + vals.join(',') + ']';
+
+        const bugInit = diff === 'hard' ? String(randInt(1,7)) : '0';
+
+        return {
+            context: `Return the largest number in a list expected ${correct}`,
+            filename: `max_val.py`,
+            language: `Python`,
+            lines: [
+                {code: `def ${fn}(${lst}):`, highlight:false},
+                {code: `    ${mv} = ${bugInit}`, highlight:true},
+                {code: `    for n in ${lst}:`, highlight:false},
+                {code: `        if n> ${mv}:`, highlight:true},
+                {code: `            ${mv} = n`, highlight:false},
+                {code: `    return${mv}`, highlight:true},
+                {code: ``, highlight:false},
+                {code: `print(${fn}(${listLit})) # expected ${correct}`, highlight: true},
+            ],
+            bugLineIndex: 1,
+        };
+    },
 ]
