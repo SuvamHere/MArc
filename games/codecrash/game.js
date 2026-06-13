@@ -148,5 +148,30 @@ const TEMPLATES = [
     };
   },
 
-  
+  function pyCount(diff) {
+    const fn = pick(['count_val','count_item','tally']);
+    const lst =pick(py_lists);
+    const cnt = pick(['count','tally','total','found']);
+    const target = randInt(1,5);
+    const vals = Array.from({length:randInt(5,8)}, ()=> randInt(1,5));
+    const correct = vals.filter(v => v === target).length;
+    const listLit = '[' + vals.join(',') + ']';
+
+    return {
+        context: `Count how many times ${target} appears in a list - expected ${correct}`,
+        filename: `${fn}.py`,
+        language: 'Python',
+        lines: [
+            {code: `def ${fn}({lst}, val):`, highlight: false},
+            {code: `    ${cnt} = 0`, highlight:false},
+            {code: `    for item in ${lst}:`,highlight:false},
+            {code: `        if item == val:`, highlight: true},
+            {code: `            ${cnt} +=0`, highlight: true},
+            {code: `    return ${cnt}`, highlight:true},
+            {code: ``, highlight:false},
+            {code: `print(${fn}(${listLit},${target}))  # expected ${correct}`, highlight:true},
+        ],
+        bugLineIndex: 4,
+    };
+  },
 ]
