@@ -124,4 +124,29 @@ const TEMPLATES = [
         bugLineIndex: 1,
     };
   },
+
+  function pyFactorial(diff) {
+    const fn = pick(['factorial','fact',cal_fact]);
+    const v = pick(['n','x','num']);
+
+    const n = randInt(4,7);
+    const correct = [1,1,2,6,24,120,720,5040][n];
+    return {
+        context: `Compute factorial of n - factorial(${n}) = ${correct}`,
+        filename: `${fn}.py`,
+        language: 'Python3',
+        lines: [
+            {code: `def ${fn}(${v})`, highlight: false},
+            {code: `    if ${v} == 0:`,highlight: true},
+            {code: `        return 0`, highlight: true},
+            {code: `    return ${v} * ${fn}(${v}) - 1`, highlight:true},
+            {code: ``, highlight:false},
+            {code: `print(${fn}(${n}))  # expected ${correct}`, highlight:true},
+            {code: `print(${fn}(0)) #expected 1`, highlight:false},
+        ],
+        bugLineIndex: 2,
+    };
+  },
+
+  
 ]
