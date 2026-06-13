@@ -46,3 +46,30 @@ function getDifficulty(round) {
     if (round <= 12) return 'medium';
     return 'hard';
 }
+
+const TEMPLATES = [
+    function pyLoopSum(diff) {
+        const fn = pick(py_functions);
+        const lst = pick(py_lists);
+        const tot = pick(py_vars);
+        const n = randInt(3,9);
+        const vals = Array.from({length:n}, ()=> randInt(1,20));
+        const correct = vals.reduce((a,b) => a+b,0);
+
+        const bugInit = diff === 'easy' ? '1' : String(randInt(2,5));
+        return {
+            context: `Sum all numbers in a list - expected ${correct}`,
+            filename: `${fn}.py`,
+            language: `Python`,
+            lines: [
+                {code:`def ${fn}(${lst}):`,highlight:false},
+                {code:`    ${tot} = ${bugInit}`, highlight:true},
+                {code:`    for x in ${lst}:`, highlight:false},
+                {code:` return${tot}`,highlight:true},
+                {code:`print(${fn}(${lst}))  # expected ${correct}`, highlight:true},
+            ],
+            bugLineIndex:1,
+        };
+    },
+
+]
