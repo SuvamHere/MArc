@@ -62,7 +62,7 @@ const TEMPLATES = [
         return {
             context: `Sum all numbers in a list - expected ${correct}`,
             filename: `${fn}.py`,
-            language: `Python`,
+            language: `Python3`,
             lines: [
                 {code:`def ${fn}(${lst}):`,highlight:false},
                 {code:`    ${tot} = ${bugInit}`, highlight:true},
@@ -89,7 +89,7 @@ const TEMPLATES = [
         return {
             context: `Return the largest number in a list expected ${correct}`,
             filename: `max_val.py`,
-            language: `Python`,
+            language: `Python3`,
             lines: [
                 {code: `def ${fn}(${lst}):`, highlight:false},
                 {code: `    ${mv} = ${bugInit}`, highlight:true},
@@ -103,4 +103,25 @@ const TEMPLATES = [
             bugLineIndex: 1,
         };
     },
+
+    function pyEvenCheck(diff) {
+        const fn = pick(['is_even', 'check_even', 'even_check']);
+        const v  = pick(['n', 'x', 'num', 'val']);
+    
+        return {
+        context: `Return True if a number is even`,
+        filename: `${fn}.py`,
+        language: 'Python',
+        lines: [
+          { code: `def ${fn}(${v}):`,                 highlight: false },
+          { code: `    return ${v} % 2 == 1`,         highlight: true  }, // BUG
+          { code: ``,                                  highlight: false },
+          { code: `print(${fn}(4))   # expected True`, highlight: true  },
+          { code: `print(${fn}(7))   # expected False`,highlight: true  },
+          { code: ``,                                  highlight: false },
+          { code: `# used in input validation`,        highlight: true  },
+        ],
+        bugLineIndex: 1,
+    };
+  },
 ]
