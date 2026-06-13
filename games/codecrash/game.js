@@ -40,3 +40,9 @@ const c_vars = ['total','result','sum','val','acc','count','ans','s'];
 const c_arrays = ['nums','arr','data','vals','scores','items'];
 
 const c_funcs = ['compute','process','calc','run','solve'];
+
+function getDifficulty(round) {
+    if (round <= 5) return 'easy';
+    if (round <= 12) return 'medium';
+    return 'hard';
+}
