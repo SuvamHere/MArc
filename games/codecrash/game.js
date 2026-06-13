@@ -28,3 +28,15 @@ function shuffle(arr) {
     }
     return a;
 }
+
+const py_vars = ['total','result','acc','val','out','s','count','ans'];
+
+const py_lists = ['nums','arr','data','values','items','scores','list'];
+
+const py_functions = ['compute','process','calculate','run','solve','check'];
+
+const c_vars = ['total','result','sum','val','acc','count','ans','s'];
+
+const c_arrays = ['nums','arr','data','vals','scores','items'];
+
+const c_funcs = ['compute','process','calc','run','solve'];
