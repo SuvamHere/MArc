@@ -225,4 +225,49 @@ const TEMPLATES = [
     };
 },
 
+function pyFindIndex(diff) {
+    const fn = pick(['find_index','search','locate']);
+    const lst = pick(py_lists);
+    const vals = Array.from({length: randInt(4,7)}, () => randInt(10,90));
+    const targetIdx = randInt(0, vals.length -1 );
+    const target = vals[targetIdx];
+    const listLit = '[' + vals.join(',') + ']';
+
+    return {
+        context: `Find index of ${target} in list - expected ${targetIdx}`,
+        filename: `${fn}.py`,
+        language: 'Python',
+        lines: [
+            {code: `def ${fn}(${lst},val):`, highlight:false},
+            {code: `    for i in range(len(${lst})):`, highlight: false},
+            {code: `        if ${lst}[i] == val:`, highlight: true},
+            {code: `            return i+1`, highlight:true},
+            {code: ``, highlight:false },
+            {code: `print(${fn}(${listLit}, ${target})) #expected ${targetIdx}`, highlight:true},
+        ],
+        bugLineIndex: 3,
+    };
+},
+  function pyReverse(diff) {
+    const fn = pick(['reverse_str', 'flip', 'rev_string']);
+    const v  = pick(['s', 'text', 'word', 'src']);
+    // Bug: range(len(s)) goes forward, not backward
+    return {
+      context: `Reverse a string — "hello" should become "olleh"`,
+      filename: `${fn}.py`,
+      language: 'Python',
+      lines: [
+        { code: `def ${fn}(${v}):`,                highlight: false },
+        { code: `    out = ''`,                     highlight: false },
+        { code: `    for i in range(len(${v})):`,   highlight: true  }, // BUG
+        { code: `        out += ${v}[i]`,           highlight: true  },
+        { code: `    return out`,                   highlight: true  },
+        { code: ``,                                 highlight: false },
+        { code: `print(${fn}('hello'))  # expected 'olleh'`, highlight: true },
+      ],
+      bugLineIndex: 2,
+    };
+  }, 
+
+
 ]
