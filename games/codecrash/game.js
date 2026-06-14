@@ -62,7 +62,7 @@ const TEMPLATES = [
         return {
             context: `Sum all numbers in a list - expected ${correct}`,
             filename: `${fn}.py`,
-            language: `Python3`,
+            language: 'Python3',
             lines: [
                 {code:`def ${fn}(${lst}):`,highlight:false},
                 {code:`    ${tot} = ${bugInit}`, highlight:true},
@@ -88,8 +88,8 @@ const TEMPLATES = [
 
         return {
             context: `Return the largest number in a list expected ${correct}`,
-            filename: `max_val.py`,
-            language: `Python3`,
+            filename: 'max_val.py',
+            language: 'Python3',
             lines: [
                 {code: `def ${fn}(${lst}):`, highlight:false},
                 {code: `    ${mv} = ${bugInit}`, highlight:true},
@@ -174,4 +174,29 @@ const TEMPLATES = [
         bugLineIndex: 4,
     };
   },
+
+  function pyPower(diff) {
+    const fn = pick(['power','my_pow','raise_to','top_of_index']);
+    const res = pick(py_vars);
+    const base = randInt(2,4);
+    const exp = randInt(3,6);
+    const correct = Math.pow(base,exp);
+    
+    return {
+        context: `Raise ${base} to the power of ${exp} - expected ${correct}`,
+        filename: `${fn}.py`,
+        language: 'Python3',
+        lines: [
+            {code: `def ${fn}(base,exp):`, highlight:false},
+            {code: `    ${res} = 0`, highlight:true},
+            {code: `    for _ in range(exp):`, highlight:false},
+            {code: `        ${res} *= base`, highlight:true},
+            {code: `    return ${res}`, highlight: true},
+            {code: ``,highlight:false},
+            {code: `print(${fn}(${base}, ${exp}))   #expected ${correct}`, highlight: true},
+        ],
+        bugLineIndex: 1,
+    };
+  },
+  
 ]
