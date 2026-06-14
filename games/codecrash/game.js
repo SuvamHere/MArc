@@ -198,5 +198,31 @@ const TEMPLATES = [
         bugLineIndex: 1,
     };
   },
-  
+  function pyAverage(diff) {
+    const fn = pick (['average','mean','calc_avg']);
+    const lst = pick(py_lists);
+    const tot = pick(py_vars);
+    const vals = Array.from({length: randInt(3,6)}, ()=> randInt(5,30));
+    const avg  = (vals.reduce((a,b) => a+b, 0) / vals.length).toFixed(1);
+    const listLit = '[' + vals.join(',') + ']';
+
+    const bugAdd = diff === 'hard' ? randInt(2,4) : 1;
+    return {
+        context: `Calculate the average of a list - expected ${avg}`,
+        filename: `${fn}.py`,
+        language: 'Python',
+        lines: [
+            {code: `def ${fn}(${lst}):`, highlight: false},
+            {code: `    ${tot} = sum(${lst})`, highlight: false},
+            {code: `    return ${tot} / len(${lst}) + ${bugAdd}`, highlight: true},
+            {code: ``, highlight:false},
+            {code: `print(${fn}(${listLit}))    #expected#{avg}`, highlight:true},
+            {code: ``, highlight:false},
+            {code: `#used in grade calculator`, highlight: true},
+            {code: `#returns float`, highlight: true},
+        ],
+        bugLineIndex: 2,   
+    };
+},
+
 ]
