@@ -540,6 +540,31 @@ const TEMPLATES = [
 
       return pick(filtered.length ? filtered : pool);
     }
+
+    function generateQuestion(round) {
+      const diff = getDifficulty(round);
+      const tmpl = pickTemplate(diff);
+      return tmpl(diff);
+    }
+    const STATE = {
+      running: false,
+      score: 0,
+      lives: 3,
+      round: 1,
+      streak: 0,
+      bestStreak: 0,
+      currentQ: null,
+      timerInterval: null,
+      timeLeft: 5.0,
+      answered: false,
+      maxTime: 5.0,
+      recentTemplates: [],
+    };
+
+    const timer_start = 5.0;
+    const timer_min = 2.0;
+    const timer_shrink = 0.15;
+    const tick_ms = 50;
   ]
 
    
