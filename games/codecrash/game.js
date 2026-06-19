@@ -426,6 +426,107 @@ const TEMPLATES = [
       bugLineIndex: 2,
     };
   },
+
+  function cFindMin(diff) {
+    const fn = pick(['find_min','get_min','minimum','low']);
+    const arr = pick(c_arrays);
+    const mv = pick(['min','low','smallest','small']);
+    const vals = Array.from({length: randInt(4,6)},() => randInt(1,50));
+    const correct = Math.min(...vals);
+    const arrLit = '{' + vals.join(',') + '}';
+
+    return {
+      context: `Find the smallest value in a C array - expected ${correct}`,
+      filename: `${fn}.c`,
+      language: 'C',
+      lines: [
+        { code: `int ${fn}(int ${arr}[], int n) {`,      highlight: false },
+        { code: `    int ${mv} = ${arr}[0];`,            highlight: false },
+        { code: `    for (int i = 1; i < n; i++) {`,     highlight: false },
+        { code: `        if (${arr}[i] > ${mv})`,        highlight: true  }, 
+        { code: `            ${mv} = ${arr}[i];`,        highlight: true  },
+        { code: `    }`,                                  highlight: false },
+        { code: `    return ${mv};`,                     highlight: true  },
+        { code: `}`,                                     highlight: false },
+        { code: `// int a[]=${arrLit};  expected ${correct}`, highlight: true },
+      ],
+      bugLineIndex: 3,
+    };
+  },
+
+  function cOffByOne(diff) {
+    const fn = pick(c_funcs);
+    const arr = pick(c_arrays);
+    const tot = pick(c_vars);
+    const n = randInt(4,7);
+    const vals = Array.from({length: n}, () => randInt(1,10));
+    const correct = vals.reduce((a,b) => a+b, 0);
+    const arrLit = '{' + vals.join(',') + '}';
+
+    return {
+      context: `Sum all ${n} elements - expected ${correct} (no element skipped)`,
+      filename: `${fn}.c`,
+      language: 'C',
+      lines: [
+        {code: `int ${fn}(int ${arr}[],int n) {`, highlight: false},
+        {code: `  int ${tot} = 0`, highlight: false},
+        {code: `  for (int i = 1; i < n; i++)`, highlight: true},
+        { code: `        ${tot} += ${arr}[i];`, highlight: true},
+        { code: `    return ${tot};`, highlight: true},
+        { code: `}`, highlight: false},
+        { code: ``, highlight: false},
+        { code: `int a[] = ${arrLit}; // expected ${correct}`, highlight: true},
+      ],
+      bugLineIndex: 2,
+    };
+  },
+
+  function cWrongInit(diff) {
+    const fn = pick(c_funcs);
+    const arr = pick(c_arrays);
+    const res = pick(c_vars);
+    const base = randInt(2,3);
+    const n = randInt(3,5);
+    const correct = Math.pow(base,n);
+    
+    return {
+      context: `Compute ${base}^${n} by multiplying in a loop - expected ${correct}`,
+      filename: 'Power.c',
+      lines: [
+        {code: `int power(int base, int exp) {`, highlight:false},
+        {code: `  int ${res} = 0;`, highlight: true},
+        {code: `  for (int i = 0; i < exp; i++)`, highlight:false},
+        {code: `    ${res} *= base;`, highlight: true},
+        {code: `  return ${res};`, highlight: true},
+        {code: `}`, highlight:false},
+        {code: ``, highlight: false},
+        {code: `//power (${base},${n}) expected ${correct}`, highlight: true},
+      ],
+      bugLineIndex: 1,
+    };
+  },
+
+  function  cPrintfBug(diff) {
+    const val = randInt(10,99);
+
+    return {
+      context: `Print an integer value - should print ${val} not garbage`,
+      filename: `pint_val.c`,
+      language: 'C',
+      lines: [
+        {code: `#include <stdio.h`, highlight: false},
+        {code: ``,highlight:false},
+        {code: `int main() {`, highlight: false},
+        {code: `  int val = ${val};`, highlight: true},
+        {code: `  printf(%f\\n",val);`, highlight: true},
+        {code: `  return 0;`, highlight: true},
+        {code: `}`, highlight: false},
+        {code: `// expected output: ${val}`, highlight: true},
+      ],
+      bugLineIndex: 4,
+    };
   
-]
+
+  ]
+
    
