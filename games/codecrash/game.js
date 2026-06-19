@@ -526,7 +526,20 @@ const TEMPLATES = [
       bugLineIndex: 4,
     };
   
+    const PY_TEMPLATES = TEMPLATES.filter((_, i) => i <= 13);
 
+    const c_templates = TEMPLATES.filter((_,i) => i >= 14);
+
+    function pickTemplate(diff) {
+      const hardOnly = ['pyBubbleStep', 'pyBinarySearch'];
+
+      const usePy = Math.random()< 0.75;
+      const pool = usePy ? py_templates : c_templates;
+      const filtered = diff === 'easy'
+      ? pool.filter(fn => !hardOnly.includes(fn.name)): pool;
+
+      return pick(filtered.length ? filtered : pool);
+    }
   ]
 
    
