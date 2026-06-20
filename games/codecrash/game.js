@@ -565,6 +565,42 @@ const TEMPLATES = [
     const timer_min = 2.0;
     const timer_shrink = 0.15;
     const tick_ms = 50;
-  ]
 
-   
+
+    function streakMulitiplier(streak) {
+      if (streak >= 10) return 2.5;
+      if (streak >=7) return 2.0;
+      if (streak >= 4) return 1.5;
+      return 1.0;
+    }
+    function calcScore(round, streak, timeLeft, maxtime) {
+      const base = 10*round;
+      const mult = streakMulitiplier(streak);
+      const speedBonus = Math.floor((timeLeft / maxTime)* 50);
+      return Math.floor(base * mult + speedBonus);
+    }
+
+    function nextQuestion() {
+      const diff = getDifficulty(STATE.round);
+      let tmpl = pickTemplate(diff);
+
+      if 
+      (STATE.recentTemplates.slice(-2).includes(tmpl.name)){
+        tmpl = pickTemplate(diff);
+      }
+      STATE.recentTemplates.push(tmpl.name);
+      if (STATE.recentTemplates.length > 5)
+    STATE.recentTemplates.shift();
+  
+      return tmpl(diff);
+
+      function clearTimer() {
+        if (STATE.timerInterval !== null) {
+          clearInterval(STATE.timerInterval);
+          STATE.timerinterval = null;
+        }
+      }
+
+      
+    }
+  }
