@@ -1,54 +1,47 @@
 'use strict';
 
-function on(id,event,fn) {
-    const el = document.getElementById(id);
-    if(el) el.addEventListener(event,fn);
-}
-
-function on(id,eventm, fn) {
-    const el = document.getElementById(id);
-    if (el) el.addEventListener(event,fn);
+function on(id, event, fn) {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener(event, fn);
 }
 
 function $id(id) {
-    return document.getElementById(id);
+  return document.getElementById(id);
 }
+
 function pick(arr) {
-    return arr[Math.floor(Math.random()* arr.length)];
+  return arr[Math.floor(Math.random() * arr.length)];
 }
-function randInt(min,max) {
-    return Math.floor(Math.random()* (max-min + 1)) + min;
+
+function randInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 function shuffle(arr) {
-    const a = arr.slice();
-    for (let i = a.length - 1; i>0; i--) {
-        const j = Math.floor(Math.random()*(i+1));
-        [a[i],a[j]] = [a[j],a[i]];
-    }
-    return a;
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
 }
 
-const py_vars = ['total','result','acc','val','out','s','count','ans'];
-
-const py_lists = ['nums','arr','data','values','items','scores','list'];
-
-const py_functions = ['compute','process','calculate','run','solve','check'];
-
-const c_vars = ['total','result','sum','val','acc','count','ans','s'];
-
-const c_arrays = ['nums','arr','data','vals','scores','items'];
-
-const c_funcs = ['compute','process','calc','run','solve'];
+const PY_VARS    = ['total','result','acc','val','out','s','count','ans'];
+const PY_LISTS   = ['nums','arr','data','values','items','scores','lst'];
+const PY_FUNCS   = ['compute','process','calculate','run','solve','check'];
+const C_VARS     = ['total','result','sum','val','acc','count','ans','s'];
+const C_ARRAYS   = ['nums','arr','data','vals','scores','items'];
+const C_FUNCS    = ['compute','process','calc','run','solve'];
 
 function getDifficulty(round) {
-    if (round <= 5) return 'easy';
-    if (round <= 12) return 'medium';
-    return 'hard';
+  if (round <= 5)  return 'easy';
+  if (round <= 12) return 'medium';
+  return 'hard';
 }
 
 const TEMPLATES = [
-      function pyLoopSum(diff) {
+
+  function pyLoopSum(diff) {
     const fn  = pick(PY_FUNCS);
     const lst = pick(PY_LISTS);
     const tot = pick(PY_VARS);
@@ -62,20 +55,19 @@ const TEMPLATES = [
     return {
       context: `Sum all numbers in a list — expected ${correct}`,
       filename: `${fn}.py`,
-      language: 'Python3',
+      language: 'Python',
       lines: [
-        { code: `def ${fn}(${lst}):`,              highlight: false },
-        { code: `    ${tot} = ${bugInit}`,          highlight: true  }, 
-        { code: `    for x in ${lst}:`,             highlight: false },
-        { code: `        ${tot} += x`,              highlight: true  },
-        { code: `    return ${tot}`,                highlight: true  },
-        { code: ``,                                 highlight: false },
-        { code: `print(${fn}(${listLit}))  # expected ${correct}`, highlight: true },
+        { code: `def ${fn}(${lst}):`,highlight: false },
+        { code: `    ${tot} = ${bugInit}`,highlight: true  }, 
+        { code: `    for x in ${lst}:`,highlight: false },
+        { code: `        ${tot} += x`,highlight: true  },
+        { code: `    return ${tot}`,highlight: true  },
+        { code: ``,highlight: false },
+        { code: `print(${fn}(${listLit}))  # expected ${correct}`,highlight: true },
       ],
       bugLineIndex: 1,
     };
   },
-
   function pyFindMax(diff) {
     const fn  = 'find_max';
     const lst = pick(PY_LISTS);
@@ -88,37 +80,36 @@ const TEMPLATES = [
 
     return {
       context: `Return the largest number in a list — expected ${correct}`,
-      filename: 'max_val.py',
-      language: 'Python3',
+      filename: `max_val.py`,
+      language: 'Python',
       lines: [
-        { code: `def ${fn}(${lst}):`,              highlight: false },
-        { code: `    ${mv} = ${bugInit}`,           highlight: true  }, 
-        { code: `    for n in ${lst}:`,             highlight: false },
-        { code: `        if n > ${mv}:`,            highlight: true  },
-        { code: `            ${mv} = n`,            highlight: false },
-        { code: `    return ${mv}`,                 highlight: true  },
-        { code: ``,                                 highlight: false },
-        { code: `print(${fn}(${listLit}))  # expected ${correct}`, highlight: true },
+        { code: `def ${fn}(${lst}):`,highlight: false },
+        { code: `    ${mv} = ${bugInit}`,highlight: true  }, 
+        { code: `    for n in ${lst}:`,highlight: false },
+        { code: `        if n > ${mv}:`,highlight: true  },
+        { code: `            ${mv} = n`,highlight: false },
+        { code: `    return ${mv}`,highlight: true  },
+        { code: ``,highlight: false },
+        { code: `print(${fn}(${listLit}))  # expected ${correct}`,highlight: true },
       ],
       bugLineIndex: 1,
     };
   },
-
   function pyEvenCheck(diff) {
     const fn = pick(['is_even', 'check_even', 'even_check']);
     const v  = pick(['n', 'x', 'num', 'val']);
     return {
       context: `Return True if a number is even`,
       filename: `${fn}.py`,
-      language: 'Python3',
+      language: 'Python',
       lines: [
-        { code: `def ${fn}(${v}):`,                 highlight: false },
-        { code: `    return ${v} % 2 == 1`,         highlight: true  },
-        { code: ``,                                  highlight: false },
-        { code: `print(${fn}(4))   # expected True`, highlight: true  },
+        { code: `def ${fn}(${v}):`,highlight: false },
+        { code: `    return ${v} % 2 == 1`,highlight: true  }, 
+        { code: ``,highlight: false },
+        { code: `print(${fn}(4))   # expected True`,highlight: true  },
         { code: `print(${fn}(7))   # expected False`,highlight: true  },
-        { code: ``,                                  highlight: false },
-        { code: `# used in input validation`,        highlight: true  },
+        { code: ``,highlight: false },
+        { code: `# used in input validation`,highlight: true  },
       ],
       bugLineIndex: 1,
     };
@@ -132,15 +123,15 @@ const TEMPLATES = [
     return {
       context: `Compute factorial of n — factorial(${n}) = ${correct}`,
       filename: `${fn}.py`,
-      language: 'Python3',
+      language: 'Python',
       lines: [
-        { code: `def ${fn}(${v}):`,                      highlight: false },
-        { code: `    if ${v} == 0:`,                     highlight: true  },
-        { code: `        return 0`,                       highlight: true  }, 
-        { code: `    return ${v} * ${fn}(${v} - 1)`,     highlight: true  },
-        { code: ``,                                       highlight: false },
-        { code: `print(${fn}(${n}))  # expected ${correct}`, highlight: true },
-        { code: `print(${fn}(0))     # expected 1`,      highlight: false },
+        { code: `def ${fn}(${v}):`,highlight: false },
+        { code: `    if ${v} == 0:`,highlight: true  },
+        { code: `        return 0`,highlight: true  }, 
+        { code: `    return ${v} * ${fn}(${v} - 1)`,highlight: true  },
+        { code: ``,highlight: false },
+        { code: `print(${fn}(${n}))  # expected ${correct}`,highlight: true },
+        { code: `print(${fn}(0))     # expected 1`,highlight: false },
       ],
       bugLineIndex: 2,
     };
@@ -157,15 +148,15 @@ const TEMPLATES = [
     return {
       context: `Count how many times ${target} appears in a list — expected ${correct}`,
       filename: `${fn}.py`,
-      language: 'Python3',
+      language: 'Python',
       lines: [
-        { code: `def ${fn}(${lst}, val):`,                      highlight: false },
-        { code: `    ${cnt} = 0`,                               highlight: false },
-        { code: `    for item in ${lst}:`,                      highlight: false },
-        { code: `        if item == val:`,                       highlight: true  },
-        { code: `            ${cnt} += 0`,                      highlight: true  }, 
-        { code: `    return ${cnt}`,                            highlight: true  },
-        { code: ``,                                             highlight: false },
+        { code: `def ${fn}(${lst}, val):`,highlight: false },
+        { code: `    ${cnt} = 0`,highlight: false },
+        { code: `    for item in ${lst}:`,highlight: false },
+        { code: `        if item == val:`, highlight: true  },
+        { code: `            ${cnt} += 0`,highlight: true  },
+        { code: `    return ${cnt}`,highlight: true  },
+        { code: ``,highlight: false },
         { code: `print(${fn}(${listLit}, ${target}))  # expected ${correct}`, highlight: true },
       ],
       bugLineIndex: 4,
@@ -175,20 +166,20 @@ const TEMPLATES = [
   function pyPower(diff) {
     const fn   = pick(['power', 'my_pow', 'raise_to']);
     const res  = pick(PY_VARS);
-    const base = randInt(2, 4);
+      const base = randInt(2, 4);
     const exp  = randInt(3, 6);
     const correct = Math.pow(base, exp);
     return {
       context: `Raise ${base} to the power of ${exp} — expected ${correct}`,
       filename: `${fn}.py`,
-      language: 'Python3',
+      language: 'Python',
       lines: [
-        { code: `def ${fn}(base, exp):`,             highlight: false },
-        { code: `    ${res} = 0`,                    highlight: true  }, 
-        { code: `    for _ in range(exp):`,          highlight: false },
-        { code: `        ${res} *= base`,            highlight: true  },
-        { code: `    return ${res}`,                 highlight: true  },
-        { code: ``,                                  highlight: false },
+        { code: `def ${fn}(base, exp):`,highlight: false },
+        { code: `    ${res} = 0`,highlight: true  },
+        { code: `    for _ in range(exp):`,highlight: false },
+        { code: `        ${res} *= base`,highlight: true  },
+        { code: `    return ${res}`,highlight: true  },
+        { code: ``,highlight: false },
         { code: `print(${fn}(${base}, ${exp}))  # expected ${correct}`, highlight: true },
       ],
       bugLineIndex: 1,
@@ -206,16 +197,16 @@ const TEMPLATES = [
     return {
       context: `Calculate the average of a list — expected ${avg}`,
       filename: `${fn}.py`,
-      language: 'Python3',
+      language: 'Python',
       lines: [
-        { code: `def ${fn}(${lst}):`,                          highlight: false },
-        { code: `    ${tot} = sum(${lst})`,                    highlight: false },
-        { code: `    return ${tot} / len(${lst}) + ${bugAdd}`, highlight: true  }, 
-        { code: ``,                                            highlight: false },
-        { code: `print(${fn}(${listLit}))  # expected ${avg}`, highlight: true  },
-        { code: ``,                                            highlight: false },
-        { code: `# used in grade calculator`,                  highlight: true  },
-        { code: `# returns float`,                             highlight: true  },
+        { code: `def ${fn}(${lst}):`,highlight: false },
+        { code: `    ${tot} = sum(${lst})`,highlight: false },
+        { code: `    return ${tot} / len(${lst}) + ${bugAdd}`,highlight: true  }, 
+        { code: ``,highlight: false },
+        { code: `print(${fn}(${listLit}))  # expected ${avg}`,highlight: true  },
+        { code: ``,highlight: false },
+        { code: `# used in grade calculator`,highlight: true  },
+        { code: `# returns float`,highlight: true  },
       ],
       bugLineIndex: 2,
     };
@@ -231,14 +222,14 @@ const TEMPLATES = [
     return {
       context: `Find index of ${target} in list — expected ${targetIdx}`,
       filename: `${fn}.py`,
-      language: 'Python3',
+      language: 'Python',
       lines: [
-        { code: `def ${fn}(${lst}, val):`,                          highlight: false },
-        { code: `    for i in range(len(${lst})):`,                 highlight: false },
-        { code: `        if ${lst}[i] == val:`,                     highlight: true  },
-        { code: `            return i + 1`,                         highlight: true  }, 
-        { code: `    return -1`,                                    highlight: true  },
-        { code: ``,                                                 highlight: false },
+        { code: `def ${fn}(${lst}, val):`,highlight: false },
+        { code: `    for i in range(len(${lst})):`,highlight: false },
+        { code: `        if ${lst}[i] == val:`,highlight: true  },
+        { code: `            return i + 1`,highlight: true  },     
+        { code: `    return -1`,highlight: true  },
+        { code: ``,highlight: false },
         { code: `print(${fn}(${listLit}, ${target}))  # expected ${targetIdx}`, highlight: true },
       ],
       bugLineIndex: 3,
@@ -251,14 +242,14 @@ const TEMPLATES = [
     return {
       context: `Reverse a string — "hello" should become "olleh"`,
       filename: `${fn}.py`,
-      language: 'Python3',
+      language: 'Python',
       lines: [
-        { code: `def ${fn}(${v}):`,                highlight: false },
-        { code: `    out = ''`,                     highlight: false },
-        { code: `    for i in range(len(${v})):`,   highlight: true  }, 
-        { code: `        out += ${v}[i]`,           highlight: true  },
-        { code: `    return out`,                   highlight: true  },
-        { code: ``,                                 highlight: false },
+        { code: `def ${fn}(${v}):`,highlight: false },
+        { code: `    out = ''`,highlight: false },
+        { code: `    for i in range(len(${v})):`,highlight: true  }, 
+        { code: `        out += ${v}[i]`,highlight: true  },
+        { code: `    return out`,highlight: true  },
+        { code: ``,highlight: false },
         { code: `print(${fn}('hello'))  # expected 'olleh'`, highlight: true },
       ],
       bugLineIndex: 2,
@@ -274,16 +265,16 @@ const TEMPLATES = [
     return {
       context: `Return only odd numbers from a list`,
       filename: `${fn}.py`,
-      language: 'Python3',
+      language: 'Python',
       lines: [
-        { code: `def ${fn}(${lst}):`,                  highlight: false },
-        { code: `    return [x for x in ${lst}`,       highlight: false },
-        { code: `            if x % 2 == 0]`,          highlight: true  }, 
-        { code: ``,                                    highlight: false },
-        { code: `print(${fn}(${listLit}))`,            highlight: true  },
+        { code: `def ${fn}(${lst}):`,highlight: false },
+        { code: `    return [x for x in ${lst}`,highlight: false },
+        { code: `            if x % 2 == 0]`,highlight: true  }, 
+        { code: ``,highlight: false },
+        { code: `print(${fn}(${listLit}))`,highlight: true  },
         { code: `# expected ${JSON.stringify(correct)}`,highlight: true  },
-        { code: ``,                                    highlight: false },
-        { code: `# used in number classifier`,         highlight: true  },
+        { code: ``,highlight: false },
+        { code: `# used in number classifier`,highlight: true  },
       ],
       bugLineIndex: 2,
     };
@@ -297,157 +288,157 @@ const TEMPLATES = [
       filename: `${fn}.py`,
       language: 'Python',
       lines: [
-        { code: `def ${fn}(${lst}):`,                         highlight: false },
-        { code: `    for i in range(len(${lst}) - 2):`,       highlight: true  }, // BUG
-        { code: `        if ${lst}[i] > ${lst}[i + 1]:`,     highlight: true  },
-        { code: `            ${lst}[i], ${lst}[i+1] = \\`,   highlight: false },
-        { code: `            ${lst}[i+1], ${lst}[i]`,        highlight: false },
-        { code: `    return ${lst}`,                          highlight: true  },
-        { code: ``,                                           highlight: false },
-        { code: `print(${fn}([3,1,4,2]))  # expected [1,3,2,4]`, highlight: true },
+        { code: `def ${fn}(${lst}):`,highlight: false },
+        { code: `    for i in range(len(${lst}) - 2):`,highlight: true  }, 
+        { code: `        if ${lst}[i] > ${lst}[i + 1]:`,highlight: true  },
+        { code: `            ${lst}[i], ${lst}[i+1] = \\`,highlight: false },
+        { code: `            ${lst}[i+1], ${lst}[i]`,highlight: false },
+        { code: `    return ${lst}`,highlight: true  },
+        { code: ``,highlight: false },
+        { code: `print(${fn}([3,1,4,2]))  # expected [1,3,2,4]`,highlight: true },
       ],
       bugLineIndex: 1,
     };
   },
 
   function pyBinarySearch(diff) {
-    const fn = pick(['binary_search','bin_find','bsearch']);
-    const lst = pick(py_lists);
-    const target = randInt(10,50);
+    const fn  = pick(['binary_search', 'bin_find', 'bsearch']);
+    const lst = pick(PY_LISTS);
+    const target = randInt(10, 50);
     return {
-        context: `Binary search - Find index of target in sorted list`,
-        filename: `${fn}.py`,
-        language: 'Python3',
-        lines: [
-            {code: `def ${fn}(${lst}, target):`, highlight: false},
-            {code: `    lo, hi = 0, len(${lst}) - 1`, highlight:false},
-            {code: `    while lo <= hi:`, highlight: false},
-            {code: `        mid = (lo + hi) // 2 + 1`, highlight:true},
-            {code: `        if ${lst}[mid] == target:`, highlight:true},
-            { code: `            return mid`, highlight: false },
-            { code: `        elif ${lst}[mid] < target:`, highlight: true  },
-            { code: `            lo = mid + 1`, highlight: false },
-            { code: `        else: hi = mid - 1`, highlight: true  },
-        ],
-    };
-  },
-
-  function pyFizzBuzz(diff) {
-    return{
-        context: `fizzBuzz - 3-Fizz, 5-Buzz, 15-FizzBuzz`,
-        filename: 'fizzbuxx.py',
-        language: 'Python3',
-        lines: [
-            { code: `def fizzbuzz(n):`,              highlight: false },
-            { code: `    out = []`,                  highlight: false },
-            { code: `    for i in range(1, n + 1):`, highlight: false },
-            { code: `        if i % 15 == 0:`,       highlight: true  },
-            { code: `            out.append('FizzBuzz')`, highlight: false },
-            { code: `        elif i % 3 == 0:`,      highlight: true  },
-            { code: `            out.append('Buzz')`,highlight: true  },
-            { code: `        elif i % 5 == 0:`,      highlight: false },
-            { code: `            out.append('Fizz')`,highlight: true  },
-        ],
-        bugLineIndex: 6,
-    };
-  },
-  
-  function pyRepeat(diff) {
-    const fn = pick(['repeat_str','multiply-str','str_repeat']);
-    const v = pick(['s','text','word']);
-    const times = randInt(2,5);
-
-    return {
-      context: `Repeat a string n times - "ab" x ${times} = "${'ab'.repeat(times)}"`,
+      context: `Binary search — find index of target in sorted list`,
       filename: `${fn}.py`,
-      language: 'Python3',
+      language: 'Python',
       lines: [
-        {code: `def ${fn}(${v}, n):`, highlight: false},
-        {code: `  return ${v} + n`, highlight:true},
-        {code: ``, highlight:false},
-        {code: `print(${fn}('ab', ${times}))`, highlight: true},
-        { code: `# expected '${'ab'.repeat(times)}'`, highlight: true  },
-        {code: ``, highlight: false},
-        {code:`#used in pattern generator`, highlight:true},
-      ],
-      bugLineIndex:1,
-    };
-  },
-  function pyFindMin(diff) {
-    const fn = pick(['find_min','minimum','get_min']);
-    const lst = pick(py_lists);
-    const mv = pick(['mn','low','smallest','least']);
-    const vals = Array.from({length:randInt(4,7)}, ()=> randInt(1,50));
-    const correct = Math.min(...vals);
-    const listLit = '[' + vals.join(',') + ']';
-
-    return {
-      context: `Return the smallest number - expected ${correct}`,
-      filename: `${fn}.py`,
-      language: 'Python3',
-      lines: [
-        {code: `def ${fn}(${lst}):`, highlight:false},
-        {code: `  ${mv} = ${lst}[o]`, highlight:false},
-        {code: `  for n in ${lst}[1:]:`, highlight:false},
-        {code: `    if n > ${mv}:`, highlight:true},
-        {code: `      ${mv} = n`,highlight:false},
-        {code: `  return ${mv}`, highlight: true},
-        { code: ``, highlight: false },
-        { code: `print(${fn}(${listLit}))  # expected ${correct}`, highlight: true },
-        { code: ``, highlight: false },
-        { code: `# wrong comparison direction`, highlight: true  },
+        { code: `def ${fn}(${lst}, target):`,highlight: false },
+        { code: `    lo, hi = 0, len(${lst}) - 1`,highlight: false },
+        { code: `    while lo <= hi:`,highlight: false },
+        { code: `        mid = (lo + hi) // 2 + 1`,highlight: true  }, 
+        { code: `        if ${lst}[mid] == target:`,highlight: true  },
+        { code: `            return mid`,highlight: false },
+        { code: `        elif ${lst}[mid] < target:`,highlight: true  },
+        { code: `            lo = mid + 1`,highlight: false },
+        { code: `        else: hi = mid - 1`,highlight
+        : true  },
       ],
       bugLineIndex: 3,
     };
   },
-  function cArraySum(diff) {
-    const fn = pick(c_funcs);
-    const arr = pick(c_arrays);
-    const tot = pick(c_vars);
-    const n = randInt(3,6);
-    const vals = Array.from({length:n}, ()=> randInt(1,15));
-    const correct = vals.reduce((a,b) => a+b, 0);
-    const arrLit = '{' + vals.join(',') + '}';
 
+  function pyFizzBuzz(diff) {
     return {
-      context: `Sum ${n} integers in a C array - expected ${correct}`,
+      context: `FizzBuzz — 3→Fizz, 5→Buzz, 15→FizzBuzz`,
+      filename: `fizzbuzz.py`,
+      language: 'Python',
+      lines: [
+        { code: `def fizzbuzz(n):`,highlight: false },
+        { code: `    out = []`,highlight: false },
+        { code: `    for i in range(1, n + 1):`,highlight: false },
+        { code: `        if i % 15 == 0:`,highlight: true  },
+        { code: `            out.append('FizzBuzz')`,highlight: false },
+        { code: `        elif i % 3 == 0:`,highlight: true  },
+        { code: `            out.append('Buzz')`,highlight: true  }, 
+        { code: `        elif i % 5 == 0:`,highlight: false },
+        { code: `            out.append('Fizz')`,highlight: true  },
+      ],
+      bugLineIndex: 6,
+    };
+  },
+
+  function pyRepeat(diff) {
+    const fn = pick(['repeat_str', 'multiply_str', 'str_repeat']);
+    const v  = pick(['s', 'text', 'word']);
+    const times = randInt(2, 5);
+    return {
+      context: `Repeat a string n times — "ab" × ${times} = "${'ab'.repeat(times)}"`,
+      filename: `${fn}.py`,
+      language: 'Python',
+      lines: [
+        { code: `def ${fn}(${v}, n):`,highlight: false },
+        { code: `    return ${v} + n`,highlight: true  }, 
+        { code: ``,highlight: false },
+        { code: `print(${fn}('ab', ${times}))`,highlight: true  },
+        { code: `# expected '${'ab'.repeat(times)}'`,highlight: true  },
+        { code: ``,highlight: false },
+        { code: `# used in pattern generator`,highlight: true  },
+      ],
+      bugLineIndex: 1,
+    };
+  },
+
+  function pyFindMin(diff) {
+    const fn  = pick(['find_min', 'minimum', 'get_min']);
+    const lst = pick(PY_LISTS);
+    const mv  = pick(['mn', 'low', 'smallest', 'least']);
+    const vals = Array.from({length: randInt(4,7)}, () => randInt(1, 50));
+    const correct = Math.min(...vals);
+    const listLit = '[' + vals.join(', ') + ']';
+    return {
+      context: `Return the smallest number — expected ${correct}`,
+      filename: `${fn}.py`,
+      language: 'Python',
+      lines: [
+        { code: `def ${fn}(${lst}):`,highlight: false },
+        { code: `    ${mv} = ${lst}[0]`,highlight: false },
+        { code: `    for n in ${lst}[1:]:`,highlight: false },
+        { code: `        if n > ${mv}:`,highlight: true  }, 
+        { code: `            ${mv} = n`,highlight: false },
+        { code: `    return ${mv}`,highlight: true  },
+        { code: ``,highlight: false },
+        { code: `print(${fn}(${listLit}))  # expected ${correct}`, highlight: true },
+        { code: ``,highlight: false },
+        { code: `# wrong comparison direction`,highlight: true  },
+      ],
+      bugLineIndex: 3,
+    };
+  },
+
+  function cArraySum(diff) {
+    const fn  = pick(C_FUNCS);
+    const arr = pick(C_ARRAYS);
+    const tot = pick(C_VARS);
+    const n   = randInt(3, 6);
+    const vals = Array.from({length: n}, () => randInt(1, 15));
+    const correct = vals.reduce((a,b) => a+b, 0);
+    const arrLit = '{' + vals.join(', ') + '}';
+    return {
+      context: `Sum ${n} integers in a C array — expected ${correct}`,
       filename: `${fn}.c`,
       language: 'C',
       lines: [
-        {code: `int ${fn}(int${arr}[], int n) {`, highlight: false},
-        {code: `  int ${tot} = 0;`, highlight: false},
-        {code: `  for (int i = 0; i <= n; i++)`, highlight: true},
-        {code: `    ${tot} += ${arr}[i];`,highlight:true},
-        {code: `  return ${tot}:`, highlight: true},
-        {code: `}`, highlight: false},
-        {code: ``, highlight: false},
-        {code: `int a[] = ${arrLit};`, highlight: true},
+        { code: `int ${fn}(int ${arr}[], int n) {`,highlight: false },
+        { code: `    int ${tot} = 0;`,highlight: false },
+        { code: `    for (int i = 0; i <= n; i++)`,highlight: true  }, 
+        { code: `        ${tot} += ${arr}[i];`,highlight: true  },
+        { code: `    return ${tot};`,highlight: true  },
+        { code: `}`,highlight: false },
+        { code: ``,highlight: false },
+        { code: `int a[] = ${arrLit};`,highlight: true  },
       ],
       bugLineIndex: 2,
     };
   },
 
   function cFindMin(diff) {
-    const fn = pick(['find_min','get_min','minimum','low']);
-    const arr = pick(c_arrays);
-    const mv = pick(['min','low','smallest','small']);
-    const vals = Array.from({length: randInt(4,6)},() => randInt(1,50));
+    const fn  = pick(['find_min', 'get_min', 'minimum']);
+    const arr = pick(C_ARRAYS);
+    const mv  = pick(['mn', 'low', 'smallest']);
+    const vals = Array.from({length: randInt(4,6)}, () => randInt(1,50));
     const correct = Math.min(...vals);
-    const arrLit = '{' + vals.join(',') + '}';
-
+    const arrLit = '{' + vals.join(', ') + '}';
     return {
-      context: `Find the smallest value in a C array - expected ${correct}`,
+      context: `Find the smallest value in a C array — expected ${correct}`,
       filename: `${fn}.c`,
       language: 'C',
       lines: [
-        { code: `int ${fn}(int ${arr}[], int n) {`,      highlight: false },
-        { code: `    int ${mv} = ${arr}[0];`,            highlight: false },
-        { code: `    for (int i = 1; i < n; i++) {`,     highlight: false },
-        { code: `        if (${arr}[i] > ${mv})`,        highlight: true  }, 
-        { code: `            ${mv} = ${arr}[i];`,        highlight: true  },
-        { code: `    }`,                                  highlight: false },
-        { code: `    return ${mv};`,                     highlight: true  },
-        { code: `}`,                                     highlight: false },
+        { code: `int ${fn}(int ${arr}[], int n) {`,highlight: false },
+        { code: `    int ${mv} = ${arr}[0];`,highlight: false },
+        { code: `    for (int i = 1; i < n; i++) {`,highlight: false },
+        { code: `        if (${arr}[i] > ${mv})`,highlight: true  }, 
+        { code: `            ${mv} = ${arr}[i];`,highlight: true  },
+        { code: `    }`,highlight: false },
+        { code: `    return ${mv};`,highlight: true  },
+        { code: `}`,highlight: false },
         { code: `// int a[]=${arrLit};  expected ${correct}`, highlight: true },
       ],
       bugLineIndex: 3,
@@ -455,152 +446,173 @@ const TEMPLATES = [
   },
 
   function cOffByOne(diff) {
-    const fn = pick(c_funcs);
-    const arr = pick(c_arrays);
-    const tot = pick(c_vars);
-    const n = randInt(4,7);
-    const vals = Array.from({length: n}, () => randInt(1,10));
+    const fn  = pick(C_FUNCS);
+    const arr = pick(C_ARRAYS);
+    const tot = pick(C_VARS);
+    const n   = randInt(4, 7);
+    const vals = Array.from({length: n}, () => randInt(1, 10));
     const correct = vals.reduce((a,b) => a+b, 0);
-    const arrLit = '{' + vals.join(',') + '}';
-
+    const arrLit = '{' + vals.join(', ') + '}';
     return {
-      context: `Sum all ${n} elements - expected ${correct} (no element skipped)`,
+      context: `Sum all ${n} elements — expected ${correct} (no element skipped)`,
       filename: `${fn}.c`,
       language: 'C',
       lines: [
-        {code: `int ${fn}(int ${arr}[],int n) {`, highlight: false},
-        {code: `  int ${tot} = 0`, highlight: false},
-        {code: `  for (int i = 1; i < n; i++)`, highlight: true},
-        { code: `        ${tot} += ${arr}[i];`, highlight: true},
-        { code: `    return ${tot};`, highlight: true},
-        { code: `}`, highlight: false},
-        { code: ``, highlight: false},
-        { code: `int a[] = ${arrLit}; // expected ${correct}`, highlight: true},
+        { code: `int ${fn}(int ${arr}[], int n) {`,highlight: false },
+        { code: `    int ${tot} = 0;`,highlight: false },
+        { code: `    for (int i = 1; i < n; i++)`,highlight: true  }, 
+        { code: `        ${tot} += ${arr}[i];`,highlight: true  },
+        { code: `    return ${tot};`,highlight: true  },
+        { code: `}`,highlight: false },
+        { code: ``,highlight: false },
+        { code: `int a[] = ${arrLit}; // expected ${correct}`, highlight: true },
       ],
       bugLineIndex: 2,
     };
   },
 
-  function cWrongInit(diff) {
-    const fn = pick(c_funcs);
-    const arr = pick(c_arrays);
-    const res = pick(c_vars);
-    const base = randInt(2,3);
-    const n = randInt(3,5);
-    const correct = Math.pow(base,n);
-    
+    function cWrongInit(diff) {
+    const fn   = pick(C_FUNCS);
+    const arr  = pick(C_ARRAYS);
+    const res  = pick(C_VARS);
+    const base = randInt(2, 3);
+    const n    = randInt(3, 5);
+    const correct = Math.pow(base, n);
     return {
-      context: `Compute ${base}^${n} by multiplying in a loop - expected ${correct}`,
-      filename: 'Power.c',
+      context: `Compute ${base}^${n} by multiplying in a loop — expected ${correct}`,
+      filename: `power.c`,
+      language: 'C',
       lines: [
-        {code: `int power(int base, int exp) {`, highlight:false},
-        {code: `  int ${res} = 0;`, highlight: true},
-        {code: `  for (int i = 0; i < exp; i++)`, highlight:false},
-        {code: `    ${res} *= base;`, highlight: true},
-        {code: `  return ${res};`, highlight: true},
-        {code: `}`, highlight:false},
-        {code: ``, highlight: false},
-        {code: `//power (${base},${n}) expected ${correct}`, highlight: true},
+        { code: `int power(int base, int exp) {`,highlight: false },
+        { code: `    int ${res} = 0;`,highlight: true  }, 
+        { code: `    for (int i = 0; i < exp; i++)`, highlight: false },
+        { code: `        ${res} *= base;`,highlight: true  },
+        { code: `    return ${res};`,highlight: true  },
+        { code: `}`,highlight: false },
+        { code: ``,highlight: false },
+        { code: `// power(${base},${n}) expected ${correct}`, highlight: true },
       ],
       bugLineIndex: 1,
     };
   },
 
-  function  cPrintfBug(diff) {
-    const val = randInt(10,99);
-
+  function cPrintfBug(diff) {
+    const val = randInt(10, 99);
     return {
-      context: `Print an integer value - should print ${val} not garbage`,
-      filename: `pint_val.c`,
+      context: `Print an integer value — should print ${val} not garbage`,
+      filename: `print_val.c`,
       language: 'C',
       lines: [
-        {code: `#include <stdio.h`, highlight: false},
-        {code: ``,highlight:false},
-        {code: `int main() {`, highlight: false},
-        {code: `  int val = ${val};`, highlight: true},
-        {code: `  printf(%f\\n",val);`, highlight: true},
-        {code: `  return 0;`, highlight: true},
-        {code: `}`, highlight: false},
-        {code: `// expected output: ${val}`, highlight: true},
+        { code: `#include <stdio.h>`,highlight: false },
+        { code: ``,highlight: false },
+        { code: `int main() {`,highlight: false },
+        { code: `    int val = ${val};`,highlight: true  },
+        { code: `    printf("%f\\n", val);`,highlight: true  }, 
+        { code: `    return 0;`,highlight: true  },
+        { code: `}`,highlight: false },
+        { code: `// expected output: ${val}`,highlight: true  },
       ],
       bugLineIndex: 4,
     };
-  
-    const PY_TEMPLATES = TEMPLATES.filter((_, i) => i <= 13);
+  },
 
-    const c_templates = TEMPLATES.filter((_,i) => i >= 14);
+];
 
-    function pickTemplate(diff) {
-      const hardOnly = ['pyBubbleStep', 'pyBinarySearch'];
+const PY_TEMPLATES = TEMPLATES.filter((_, i) => i <= 13); 
+const C_TEMPLATES  = TEMPLATES.filter((_, i) => i >= 14); 
 
-      const usePy = Math.random()< 0.75;
-      const pool = usePy ? py_templates : c_templates;
-      const filtered = diff === 'easy'
-      ? pool.filter(fn => !hardOnly.includes(fn.name)): pool;
+function pickTemplate(diff) {
+  const hardOnly = ['pyBubbleStep', 'pyBinarySearch'];
 
-      return pick(filtered.length ? filtered : pool);
-    }
+  const usePy = Math.random() < 0.75;
+  const pool  = usePy ? PY_TEMPLATES : C_TEMPLATES;
 
-    function generateQuestion(round) {
-      const diff = getDifficulty(round);
-      const tmpl = pickTemplate(diff);
-      return tmpl(diff);
-    }
-    const STATE = {
-      running: false,
-      score: 0,
-      lives: 3,
-      round: 1,
-      streak: 0,
-      bestStreak: 0,
-      currentQ: null,
-      timerInterval: null,
-      timeLeft: 5.0,
-      answered: false,
-      maxTime: 5.0,
-      recentTemplates: [],
-    };
+  const filtered = diff === 'easy'
+    ? pool.filter(fn => !hardOnly.includes(fn.name))
+    : pool;
 
-    const timer_start = 5.0;
-    const timer_min = 2.0;
-    const timer_shrink = 0.15;
-    const tick_ms = 50;
+  return pick(filtered.length ? filtered : pool);
+}
 
+function generateQuestion(round) {
+  const diff = getDifficulty(round);
+  const tmpl = pickTemplate(diff);
+  return tmpl(diff);
+}
 
-    function streakMulitiplier(streak) {
-      if (streak >= 10) return 2.5;
-      if (streak >=7) return 2.0;
-      if (streak >= 4) return 1.5;
-      return 1.0;
-    }
-    function calcScore(round, streak, timeLeft, maxtime) {
-      const base = 10*round;
-      const mult = streakMulitiplier(streak);
-      const speedBonus = Math.floor((timeLeft / maxTime)* 50);
-      return Math.floor(base * mult + speedBonus);
-    }
+const STATE = {
+  running:    false,
+  score:      0,
+  lives:      3,
+  round:      1,
+  streak:     0,
+  bestStreak: 0,
+  currentQ:   null,
+  timerInterval: null,
+  timeLeft:   5.0,
+  answered:   false,
+  maxTime:    5.0,
+  recentTemplates: [],
+};
 
-    function nextQuestion() {
-      const diff = getDifficulty(STATE.round);
-      let tmpl = pickTemplate(diff);
+const TIMER_START  = 5.0;
+const TIMER_MIN    = 2.0;
+const TIMER_SHRINK = 0.15;
+const TICK_MS      = 50;
 
-      if 
-      (STATE.recentTemplates.slice(-2).includes(tmpl.name)){
-        tmpl = pickTemplate(diff);
-      }
-      STATE.recentTemplates.push(tmpl.name);
-      if (STATE.recentTemplates.length > 5)
-    STATE.recentTemplates.shift();
-  
-      return tmpl(diff);
+function streakMultiplier(streak) {
+  if (streak >= 10) return 2.5;
+  if (streak >= 7)  return 2.0;
+  if (streak >= 4)  return 1.5;
+  return 1.0;
+}
 
-      function clearTimer() {
-        if (STATE.timerInterval !== null) {
-          clearInterval(STATE.timerInterval);
-          STATE.timerinterval = null;
-        }
-      }
+function calcScore(round, streak, timeLeft, maxTime) {
+  const base       = 10 * round;
+  const mult       = streakMultiplier(streak);
+  const speedBonus = Math.floor((timeLeft / maxTime) * 50);
+  return Math.floor(base * mult + speedBonus);
+}
 
-      
-    }
+function nextQuestion() {
+  const diff = getDifficulty(STATE.round);
+  let tmpl = pickTemplate(diff);
+
+  if (STATE.recentTemplates.slice(-2).includes(tmpl.name)) {
+    tmpl = pickTemplate(diff);
   }
+
+  STATE.recentTemplates.push(tmpl.name);
+  if (STATE.recentTemplates.length > 5) STATE.recentTemplates.shift();
+
+  return tmpl(diff);
+}
+
+function clearTimer() {
+  if (STATE.timerInterval !== null) {
+    clearInterval(STATE.timerInterval);
+    STATE.timerInterval = null;
+  }
+}
+function startTimer() {
+  clearTimer();
+  const reduction = Math.floor((STATE.round - 1) / 3)* TIMER_SHRINK;
+  STATE.maxTime = Math.max(TIMER_MIN, TIMER_START - reduction);
+  STATE.timeleft = STATE.maxTime;
+  STATE.timeLeft = STATE.maxTime;
+  updateTimerUI();
+
+  STATE.timerInterval = setInterval(() => {
+    STATE.timeLeft -= TICK_MS / 1000;
+    if (STATE.timeleft <= 0) {
+      STATE.timeLeft = 0;
+      updateTimerUI();
+      clearTimer();
+      clearTimer();
+      handleTimeout();
+      return;
+    }
+    updateTimerUI();
+  }, TICK_MS);
+}
+
