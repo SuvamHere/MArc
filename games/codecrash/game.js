@@ -616,3 +616,17 @@ function startTimer() {
   }, TICK_MS);
 }
 
+function updateTimerUI() {
+  const bar = $id('timer-bar');
+  const secs = $id('timer-seconds');
+  if (!bar || !secs) return;
+
+  const pct = STATE.timeLeft / STATE.maxTime;
+  bar.style.width = (pct * 100) + '%';
+  if (pct <= 0.25)     bar.style.background = 'var(--red)';
+  else if (pct <= 0.5) bar.style.background = '#ff9a3c';
+  else                 bar.style.background = 'var(--yellow)';
+
+  secs.style.color = pct <= 0.25 ? 'var(--red)' : 'var(--ink)';
+  secs.textContent = STATE.timeLeft.toFixed(1) + 's';
+}
