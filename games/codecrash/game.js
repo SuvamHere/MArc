@@ -671,4 +671,6 @@ function highlightCode(code, language) {
   } else {
     s = s.replace(/(\/\/.*)$/, '<span class="cm">$1</span>');
   }
+
+  s = s.replace(/(&quot;[^&]*&quot;|'[^']*')/g, '<span class="str">$1</span>');
 }
