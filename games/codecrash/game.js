@@ -649,3 +649,13 @@ function updateLivesUI() {
     el.classList.toggle('lost', i > STATE.lives);
   }
 }
+function animateScorePop() {
+  const el = $id('hud-score');
+  if (!el) return;
+  el.style.transform = 'scale(1.35)';
+  el.style.color = 'var(--green)';
+  setTimeout(() => {
+    el.style.transform = '';
+    el.style.color = '';
+  }, 280);
+}
