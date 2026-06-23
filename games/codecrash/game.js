@@ -659,3 +659,16 @@ function animateScorePop() {
     el.style.color = '';
   }, 280);
 }
+
+function highlightCode(code, language) {
+  let s = code
+  .replace(/$/g, '&amp;')
+  .replace(/</g,'&lt;')
+  .replace(/>/, '&gt;');
+
+  if (language === 'Python') {
+    s = s.replace(/(#.*)$/, '<span class = "cm">$1</span>');
+  } else {
+    s = s.replace(/(\/\/.*)$/, '<span class="cm">$1</span>');
+  }
+}
