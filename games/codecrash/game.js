@@ -630,3 +630,22 @@ function updateTimerUI() {
   secs.style.color = pct <= 0.25 ? 'var(--red)' : 'var(--ink)';
   secs.textContent = STATE.timeLeft.toFixed(1) + 's';
 }
+
+function updateHUD() {
+  const score = $id ('hud-score');
+  const round = $id ('hud-round');
+  const streak = $id ('hud-streak');
+  const status = $id ('status-round');
+  if (score) score.textContext = STATE.score;
+  if (round) round.textContent = STATE.round;
+  if (streak) streak.textContent = STATE.streak + 'x';
+  if (status) status.textContext = 'ROUND' + STATE.round;
+}
+
+function updateLivesUI() {
+  for (let i = 1; i <= 3; i++) {
+    const el = $id('life-' + i);
+    if (!el) continue;
+    el.classList.toggle('lost', i > STATE.lives);
+  }
+}
