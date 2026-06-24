@@ -673,4 +673,8 @@ function highlightCode(code, language) {
   }
 
   s = s.replace(/(&quot;[^&]*&quot;|'[^']*')/g, '<span class="str">$1</span>');
+
+  s = s.replace(/\b(\d+\.?\d*)\b/g, '<span class="num">$1</span>');
+
+  
 }
