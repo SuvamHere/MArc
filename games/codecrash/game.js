@@ -676,5 +676,12 @@ function highlightCode(code, language) {
 
   s = s.replace(/\b(\d+\.?\d*)\b/g, '<span class="num">$1</span>');
 
-  
+  if (language === 'Python') {
+    const kws = ['def','return','for','in','if','elif','else','while',
+                 'not','and','or','True','False','None','import','from',
+                 'class','pass','break','continue','lambda','with','as'];
+    kws.forEach(kw => {
+      s = s.replace(new RegExp('\\b(' + kw + ')\\b', 'g'), '<span class="kw">$1</span>');
+    });
+  }
 }
