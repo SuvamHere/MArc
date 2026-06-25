@@ -661,27 +661,80 @@ function animateScorePop() {
 }
 
 function highlightCode(code, language) {
-  let s = code
-  .replace(/$/g, '&amp;')
-  .replace(/</g,'&lt;')
-  .replace(/>/, '&gt;');
+  let s = code;
+
+  s = s.replace(/&/g, '&amp;');
+  s = s.replace(/</g, '&lt;');
+  s = s.replace(/>/g, '&gt;');
 
   if (language === 'Python') {
-    s = s.replace(/(#.*)$/, '<span class = "cm">$1</span>');
+
+    s = s.replace(
+      /(#.*)$/g,
+      '<span class="cm">$1</span>'
+    );
+
   } else {
-    s = s.replace(/(\/\/.*)$/, '<span class="cm">$1</span>');
+
+    s = s.replace(
+      /(\/\/.*)$/g,
+      '<span class="cm">$1</span>'
+    );
+
   }
 
-  s = s.replace(/(&quot;[^&]*&quot;|'[^']*')/g, '<span class="str">$1</span>');
-
-  s = s.replace(/\b(\d+\.?\d*)\b/g, '<span class="num">$1</span>');
-
+  s = s.replace(
+    /(&quot;[^&]*&quot;|'[^']*')/g,
+    '<span class="str">$1</span>'
+  );
+  s = s.replace(
+    /\b(\d+\.?\d*)\b/g,
+    '<span class="num">$1</span>'
+  );
   if (language === 'Python') {
-    const kws = ['def','return','for','in','if','elif','else','while',
-                 'not','and','or','True','False','None','import','from',
-                 'class','pass','break','continue','lambda','with','as'];
+
+    const kws = [
+      'def','return','for','in','if','elif','else','while','not','and','or','True','False','None','import','from','class','pass','break','continue','lambda','with','as'];
+
     kws.forEach(kw => {
-      s = s.replace(new RegExp('\\b(' + kw + ')\\b', 'g'), '<span class="kw">$1</span>');
+      const pattern = new RegExp(
+        '\\b' + kw + '\\b',
+        'g'
+      );
+
+      s = s.replace(
+        pattern,
+        '<span class="kw">$&</span>'
+      );
+
     });
+
   }
+
+  if (language === 'C') {
+
+    const kws = [
+      'int','float','char','void','return','for','while','if','else','break','continue','struct','include','printf','main'];
+
+    kws.forEach(kw => {
+
+      const pattern = new RegExp(
+        '\\b' + kw + '\\b',
+        'g'
+      );
+
+      s = s.replace(
+        pattern,
+        '<span class="kw">$&</span>'
+      );
+
+    });
+
+  }
+
+  s = s.replace(
+    /\b([a-zA-Z_]\w*)(?=\s*\()/g,
+    '<span class="fn">$1</span>'
+  );
+  return s;
 }
