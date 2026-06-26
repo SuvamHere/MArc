@@ -738,3 +738,49 @@ function highlightCode(code, language) {
   );
   return s;
 }
+
+function renderRound(q) {
+  const ctxEl = $if('context-text');
+  const fnEl = $id('code-filename');
+  const langEl = $if('code-lang-tag');
+  const body = $id('code-body');
+  
+  if (ctxEl) ctxEl.textContent = q.context;
+  if (fnEl) fnEl.textContent = q.filename;
+  if (langEl) langEl.textContent = q.language;
+
+  if (langEl) {
+    langEl.style.background =
+      q.language === 'C'          ? 'var(--purple)' :
+      q.language === 'JavaScript' ? 'var(--yellow)'  :'var(--blue)';
+  }
+
+  if (!body) return;
+  body.innerHTML = '';
+
+  q.lines.forEach((line, idx) => {
+    const row    = document.createElement('div');
+    const numEl  = document.createElement('span');
+    const codeEl = document.createElement('span');
+
+    row.classList.add('code-line');
+    row.classList.add(line.highlight ? 'line-highlighted' : 'line-dim');
+
+    numEl.classList.add('line-num');
+    numEl.textContent = idx + 1;
+
+    codeEl.classList.add('line-code');
+    codeEl.innerHTML = line.code
+      ? highlightCode(line.code, q.language)
+      : '&nbsp;';
+
+    row.appendChild(numEl);
+    row.appendChild(codeEl);
+
+    if (line.highlight) {
+      row.addEventListener('click', () => handleLineClick(idx, row));
+    }
+
+    body.appendChild(row);
+  });
+}
