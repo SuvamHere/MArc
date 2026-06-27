@@ -784,3 +784,36 @@ function renderRound(q) {
     body.appendChild(row);
   });
 }
+
+function handleLineClick(lineIdx, rowE) {
+  if (STATE.answered || !STATE.running) return;
+  STATE.answered = true;
+  clearTimer();
+
+  if (lineIdx === STATE.currentQ.bugLineIndex) {
+    handleCorrect(rowEl);
+}
+  else {
+    handleWrong(rowEl);
+  }
+}
+
+function handleCorrect(rowEl) {
+  rowEl.classList.replace('line-highlighted','line-correct');
+
+  const block = $id('code-block');
+  if (block) block.classList.add('anim-correct');
+
+  const earned = calcScore(STATE.round,STATE.streak + 1, STATE.timeLeft, STATE.maxTime);
+  STATE.streak++;
+  if (STATE.streak > STATE.bestStreak) STATE.bestStreak = STATE.streak;
+  STATE.score += earned;
+
+  updateHUD();
+  animateScorePop();
+
+  setTimeout(() => {
+    if(block) block.classList.remove('anim-correct');
+    advanceRound();
+  }, 700);
+}
