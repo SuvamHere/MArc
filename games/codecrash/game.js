@@ -817,3 +817,48 @@ function handleCorrect(rowEl) {
     advanceRound();
   }, 700);
 }
+
+function handleWrong(rowEl) {
+  rowEl.classList.replace('line-highlighted','line-wrong');
+
+  const block = $id('code-block');
+  if (block) block.classList.add('anim-wrong');
+  revealCorrectLine();
+  STATE.streak = 0;
+  updateHUD();
+
+  setTimeout(() => {
+    if (block) block.classList.remove('anim-wrong');
+    loseLife();
+  }, 750);
+}
+function handleTimeout() {
+  if (STATE.answered || !STATE.running) return;
+  STATE.answered = true;
+  revealCorrectLine();
+  STATE.streak = 0;
+  updateHUD();
+  setTimeout(() => loseLife(), 750);
+}
+
+function revealCorrectLine() {
+  const body = $id('code-body');
+  if (!body) return;
+  const rows = body.querySelectorAll('code-line'); 
+  const correctRow = rows[STATE.currentQ.bugLineIndex];
+  if (correctRow) correctRow.classList.replace('line-highlighted','line-correct');
+}
+function loseLife() {
+  STATE.lives--;
+  updateLivesUI();
+  const lifeEl = $id('life-' + (STATE.lives + 1));
+  if (lifeEl) {
+    lifeEl.style.transition = 'transform 0.2s, opacity 0.2s, color 0.2s';
+  }
+  if (STATE.lives <= 0) {
+    setTimeout(() => endGame(), 600);
+  } 
+    else {
+    setTimeout(() => advanceRound(), 600);
+  }
+}
