@@ -862,3 +862,21 @@ function loseLife() {
     setTimeout(() => advanceRound(), 600);
   }
 }
+
+function advanceRound() {
+  STATE.round++;
+  STATE.answered = false;
+  STATE.currentQ = nextQuestion();
+  updateHUD();
+  renderRound(STATE.currentQ);
+  startTimer();
+}
+
+function showRound() {
+   STATE.answered = false;
+  STATE.currentQ = nextQuestion();
+  updateHUD();
+  updateLivesUI();
+  renderRound(STATE.currentQ);
+  startTimer();
+}
