@@ -880,3 +880,52 @@ function showRound() {
   renderRound(STATE.currentQ);
   startTimer();
 }
+
+function resetState() {
+  clearTimer();
+  Object.assign(STATE, {
+    running:         false,
+    score:           0,
+    lives:           3,
+    round:           1,
+    streak:          0,
+    bestStreak:      0,
+    answered:        false,
+    currentQ:        null,
+    timeLeft:        TIMER_START,
+    maxTime:         TIMER_START,
+    recentTemplates: [],
+  });
+}   
+
+function startGame() { 
+  esetState();
+  STATE.running = true;
+
+  hideOverlay('overlay-start');
+  hideOverlay('overlay-gameover');
+  showGameUI();
+  showRound();
+}
+
+function endGame() {
+  STATE.running = false;
+  clearTimer();
+
+  const stored    = parseInt(localStorage.getItem('best-codecrash') || '0', 10);
+  const isNewBest = STATE.score > stored;
+  if (isNewBest) localStorage.setItem('best-codecrash', STATE.score);
+
+  const set = (id, val) => { const el = $id(id); if (el) el.textContent = val; };
+  set('final-score',  STATE.score);
+  set('final-best',   Math.max(STATE.score, stored));
+  set('final-round',  STATE.round);
+  set('final-streak', STATE.bestStreak);
+
+  const banner = $id('new-best-banner');
+  if (banner) banner.classList.toggle('hidden', !isNewBest);
+
+  hideGameUI();
+  showOverlay('overlay-gameover'); 
+}
+
