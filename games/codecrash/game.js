@@ -899,7 +899,7 @@ function resetState() {
 }   
 
 function startGame() { 
-  esetState();
+  resetState();
   STATE.running = true;
 
   hideOverlay('overlay-start');
@@ -952,4 +952,15 @@ function hideGameUI() {
 function goBack() {
   window.location.href = '../../index.html';
 }
- 
+
+on('btn-start',      'click', startGame);
+on('btn-restart',    'click', startGame);
+on('btn-back-start', 'click', goBack);
+on('btn-back-over',  'click', goBack);
+on('btn-back-hud',   'click', () => {
+  clearTimer();
+  STATE.running = false;
+  goBack();
+});
+
+showOverlay('overlay-start'); 
