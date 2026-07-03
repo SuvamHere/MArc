@@ -929,3 +929,27 @@ function endGame() {
   showOverlay('overlay-gameover'); 
 }
 
+function showOverlay(id) {
+  const el = $id(id);
+  if (el) el.classList.add('active');
+}
+
+function hideOverlay(id) {
+  const el = $id(id);
+  if (el) el.classList.remove('active');
+}
+
+function showGameUI() {
+  const el = $id('game-ui');
+  if (el) el.classList.remove('hidden');
+}
+
+function hideGameUI() {
+  const el = $id('game-ui');
+  if (el) el.classList.add('hidden');
+}
+
+function goBack() {
+  window.location.href = '../../index.html';
+}
+ 
