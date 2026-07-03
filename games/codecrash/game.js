@@ -598,7 +598,6 @@ function startTimer() {
   clearTimer();
   const reduction = Math.floor((STATE.round - 1) / 3)* TIMER_SHRINK;
   STATE.maxTime = Math.max(TIMER_MIN, TIMER_START - reduction);
-  STATE.timeleft = STATE.maxTime;
   STATE.timeLeft = STATE.maxTime;
   updateTimerUI();
 
@@ -636,10 +635,10 @@ function updateHUD() {
   const round = $id ('hud-round');
   const streak = $id ('hud-streak');
   const status = $id ('status-round');
-  if (score) score.textContext = STATE.score;
+  if (score) score.textContent = STATE.score;
   if (round) round.textContent = STATE.round;
   if (streak) streak.textContent = STATE.streak + 'x';
-  if (status) status.textContext = 'ROUND' + STATE.round;
+  if (status) status.textContent = 'ROUND' + STATE.round;
 }
 
 function updateLivesUI() {
@@ -740,9 +739,9 @@ function highlightCode(code, language) {
 }
 
 function renderRound(q) {
-  const ctxEl = $if('context-text');
+  const ctxEl = $id('context-text');
   const fnEl = $id('code-filename');
-  const langEl = $if('code-lang-tag');
+  const langEl = $id('code-lang-tag');
   const body = $id('code-body');
   
   if (ctxEl) ctxEl.textContent = q.context;
@@ -785,7 +784,7 @@ function renderRound(q) {
   });
 }
 
-function handleLineClick(lineIdx, rowE) {
+function handleLineClick(lineIdx, rowEl) {
   if (STATE.answered || !STATE.running) return;
   STATE.answered = true;
   clearTimer();
@@ -844,7 +843,7 @@ function handleTimeout() {
 function revealCorrectLine() {
   const body = $id('code-body');
   if (!body) return;
-  const rows = body.querySelectorAll('code-line'); 
+  const rows = body.querySelectorAll('.code-line'); 
   const correctRow = rows[STATE.currentQ.bugLineIndex];
   if (correctRow) correctRow.classList.replace('line-highlighted','line-correct');
 }
