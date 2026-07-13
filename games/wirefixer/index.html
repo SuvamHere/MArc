@@ -27,8 +27,7 @@
     </div>
   </div>
 
-
-   <div id="overlay-gameover" class="overlay">
+  <div id="overlay-gameover" class="overlay">
     <div class="overlay-box">
       <div class="overlay-tag gameover-tag">GAME OVER</div>
       <h2 class="overlay-title">CIRCUIT<br>DEAD.</h2>
@@ -54,5 +53,27 @@
       <button id="btn-restart" class="btn-primary">PLAY AGAIN →</button>
       <button id="btn-back-over" class="btn-secondary">← BACK TO ARCADE</button>
     </div>
-  </div> 
+  </div>
+  <div id="game-ui" class="hidden">
+
+    <div id="hud">
+      <div class="hud-left">
+        <button id="btn-back-hud" class="hud-btn">← ARCADE</button>
+        <span class="hud-title">// WIREFIXER</span>
+      </div>
+
+      <div class="hud-center">
+        <div class="hud-item">
+          <span class="hud-label">SCORE</span>
+          <span class="hud-value" id="hud-score">0</span>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">LEVEL</span>
+          <span class="hud-value" id="hud-level">1</span>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">STREAK</span>
+          <span class="hud-value streak-val" id="hud-streak">0×</span>
+        </div>
+      </div>
 </body>
