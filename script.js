@@ -161,7 +161,7 @@ function setupCursorTrail() {
     document.addEventListener('mouseover', (e) => {
         if (e.target.closest(activeSelectors)) {
             trail.style.transform = 'translate(-50%, -50%) scale(1.6) rotate(45deg)';
-            trail.style.backgroundColor = 'var(--red)';
+            trail.style.backgroundColor = 'var(--yellow)';
         }
     });
 
@@ -175,10 +175,10 @@ function setupCursorTrail() {
 
 function bindGraphParallax(){
     window.addEventListener('mousemove', (e) => {
-        const activeScreen = document.querySelector('screen.active');
+        const activeScreen = document.querySelector('.screen.active');
         if (!activeScreen) return;
 
-        const backdrop = activeScreen.querySelector('graph-grid-backdrop');
+        const backdrop = activeScreen.querySelector('.graph-grid-backdrop');
         if (!backdrop) return;
 
         const shiftX = (e.clientX / window.innerWidth - 0.5) * -15;
@@ -206,4 +206,4 @@ function init() {
 
 }
 
-docment.addEventListener('DOMContentLoaded', init);
+document.addEventListener('DOMContentLoaded', init);
