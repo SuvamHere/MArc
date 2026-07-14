@@ -1,14 +1,16 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WireFixer - Suvam's Arcade</title>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700;900&family=Space+Mono:wght@400;700&display=block" rel="stylesheet">
-    <link rel = "stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WIREFIXER — Suvam's Arcade</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700;900&family=Space+Mono:wght@400;700&display=block" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="overlay-start" class="overlay active">
+
+  <div id="overlay-start" class="overlay active">
     <div class="overlay-box">
       <div class="overlay-tag">WIREFIXER</div>
       <h1 class="overlay-title">CIRCUIT<br>BROKEN.<br>FIX IT.</h1>
@@ -54,8 +56,10 @@
       <button id="btn-back-over" class="btn-secondary">← BACK TO ARCADE</button>
     </div>
   </div>
+
   <div id="game-ui" class="hidden">
 
+    <!-- HUD: top bar -->
     <div id="hud">
       <div class="hud-left">
         <button id="btn-back-hud" class="hud-btn">← ARCADE</button>
@@ -76,11 +80,48 @@
           <span class="hud-value streak-val" id="hud-streak">0×</span>
         </div>
       </div>
-      <div class="hud-right">
+
+      s<div class="hud-right">
         <span class="life" id="life-1">⚡</span>
         <span class="life" id="life-2">⚡</span>
         <span class="life" id="life-3">⚡</span>
       </div>
     </div>
 
-    </body>
+    <div id="game-area">
+
+      <div id="score-popup" class="score-popup hidden"></div>
+
+      <div id="circuit-wrap">
+        <svg id="circuit-svg" viewBox="0 0 560 200" xmlns="http://www.w3.org/2000/svg">
+        </svg>
+      </div>
+
+      <div class="wire-tray">
+        <span class="tray-label">REPLACEMENT WIRES:</span>
+        <div id="wire-options" class="wire-options-row">
+        </div>
+      </div>
+
+      <div class="timer-wrap">
+        <div class="timer-label-row">
+          <span class="timer-label">TIME REMAINING</span>
+          <span class="timer-seconds" id="timer-seconds">10.0s</span>
+        </div>
+        <div class="timer-track">
+          <div class="timer-bar" id="timer-bar"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="status-bar">
+      <span class="status-hint"><span>DRAG</span> the correct wire to the break</span>
+      <span class="status-level" id="status-level">LEVEL 1</span>
+    </div>
+
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
