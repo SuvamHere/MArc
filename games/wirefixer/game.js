@@ -57,3 +57,31 @@ var STREAK_TIERS = [
   { min: 4,mult: 1.5 },
   { min: 0,mult: 1.0 },
 ];
+
+var state = {
+  running:false,
+  score: 0,
+  lives: LIVES,
+  level: 1,
+  streak:0,
+  bestStreak:0,
+  answered:false,    
+  timerInterval: null, 
+  timeLeft:BASE_TIME,
+  currentCircuit: null,
+  dragWire:null,     
+};
+
+function resetState() {
+  state.running  = false;
+  state.score= 0;
+  state.lives = LIVES; 
+  state.level = 1;
+  state.streak = 0;
+  state.bestStreak= 0;
+  state.answered = false;
+  state.timerInterval = null;
+  state.timeLeft = BASE_TIME;
+  state.currentCircuit = null;
+  state.dragWire = null; 
+} 
