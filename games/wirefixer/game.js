@@ -85,3 +85,62 @@ function resetState() {
   state.currentCircuit = null;
   state.dragWire = null; 
 } 
+
+var audioCtx = null;
+
+function getAudioCtx() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  return audioCtx;
+}
+
+function playTone(frequency, type, duration, volume) {
+  try {
+    var ctx = getAudioCtx();
+    var osc = ctx.createOscillator();
+    var gain = ctx.createGain();
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.type = type || 'sine';
+    osc.frequency.setValueAtTime(frequency, ctx.currentTime);
+
+    gain.gain.setValueAtTime(volume || 0.3, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + duration);
+  } catch (e) {
+  }
+}
+
+function soundCorrect() {
+  playTone(880,'sawtooth',0.08,0.25);
+  setTimeout(function() {playTone(1200,'sine',0.15,0.2);},80);
+  setTimeout(function() {playTone(660,'sine',0.2,0.15);},180);
+}
+
+function soundWrong() {
+  playTone(120,'square',0.18,0.3);
+  setTimeout(function() {playTone(100,'square',0.15,0.2);},100);
+}
+
+
+function soundLifeLost() {
+  playTone(400, 'sine',0.15,0.3);
+  setTimeout(function() {playTone(300,'sine',0.15,0.25);},120);
+  setTimeout(function() {playTone(200,'sine',0.25,0.2);},240);
+}
+
+function soundGameOver() {
+  playTone(300,'sawtooth',0.3,0.3);
+  setTimeout(function() {playTone(250,'sawtooth',0.3,0.25);},200);
+  setTimeout(function() {playTone(180,'sawtooth',0.5,0.2);},400);
+}
+
+function soundTick(urgent) {
+  var freq =urgent?600:400;
+  playTone(freq,'sine',0.04,0.15);
+}
