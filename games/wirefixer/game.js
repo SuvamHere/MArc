@@ -29,18 +29,31 @@ var scorePopup  = document.getElementById('score-popup');
 
 
 var COLORS = {
-  bg:      '#fffdf6',
-  surface: '#ffffff',
-  ink:     '#111111',
-  red:     '#ff6a67',
-  yellow:  '#ffdd3c',
-  blue:    '#179FF5',
-  green:   '#5edd8e',
-  shadow:  '#111111',
+  bg:'#fffdf6',
+  surface:'#ffffff',
+  ink:'#111111',
+  red:'#ff6a67',
+  yellow:'#ffdd3c',
+  blue:'#179FF5',
+  green:'#5edd8e',
+  shadow:'#111111',
 };
 var WIRE_COLORS = {
-  power:   '#cc0000',   
-  ground:  '#111111',   
-  signal:  '#007700',   
-  neutral: '#888888',   
+  power:'#cc0000',   
+  ground:'#111111',   
+  signal:'#007700',   
+  neutral:'#888888',   
 };
+
+var BASE_TIME= 10;    
+var TIME_REDUCE= 0.2;   
+var MIN_TIME= 4;     
+var LEVEL_UP_SCORE = 100;   
+var LIVES= 3;
+
+var STREAK_TIERS = [
+  { min: 10,mult: 2.5 },
+  { min: 7,mult: 2.0 },
+  { min: 4,mult: 1.5 },
+  { min: 0,mult: 1.0 },
+];
