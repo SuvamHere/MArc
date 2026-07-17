@@ -144,3 +144,49 @@ function soundTick(urgent) {
   var freq =urgent?600:400;
   playTone(freq,'sine',0.04,0.15);
 }
+
+function on(id, event, fn) {
+  var el = document.getElementById(id);
+  if (el) {
+    el.addEventListener(event, fn);
+  } else {
+    console.warn('WIREFIXER: element not found —', id);
+  }
+}
+
+function getBestScore() {
+  return parseInt(localStorage.getItem('best-wirefixer') || '0', 10);
+}
+
+function saveBestScore(score) {
+  var prev = getBestScore();
+  if (score > prev) {
+    localStorage.setItem('best-wirefixer', String(score));
+    return true;
+  }
+  return false;
+}
+
+function getTimeForLevel() {
+  var reductions = Math.floor((state.level - 1) / 2);
+  var time = BASE_TIME - reductions * TIME_REDUCE;
+  if (time < MIN_TIME) time = MIN_TIME;
+  return time;
+}
+
+function getMultiplier() {
+  for (var i = 0; i < STREAK_TIERS.length; i++) {
+    if (state.streak >= STREAK_TIERS[i].min) {
+      return STREAK_TIERS[i].mult;
+    }
+  }
+  return 1.0;
+}
+
+function makeSVG(tag, attrs) {
+  var el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+  for (var key in attrs) {
+    el.setAttribute(key, attrs[key]);
+  }
+  return el;
+}
