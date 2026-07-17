@@ -26,3 +26,15 @@ var timerBar    = document.getElementById('timer-bar');
 var timerSecs   = document.getElementById('timer-seconds');
 var statusLevel = document.getElementById('status-level');
 var scorePopup  = document.getElementById('score-popup');
+
+
+var COLORS = {
+  bg:      '#fffdf6',
+  surface: '#ffffff',
+  ink:     '#111111',
+  red:     '#ff6a67',
+  yellow:  '#ffdd3c',
+  blue:    '#179FF5',
+  green:   '#5edd8e',
+  shadow:  '#111111',
+};
