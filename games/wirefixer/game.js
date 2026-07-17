@@ -38,3 +38,9 @@ var COLORS = {
   green:   '#5edd8e',
   shadow:  '#111111',
 };
+var WIRE_COLORS = {
+  power:   '#cc0000',   
+  ground:  '#111111',   
+  signal:  '#007700',   
+  neutral: '#888888',   
+};
