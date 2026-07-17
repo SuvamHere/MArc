@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MArc — Suvam's Arcade</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700;900&family=Space+Mono:wght@400;700&display=block" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header id="header">
+    <div class="header-tag">SUVAM'S ARCADE</div>
+    <h1 class="arcade-title">M<span class="title-accent">A</span>rc</h1>
+    <p class="arcade-sub">pick a game. find a bug. beat the clock.</p>
+  </header>
+
+  <main id="game-grid">
+
+    <a class="game-card" href="../games/numstrike/index.html">
+      <div class="card-number">01</div>
+      <div class="card-body">
+        <div class="card-tag" style="background: var(--yellow); color: var(--ink);">LIVE</div>
+        <h2 class="card-title">NUM<br>STRIKE</h2>
+        <p class="card-desc">Equations fall from the sky. Type the answer and destroy them before they hit the floor.</p>
+        <div class="card-meta">
+          <span class="card-chip">MATH</span>
+          <span class="card-chip">TYPING</span>
+          <span class="card-chip">SPEED</span>
+        </div>
+      </div>
+      <div class="card-cta">PLAY →</div>
+    </a>
+
+    <a class="game-card" href="../games/codecrash/index.html">
+      <div class="card-number">02</div>
+      <div class="card-body">
+        <div class="card-tag" style="background: var(--green); color: var(--ink);">LIVE</div>
+        <h2 class="card-title">CODE<br>CRASH</h2>
+        <p class="card-desc">Broken code appears. Four lines are suspect. Click the bug before the timer dies.</p>
+        <div class="card-meta">
+          <span class="card-chip">DEBUG</span>
+          <span class="card-chip">LOGIC</span>
+          <span class="card-chip">REFLEX</span>
+        </div>
+      </div>
+      <div class="card-cta">PLAY →</div>
+    </a>
+
+    <a class="game-card card-locked" href="../games/wirefixer/index.html">
+      <div class="card-number">03</div>
+      <div class="card-body">
+        <div class="card-tag" style="background: var(--ink); color: var(--bg);">SOON</div>
+        <h2 class="card-title">WIRE<br>FIXER</h2>
+        <p class="card-desc">Broken circuits, tangled logic. Rotate the wires and restore the signal before it shorts out.</p>
+        <div class="card-meta">
+          <span class="card-chip">PUZZLE</span>
+          <span class="card-chip">WIRES</span>
+          <span class="card-chip">CIRCUITS</span>
+        </div>
+      </div>
+      <div class="card-cta">LOCKED</div>
+    </a>
+
+  </main>
+
+  <footer id="footer">
+    <span class="footer-text">// MARC — BUILT BY SUVAM</span>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
