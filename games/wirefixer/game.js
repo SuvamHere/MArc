@@ -448,3 +448,222 @@ function getCircuitForLevel() {
     return CIRCUITS[3];   
   }
 }
+function drawCircuit(circuit) {
+  while (circuitSvg.firstChild) {
+    circuitSvg.removeChild(circuitSvg.firstChild);
+  }
+
+  for (var i = 0; i < circuit.wires.length; i++) {
+    var w = circuit.wires[i];
+
+    if (w.broken) {
+      for (var s = 0; s < circuit.brokenSegments.length; s++) {
+        var seg = circuit.brokenSegments[s];
+        var brokenLine = makeSVG('line', {
+          x1: seg.x1, y1: seg.y1, x2: seg.x2, y2: seg.y2,
+          class: 'wire wire-broken',
+        });
+        circuitSvg.appendChild(brokenLine);
+      }
+    } else {
+      
+      var line = makeSVG('line', {
+        x1: w.x1, y1: w.y1, x2: w.x2, y2: w.y2,
+        class: 'wire wire-' + w.type,
+      });
+      circuitSvg.appendChild(line);
+    }
+  }
+
+  var dz = circuit.dropZone;
+  var dropZoneEl = makeSVG('rect', {
+    x: dz.x, y: dz.y, width: dz.w, height: dz.h,
+    class: 'drop-zone',
+    id: 'drop-zone',
+  });
+  circuitSvg.appendChild(dropZoneEl);
+
+  var xMark = makeSVG('text', {
+    x: dz.x + dz.w / 2,
+    y: dz.y - 10,
+    class: 'break-x',
+  });
+  xMark.textContent = '✕';
+  circuitSvg.appendChild(xMark);
+
+  drawSparks(dz.x + dz.w / 2, dz.y + dz.h / 2);
+
+  drawBattery(circuit.battery.x, circuit.battery.y);
+
+  if (circuit.resistor) {
+    drawComponent(circuit.resistor.x, circuit.resistor.y,
+                  circuit.resistor.w, circuit.resistor.h,
+                  circuit.resistor.label);
+  }
+
+  if (circuit.switchComp) {
+    drawComponent(circuit.switchComp.x, circuit.switchComp.y,
+                  circuit.switchComp.w, circuit.switchComp.h,
+                  circuit.switchComp.label);
+  }
+
+  if (circuit.output === 'bulb') {
+    drawBulb(circuit.bulb.x, circuit.bulb.y, false);
+  } else if (circuit.output === 'led') {
+    drawLED(circuit.led.x, circuit.led.y, false);
+  }
+
+  var label = makeSVG('text', {
+    x: 0, y: -8,
+    'font-family': 'Space Mono, monospace',
+    'font-size': '9',
+    'font-weight': '700',
+    'letter-spacing': '0.1',
+    'text-transform': 'uppercase',
+    fill: COLORS.ink,
+    opacity: '0.4',
+  });
+  label.textContent = circuit.label + ' — LEVEL ' + state.level;
+  circuitSvg.appendChild(label);
+}
+
+function drawBattery(x, y) {
+  var rect = makeSVG('rect', {
+    x: x, y: y - 22, width: 44, height: 44,
+    class: 'component-body',
+  });
+  circuitSvg.appendChild(rect);
+
+  var plus = makeSVG('text', { x: x + 22, y: y - 6, class: 'component-text' });
+  plus.textContent = '+';
+  circuitSvg.appendChild(plus);
+
+  var minus = makeSVG('text', { x: x + 22, y: y + 8, class: 'component-text', 'font-size': '14' });
+  minus.textContent = '−';
+  circuitSvg.appendChild(minus);
+
+  var voltLabel = makeSVG('text', { x: x + 22, y: y + 20, class: 'component-text', 'font-size': '8' });
+  voltLabel.textContent = '9V';
+  circuitSvg.appendChild(voltLabel);
+}
+
+function drawComponent(x, y, w, h, label) {
+  var rect = makeSVG('rect', {
+    x: x, y: y, width: w, height: h,
+    class: 'component-body',
+  });
+  circuitSvg.appendChild(rect);
+
+  var text = makeSVG('text', { x: x + w / 2, y: y + h / 2, class: 'component-text', 'font-size': '9' });
+  text.textContent = label;
+  circuitSvg.appendChild(text);
+}
+
+function drawBulb(x, y, lit) {
+  var circle = makeSVG('circle', {
+    cx: x, cy: y, r: '20',
+    class: lit ? 'bulb-glass lit' : 'bulb-glass',
+    id: 'output-device',
+  });
+  circuitSvg.appendChild(circle);
+
+  // Filament cross lines inside the bulb
+  var line1 = makeSVG('line', {
+    x1: x - 8, y1: y - 6, x2: x + 8, y2: y + 6,
+    stroke: COLORS.ink, 'stroke-width': '1.5',
+  });
+  circuitSvg.appendChild(line1);
+
+  var line2 = makeSVG('line', {
+    x1: x + 8, y1: y - 6, x2: x - 8, y2: y + 6,
+    stroke: COLORS.ink, 'stroke-width': '1.5',
+  });
+  circuitSvg.appendChild(line2);
+
+  var label = makeSVG('text', { x: x, y: y + 32, class: 'component-text', 'font-size': '8' });
+  label.textContent = 'BULB';
+  circuitSvg.appendChild(label);
+}
+
+function drawLED(x, y, lit) {
+  var points = (x) + ',' + (y - 14) + ' ' + (x + 14) + ',' + (y + 7) + ' ' + (x - 14) + ',' + (y + 7);
+  var triangle = makeSVG('polygon', {
+    points: points,
+    class: lit ? 'led-body lit' : 'led-body',
+    id: 'output-device',
+  });
+  circuitSvg.appendChild(triangle);
+
+  var ray1 = makeSVG('line', {
+    x1: x + 16, y1: y - 10, x2: x + 24, y2: y - 18,
+    stroke: lit ? COLORS.green : COLORS.ink,
+    'stroke-width': '1.5', 'stroke-linecap': 'round',
+  });
+  circuitSvg.appendChild(ray1);
+
+  var ray2 = makeSVG('line', {
+    x1: x + 20, y1: y - 2, x2: x + 30, y2: y - 8,
+    stroke: lit ? COLORS.green : COLORS.ink,
+    'stroke-width': '1.5', 'stroke-linecap': 'round',
+  });
+  circuitSvg.appendChild(ray2);
+
+  var label = makeSVG('text', { x: x, y: y + 22, class: 'component-text', 'font-size': '8' });
+  label.textContent = 'LED';
+  circuitSvg.appendChild(label);
+}
+
+function drawSparks(cx, cy) {
+  var offsets = [
+    { dx: -8, dy: -7 },
+    {  dx: 8, dy: -7 },
+    {  dx: 0, dy: -10 },
+  ];
+
+  for (var i = 0; i < offsets.length; i++) {
+    var spark = makeSVG('line', {
+      x1: cx + offsets[i].dx * 0.3,
+      y1: cy + offsets[i].dy * 0.3,
+      x2: cx + offsets[i].dx,
+      y2: cy + offsets[i].dy,
+      class: 'spark-line',
+      style: 'animation-delay: ' + (i * 0.15) + 's',
+    });
+    circuitSvg.appendChild(spark);
+  }
+}
+function lightUpOutput() {
+  var circuit = state.currentCircuit;
+
+  var old = document.getElementById('output-device');
+  if (old) old.parentNode.removeChild(old);
+
+  if (circuit.output === 'bulb') {
+    drawBulb(circuit.bulb.x, circuit.bulb.y, true);
+  } else if (circuit.output === 'led') {
+    drawLED(circuit.led.x, circuit.led.y, true);
+  }
+}
+
+function showFixedWire() {
+  var broken = circuitSvg.querySelectorAll('.wire-broken');
+  broken.forEach(function(el) { el.parentNode.removeChild(el); });
+
+  var dz = document.getElementById('drop-zone');
+  if (dz) dz.parentNode.removeChild(dz);
+  var sparks = circuitSvg.querySelectorAll('.spark-line');
+  sparks.forEach(function(el) { el.parentNode.removeChild(el); });
+  var xMark = circuitSvg.querySelector('.break-x');
+  if (xMark) xMark.parentNode.removeChild(xMark);
+
+  var circuit = state.currentCircuit;
+  var segs = circuit.brokenSegments;
+  if (segs.length >= 2) {
+    var fixedLine = makeSVG('line', {
+      x1: segs[0].x1, y1: segs[0].y1,
+      x2: segs[segs.length - 1].x2, y2: segs[segs.length - 1].y2,
+      class: 'wire-fixed',
+    });
+    circuitSvg.appendChild(fixedLine);
+  }
+}
