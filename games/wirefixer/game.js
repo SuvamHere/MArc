@@ -190,3 +190,261 @@ function makeSVG(tag, attrs) {
   }
   return el;
 }
+
+var CIRCUITS = [
+
+  {
+    id: 'series-basic',
+    label: 'SERIES CIRCUIT',
+    output: 'bulb',         
+    brokenWire: 'power',     
+    wrongWires: ['signal', 'neutral'],  
+
+    battery:{x:30,y:80},
+    bulb:{ x:460,y:80},
+
+    wires: [
+      { x1:74,y1:68,x2:420,y2:68,type:'power',broken:true },
+      { x1:30,y1:112,x2:460,y2:112,type:'ground',broken:false},
+      { x1:460,y1:68,x2:460,y2:62,type:'power',broken:false},
+      { x1:460,y1:100,x2:460,y2:112,type:'ground',broken:false},
+      { x1:30,y1:68,x2:30,y2:112,type:'ground',broken:false},
+    ],
+
+    dropZone: { x:200,y:58,w:80,h:24},
+    brokenSegments: [
+      { x1:74,y1:68, x2:195, y2:68 },
+      { x1:285,y1:68, x2:420, y2:68 },
+    ],
+  },
+  {
+    id: 'series-resistor',
+    label: 'RESISTOR CIRCUIT',
+    output: 'bulb',
+    brokenWire: 'power',
+    wrongWires: ['ground', 'neutral'],
+
+    battery:   { x: 30, y: 80 },
+    bulb:      { x: 460, y: 80 },
+    resistor:  { x: 180, y: 58, w: 60, h: 20, label: '100Ω' },
+
+    wires: [
+      { x1:74, y1:68, x2:180, y2:68, type:'power',broken:false },
+      { x1:240,y1:68, x2:300, y2:68, type:'power',broken:true  },
+      { x1:300,y1:68, x2:420, y2:68, type:'power',broken:false },
+      { x1:30, y1:112, x2:460, y2:112, type:'ground',broken:false },
+      { x1:460,y1:68,  x2:460, y2:62,  type:'power', broken:false },
+      { x1:460,y1:100, x2:460, y2:112, type:'ground',broken:false },
+      { x1:30, y1:68,  x2:30,  y2:112, type:'ground',broken:false },
+    ],
+
+    dropZone:{x:300,y:58,w:70,h: 24},
+
+    brokenSegments: [
+      { x1:240,y1:68,x2:298,y2:68 },
+      { x1:374,y1:68,x2:420,y2:68 },
+    ],
+  },
+
+  {
+    id: 'parallel-basic',
+    label: 'PARALLEL CIRCUIT',
+    output: 'bulb',
+    brokenWire: 'signal',
+    wrongWires: ['power', 'neutral'],
+
+    battery: { x: 30, y: 100 },
+    bulb:    { x: 460, y: 60 },
+
+    wires: [
+      {x1:74, y1: 88, x2:200,y2:88, type:'power', broken:false},
+      {x1:200,y1: 88, x2:200,y2:48, type:'power', broken:false},
+      {x1:200,y1: 48, x2:420,y2:48, type:'power', broken:false},
+      {x1:420,y1: 48, x2:420,y2:62, type:'power', broken:false},
+      {x1:200,y1: 88, x2:200,y2:140,type:'signal',broken:false},
+      {x1:200,y1: 140,x2:420,y2:140,type:'signal',broken:true },
+      {x1:420,y1: 100,x2:420,y2:140,type:'signal',broken:false},
+      {x1:30, y1: 112,x2:200,y2:112,type:'ground',broken:false},
+      {x1:460,y1: 80, x2:460,y2:112,type:'ground',broken:false},
+      {x1:460,y1: 112,x2:30, y2:112,type:'ground',broken:false},
+    ],
+
+    dropZone: { x: 270, y: 130, w: 80, h: 24 },
+
+    brokenSegments: [
+      { x1:200,y1:140,x2:268, y2:140 },
+      { x1:352,y1:140,x2:420,y2:140 },
+    ],
+  },
+  {
+    id: 'switch-led',
+    label: 'SWITCH CIRCUIT',
+    output: 'led',
+    brokenWire: 'power',
+    wrongWires: ['signal', 'ground'],
+
+    battery:  { x: 30,  y: 80 },
+    led:      { x: 440, y: 68 },
+    switchComp: { x: 200, y: 58, w: 60, h: 20, label: 'SW1' },
+
+    wires: [
+      {x1:74, y1:68,x2:200,y2:68,type:'power',broken:false},
+      {x1:260,y1:68,x2:320,y2:68,type:'power',broken:true },
+      {x1:320,y1:68,x2:430,y2:68,type:'power',broken:false},
+      {x1:30, y1:112,x2:460,y2:112,type:'ground',broken:false},
+      {x1:460,y1:80, x2:460,y2:112,type:'ground',broken:false},
+      {x1:30, y1:68, x2:30, y2:112,type:'ground',broken:false},
+    ],
+
+    dropZone: { x: 318, y: 58, w: 70, h: 24 },
+
+    brokenSegments: [
+      { x1:260,y1:68,x2:316, y2: 68},
+      { x1:390,y1:68,x2:430,y2: 68},
+    ],
+  },
+];
+
+function getCircuitForLevel() {
+  var lvl = state.level;
+
+  if (lvl <= 2) {
+    return CIRCUITS[0];   
+  } else if (lvl <= 4) {
+    return CIRCUITS[1];   
+  } else if (lvl <= 6) {
+    return CIRCUITS[2];   
+  } else {var CIRCUITS = [
+
+
+  {
+    id: 'series-basic',
+    label: 'SERIES CIRCUIT',
+    output: 'bulb',          
+    brokenWire: 'power',     
+    wrongWires: ['signal', 'neutral'], 
+
+    battery: { x: 30, y: 80 },
+    bulb:    { x: 460, y: 80 },
+
+    wires: [
+      {x1:74, y1: 68, x2: 420, y2: 68, type: 'power',  broken: true },
+      {x1:30, y1: 112, x2: 460, y2: 112, type: 'ground', broken: false },
+      {x1:460, y1: 68, x2: 460, y2: 62, type: 'power',  broken: false },
+      {x1:460, y1: 100, x2: 460, y2: 112, type: 'ground', broken: false },
+      {x1:30, y1: 68, x2: 30, y2: 112, type: 'ground', broken: false },
+    ],
+
+    dropZone: { x: 200, y: 58, w: 80, h: 24 },
+
+    brokenSegments: [
+      { x1: 74,  y1: 68, x2: 195, y2: 68 },
+      { x1: 285, y1: 68, x2: 420, y2: 68 },
+    ],
+  },
+
+
+  {
+    id: 'series-resistor',
+    label: 'RESISTOR CIRCUIT',
+    output: 'bulb',
+    brokenWire: 'power',
+    wrongWires: ['ground', 'neutral'],
+
+    battery:   { x: 30, y: 80 },
+    bulb:      { x: 460, y: 80 },
+    resistor:  { x: 180, y: 58, w: 60, h: 20, label: '100Ω' },
+
+    wires: [
+      {x1:74, y1:68,x2:180,y2:68,type:'power', broken:false},
+      {x1:240,y1:68,x2:300,y2:68,type:'power', broken:true },
+      {x1:300,y1:68,x2:420,y2:68,type:'power', broken:false},
+      {x1:30, y1:112,x2:460,y2:112,type:'ground',broken:false},
+      {x1:460,y1:68, x2:460,y2:62, type:'power', broken:false},
+      {x1:460,y1:100,x2:460,y2:112,type:'ground',broken:false},
+      {x1:30, y1:68, x2:30, y2:112,type:'ground',broken:false},
+    ],
+
+    dropZone: { x: 300, y: 58, w: 70, h: 24 },
+
+    brokenSegments: [
+      { x1: 240, y1: 68, x2: 298,  y2: 68 },
+      { x1: 374, y1: 68, x2: 420, y2: 68 },
+    ],
+  },
+
+
+  {
+    id: 'parallel-basic',
+    label: 'PARALLEL CIRCUIT',
+    output: 'bulb',
+    brokenWire: 'signal',
+    wrongWires: ['power', 'neutral'],
+
+    battery: { x: 30, y: 100 },
+    bulb:    { x: 460, y: 60 },
+
+    wires: [
+      { x1:74,  y1: 88,  x2: 200, y2: 88,  type: 'power',  broken: false },
+      { x1:200, y1: 88,  x2: 200, y2: 48,  type: 'power',  broken: false },
+      { x1:200, y1: 48,  x2: 420, y2: 48,  type: 'power',  broken: false },
+      { x1:420, y1: 48,  x2: 420, y2: 62,  type: 'power',  broken: false },
+      { x1:200, y1: 88,  x2: 200, y2: 140, type: 'signal', broken: false },
+      { x1:200, y1: 140, x2: 420, y2: 140, type: 'signal', broken: true  },
+      { x1:420, y1: 100, x2: 420, y2: 140, type: 'signal', broken: false },
+      { x1:30,  y1: 112, x2: 200, y2: 112, type: 'ground', broken: false },
+      { x1:460, y1: 80,  x2: 460, y2: 112, type: 'ground', broken: false },
+      { x1:460, y1: 112, x2: 30,  y2: 112, type: 'ground', broken: false },
+    ],
+
+    dropZone: { x: 270, y: 130, w: 80, h: 24 },
+
+    brokenSegments: [
+      { x1: 200, y1: 140, x2: 268,  y2: 140 },
+      { x1: 352, y1: 140, x2: 420, y2: 140 },
+    ],
+  },
+  {
+    id: 'switch-led',
+    label: 'SWITCH CIRCUIT',
+    output: 'led',
+    brokenWire: 'power',
+    wrongWires: ['signal', 'ground'],
+
+    battery:  { x: 30,  y: 80 },
+    led:      { x: 440, y: 68 },
+    switchComp: { x: 200, y: 58, w: 60, h: 20, label: 'SW1' },
+
+    wires: [
+      { x1: 74,  y1: 68, x2: 200, y2: 68, type: 'power',  broken: false },
+      { x1: 260, y1: 68, x2: 320, y2: 68, type: 'power',  broken: true  },
+      { x1: 320, y1: 68, x2: 430, y2: 68, type: 'power',  broken: false },
+      { x1: 30,  y1: 112, x2: 460, y2: 112, type: 'ground', broken: false },
+      { x1: 460, y1: 80,  x2: 460, y2: 112, type: 'ground', broken: false },
+      { x1: 30,  y1: 68,  x2: 30,  y2: 112, type: 'ground', broken: false },
+    ],
+
+    dropZone: { x: 318, y: 58, w: 70, h: 24 },
+
+    brokenSegments: [
+      { x1: 260, y1: 68, x2: 316,  y2: 68 },
+      { x1: 390, y1: 68, x2: 430, y2: 68 },
+    ],
+  },
+];
+function getCircuitForLevel() {
+  var lvl = state.level;
+
+  if (lvl <= 2) {
+    return CIRCUITS[0];   
+  } else if (lvl <= 4) {
+    return CIRCUITS[1];  
+  } else if (lvl <= 6) {
+    return CIRCUITS[2];   
+  } else {
+    return CIRCUITS[3];   
+  }
+}
+    return CIRCUITS[3];   
+  }
+}
