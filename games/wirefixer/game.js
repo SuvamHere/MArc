@@ -567,7 +567,6 @@ function drawBulb(x, y, lit) {
   });
   circuitSvg.appendChild(circle);
 
-  // Filament cross lines inside the bulb
   var line1 = makeSVG('line', {
     x1: x - 8, y1: y - 6, x2: x + 8, y2: y + 6,
     stroke: COLORS.ink, 'stroke-width': '1.5',
@@ -667,3 +666,233 @@ function showFixedWire() {
     circuitSvg.appendChild(fixedLine);
   }
 }
+function buildWireTray(circuit) {
+  wireOptions.innerHTML = '';
+  let options = [circuit.brokenWire, ...circuit.wrongWires];
+
+  for (let j = options.length - 1; j > 0; j--) {
+    let k = Math.floor(Math.random() * (j + 1));
+    [options[j], options[k]] = [options[k], options[j]];
+  }
+
+  options.forEach(wireType => {
+    wireOptions.appendChild(createWireCard(wireType, wireType === circuit.brokenWire));
+  });
+}
+
+function createWireCard(wireType, isCorrect) {
+  const card = document.createElement('div');
+  card.className = 'wire-option';
+  card.setAttribute('draggable', 'true');
+  Object.assign(card.dataset, { wireType, correct: isCorrect });
+
+  card.innerHTML = `
+    <div class="wire-swatch" style="background: ${WIRE_COLORS[wireType] || COLORS.ink}"></div>
+    <span class="wire-option-label">${wireType.toUpperCase()}</span>
+  `;
+
+  card.addEventListener('dragstart', onDragStart);
+  card.addEventListener('dragend', onDragEnd);
+  return card;
+}
+
+function onDragStart(e) {
+  state.dragWire = e.currentTarget;
+  e.currentTarget.classList.add('dragging');
+  e.dataTransfer.setData('text/plain', e.currentTarget.dataset.wireType);
+  e.dataTransfer.effectAllowed = 'move';
+}
+
+function onDragEnd(e) {
+  e.currentTarget.classList.remove('dragging');
+  state.dragWire = null;
+  document.getElementById('drop-zone')?.classList.remove('drag-over');
+}
+
+function setupDropZone() {
+  const toggleDropZoneClass = (isOver) => {
+    document.getElementById('drop-zone')?.classList.toggle('drag-over', isOver);
+  };
+
+  circuitSvg.addEventListener('dragover', (e) => { e.preventDefault(); toggleDropZoneClass(true); });
+  circuitSvg.addEventListener('dragleave', () => toggleDropZoneClass(false));
+  
+  circuitSvg.addEventListener('drop', (e) => {
+    e.preventDefault();
+    if (state.answered || !state.running) return;
+    toggleDropZoneClass(false);
+
+    const wireType = e.dataTransfer.getData('text/plain');
+    if (wireType === state.currentCircuit.brokenWire) {
+      handleCorrectDrop();
+    } else {
+      handleWrongDrop(wireType);
+    }
+  });
+}
+
+function startTimer() {
+  stopTimer();
+  const maxTime = getTimeForLevel();
+  state.timeLeft = maxTime;
+  let lastTickSecond = Math.ceil(state.timeLeft);
+
+  state.timerInterval = setInterval(() => {
+    state.timeLeft -= 0.1;
+
+    if (state.timeLeft <= 0) {
+      state.timeLeft = 0;
+      stopTimer();
+      handleTimeUp();
+      return;
+    }
+
+    const pct = (state.timeLeft / maxTime) * 100;
+    timerBar.style.width = pct + '%';
+    timerSecs.textContent = state.timeLeft.toFixed(1) + 's';
+
+    timerBar.style.background = pct <= 25 ? COLORS.red : (pct <= 50 ? '#ff9a3c' : COLORS.yellow);
+
+    if (state.timeLeft <= 3) {
+      if (Math.round(state.timeLeft * 2) !== Math.round((state.timeLeft + 0.1) * 2)) soundTick(true);
+    } else {
+      const currentSecond = Math.ceil(state.timeLeft);
+      if (currentSecond !== lastTickSecond) {
+        soundTick(false);
+        lastTickSecond = currentSecond;
+      }
+    }
+  }, 100);
+}
+
+function stopTimer() {
+  if (state.timerInterval) clearInterval(state.timerInterval);
+  state.timerInterval = null;
+}
+
+function handleCorrectDrop() {
+  state.answered = true;
+  stopTimer();
+
+  state.streak++;
+  if (state.streak > state.bestStreak) state.bestStreak = state.streak;
+
+  const maxTime = getTimeForLevel();
+  const timeUsed = maxTime - state.timeLeft;
+  const labels = [ { t: 2, txt: 'PERFECT!' }, { t: 4, txt: 'FAST!' } ];
+  const label = (labels.find(l => timeUsed < l.t)?.txt || 'FIXED!');
+
+  const points = Math.round(100 * state.level * getMultiplier()) + Math.round((1 - (timeUsed / maxTime)) * 50);
+  state.score += points;
+
+  showFixedWire();
+  lightUpOutput();
+  showScorePopup(`${label} +${points}`);
+  soundCorrect();
+
+  setTimeout(nextLevel,1200);
+}
+
+function handleWrongDrop(wireType) {
+  soundWrong();
+  const card = wireOptions.querySelector(`.wire-option[data-wire-type="${wireType}"]`);
+  if (card) {
+    card.classList.add('shake');
+    setTimeout(() => card.classList.remove('shake'), 400);
+  }
+}
+
+function handleTimeUp() {
+  state.answered = true;
+  state.streak = 0;
+  soundLifeLost();
+  state.lives--;
+
+  updateHUD();
+  showFixedWire();
+
+  setTimeout(state.lives <= 0 ? endGame : nextLevel, state.lives <= 0 ? 800 : 1000);
+}
+
+function nextLevel() {
+  if (!state.running) return;
+  state.level++;
+  state.answered = false;
+  state.currentCircuit = getCircuitForLevel();
+
+  drawCircuit(state.currentCircuit);
+  buildWireTray(state.currentCircuit);
+
+  timerBar.style.width = '100%';
+  timerBar.style.background = COLORS.yellow;
+  if (statusLevel) statusLevel.textContent = 'LEVEL ' + state.level;
+
+  updateHUD();
+  startTimer();
+}
+
+function showScorePopup(text) {
+  if (!scorePopup) return;
+  scorePopup.textContent = text;
+  scorePopup.classList.remove('hidden', 'visible');
+  void scorePopup.offsetWidth; 
+  scorePopup.classList.add('visible');
+  setTimeout(() => { scorePopup.classList.replace('visible', 'hidden'); }, 1500);
+}
+
+function startGame() {
+  resetState();
+  overlayStart.classList.remove('active');
+  overlayGameover.classList.remove('active');
+  gameUI.classList.remove('hidden');
+
+  requestAnimationFrame(() => {
+    state.running = true;
+    state.currentCircuit = getCircuitForLevel();
+    drawCircuit(state.currentCircuit);
+    buildWireTray(state.currentCircuit);
+    setupDropZone();
+    if (statusLevel) statusLevel.textContent = 'LEVEL 1';
+    updateHUD();
+    startTimer();
+  });
+}
+
+function endGame() {
+  state.running = false;
+  stopTimer();
+  soundGameOver();
+
+  const isNewBest = saveBestScore(state.score);
+  if (finalScore)finalScore.textContent =state.score;
+  if (finalBest)finalBest.textContent =getBestScore();
+  if (finalLevel)finalLevel.textContent =state.level;
+  if (finalStreak)finalStreak.textContent =state.bestStreak;
+  if (newBestBanner)newBestBanner.classList.toggle('hidden', !isNewBest);
+
+  gameUI.classList.add('hidden');
+  overlayGameover.classList.add('active');
+}
+
+function goToArcade() {
+  window.location.href = '../../index.html';
+}
+function updateHUD() {
+  if (hudScore) hudScore.textContent = state.score;
+  if (hudLevel) hudLevel.textContent = state.level;
+  if (hudStreak) hudStreak.textContent = state.streak + '×';
+  
+  lifeEls.forEach((el, i) => el?.classList.toggle('lost', i >= state.lives));
+}
+
+on('btn-start','click',startGame);
+on('btn-restart','click',startGame);
+on('btn-back-start','click',goToArcade);
+on('btn-back-over','click',goToArcade);
+
+on('btn-back-hud', 'click', () => {
+  state.running = false;
+  stopTimer();
+  gameUI.classList.add('hidden');
+  overlayStart.classList.add('active');
+});
