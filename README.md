@@ -5,7 +5,7 @@
 [Click Here](https://suvamhere.github.io/MArc/)
 
 ### Here's the image of the main page
-
+(I just noticed a peek of the my IDE is opened plz ignore that part and see the image)
 <img width="1365" height="616" alt="Suvam's Arcade main page" src="main.png" />
 
 ## The currently available games are:
