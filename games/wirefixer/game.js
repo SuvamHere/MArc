@@ -8,16 +8,16 @@ var hudScore  = document.getElementById('hud-score');
 var hudLevel  = document.getElementById('hud-level');
 var hudStreak = document.getElementById('hud-streak');
 
-var finalScore  = document.getElementById('final-score');
-var finalBest   = document.getElementById('final-best');
-var finalLevel  = document.getElementById('final-level');
-var finalStreak = document.getElementById('final-streak');
+var finalScore    = document.getElementById('final-score');
+var finalBest     = document.getElementById('final-best');
+var finalLevel    = document.getElementById('final-level');
+var finalStreak   = document.getElementById('final-streak');
 var newBestBanner = document.getElementById('new-best-banner');
 
 var lifeEls = [
   document.getElementById('life-1'),
   document.getElementById('life-2'),
-  document.getElementById('life-3'),
+  document.getElementById('life-3')
 ];
 
 var circuitSvg  = document.getElementById('circuit-svg');
@@ -27,64 +27,64 @@ var timerSecs   = document.getElementById('timer-seconds');
 var statusLevel = document.getElementById('status-level');
 var scorePopup  = document.getElementById('score-popup');
 
-
 var COLORS = {
-  bg:'#fffdf6',
-  surface:'#ffffff',
-  ink:'#111111',
-  red:'#ff6a67',
-  yellow:'#ffdd3c',
-  blue:'#179FF5',
-  green:'#5edd8e',
-  shadow:'#111111',
-};
-var WIRE_COLORS = {
-  power:'#cc0000',   
-  ground:'#111111',   
-  signal:'#007700',   
-  neutral:'#888888',   
+  bg:      '#fffdf6',
+  surface: '#ffffff',
+  ink:     '#111111',
+  red:     '#ff6a67',
+  yellow:  '#ffdd3c',
+  blue:    '#179FF5',
+  green:   '#5edd8e',
+  shadow:  '#111111'
 };
 
-var BASE_TIME= 10;    
-var TIME_REDUCE= 0.2;   
-var MIN_TIME= 4;     
-var LEVEL_UP_SCORE = 100;   
-var LIVES= 3;
+var WIRE_COLORS = {
+  power:   '#cc0000',
+  ground:  '#111111',
+  signal:  '#007700',
+  neutral: '#888888'
+};
+
+var BASE_TIME       = 10;
+var TIME_REDUCE     = 0.2;
+var MIN_TIME        = 4;
+var LEVEL_UP_SCORE  = 100;
+var LIVES           = 3;
 
 var STREAK_TIERS = [
-  { min: 10,mult: 2.5 },
-  { min: 7,mult: 2.0 },
-  { min: 4,mult: 1.5 },
-  { min: 0,mult: 1.0 },
+  { min: 10, mult: 2.5 },
+  { min: 7,  mult: 2.0 },
+  { min: 4,  mult: 1.5 },
+  { min: 0,  mult: 1.0 }
 ];
 
 var state = {
-  running:false,
-  score: 0,
-  lives: LIVES,
-  level: 1,
-  streak:0,
-  bestStreak:0,
-  answered:false,    
-  timerInterval: null, 
-  timeLeft:BASE_TIME,
+  running:        false,
+  score:          0,
+  lives:          LIVES,
+  level:          1,
+  streak:         0,
+  bestStreak:     0,
+  answered:       false,
+  timerInterval:  null,
+  timeLeft:       BASE_TIME,
   currentCircuit: null,
-  dragWire:null,     
+  dragWire:       null
 };
 
 function resetState() {
-  state.running  = false;
-  state.score= 0;
-  state.lives = LIVES; 
-  state.level = 1;
-  state.streak = 0;
-  state.bestStreak= 0;
-  state.answered = false;
-  state.timerInterval = null;
-  state.timeLeft = BASE_TIME;
+  state.running        = false;
+  state.score          = 0;
+  state.lives          = LIVES;
+  state.level          = 1;
+  state.streak         = 0;
+  state.bestStreak     = 0;
+  state.answered       = false;
+  state.timerInterval  = null;
+  state.timeLeft       = BASE_TIME;
   state.currentCircuit = null;
-  state.dragWire = null; 
-} 
+  state.dragWire       = null;
+}
 
 var audioCtx = null;
 
@@ -112,37 +112,35 @@ function playTone(frequency, type, duration, volume) {
 
     osc.start(ctx.currentTime);
     osc.stop(ctx.currentTime + duration);
-  } catch (e) {
-  }
+  } catch (e) {}
 }
 
 function soundCorrect() {
-  playTone(880,'sawtooth',0.08,0.25);
-  setTimeout(function() {playTone(1200,'sine',0.15,0.2);},80);
-  setTimeout(function() {playTone(660,'sine',0.2,0.15);},180);
+  playTone(880, 'sawtooth', 0.08, 0.25);
+  setTimeout(function() { playTone(1200, 'sine', 0.15, 0.2); }, 80);
+  setTimeout(function() { playTone(660, 'sine', 0.2, 0.15); }, 180);
 }
 
 function soundWrong() {
-  playTone(120,'square',0.18,0.3);
-  setTimeout(function() {playTone(100,'square',0.15,0.2);},100);
+  playTone(120, 'square', 0.18, 0.3);
+  setTimeout(function() { playTone(100, 'square', 0.15, 0.2); }, 100);
 }
 
-
 function soundLifeLost() {
-  playTone(400, 'sine',0.15,0.3);
-  setTimeout(function() {playTone(300,'sine',0.15,0.25);},120);
-  setTimeout(function() {playTone(200,'sine',0.25,0.2);},240);
+  playTone(400, 'sine', 0.15, 0.3);
+  setTimeout(function() { playTone(300, 'sine', 0.15, 0.25); }, 120);
+  setTimeout(function() { playTone(200, 'sine', 0.25, 0.2); }, 240);
 }
 
 function soundGameOver() {
-  playTone(300,'sawtooth',0.3,0.3);
-  setTimeout(function() {playTone(250,'sawtooth',0.3,0.25);},200);
-  setTimeout(function() {playTone(180,'sawtooth',0.5,0.2);},400);
+  playTone(300, 'sawtooth', 0.3, 0.3);
+  setTimeout(function() { playTone(250, 'sawtooth', 0.3, 0.25); }, 200);
+  setTimeout(function() { playTone(180, 'sawtooth', 0.5, 0.2); }, 400);
 }
 
 function soundTick(urgent) {
-  var freq =urgent?600:400;
-  playTone(freq,'sine',0.04,0.15);
+  var freq = urgent ? 600 : 400;
+  playTone(freq, 'sine', 0.04, 0.15);
 }
 
 function on(id, event, fn) {
@@ -192,217 +190,76 @@ function makeSVG(tag, attrs) {
 }
 
 var CIRCUITS = [
-
   {
     id: 'series-basic',
     label: 'SERIES CIRCUIT',
-    output: 'bulb',         
-    brokenWire: 'power',     
-    wrongWires: ['signal', 'neutral'],  
-
-    battery:{x:30,y:80},
-    bulb:{ x:460,y:80},
-
-    wires: [
-      { x1:74,y1:68,x2:420,y2:68,type:'power',broken:true },
-      { x1:30,y1:112,x2:460,y2:112,type:'ground',broken:false},
-      { x1:460,y1:68,x2:460,y2:62,type:'power',broken:false},
-      { x1:460,y1:100,x2:460,y2:112,type:'ground',broken:false},
-      { x1:30,y1:68,x2:30,y2:112,type:'ground',broken:false},
-    ],
-
-    dropZone: { x:200,y:58,w:80,h:24},
-    brokenSegments: [
-      { x1:74,y1:68, x2:195, y2:68 },
-      { x1:285,y1:68, x2:420, y2:68 },
-    ],
-  },
-  {
-    id: 'series-resistor',
-    label: 'RESISTOR CIRCUIT',
     output: 'bulb',
     brokenWire: 'power',
-    wrongWires: ['ground', 'neutral'],
-
-    battery:   { x: 30, y: 80 },
-    bulb:      { x: 460, y: 80 },
-    resistor:  { x: 180, y: 58, w: 60, h: 20, label: '100Ω' },
-
-    wires: [
-      { x1:74, y1:68, x2:180, y2:68, type:'power',broken:false },
-      { x1:240,y1:68, x2:300, y2:68, type:'power',broken:true  },
-      { x1:300,y1:68, x2:420, y2:68, type:'power',broken:false },
-      { x1:30, y1:112, x2:460, y2:112, type:'ground',broken:false },
-      { x1:460,y1:68,  x2:460, y2:62,  type:'power', broken:false },
-      { x1:460,y1:100, x2:460, y2:112, type:'ground',broken:false },
-      { x1:30, y1:68,  x2:30,  y2:112, type:'ground',broken:false },
-    ],
-
-    dropZone:{x:300,y:58,w:70,h: 24},
-
-    brokenSegments: [
-      { x1:240,y1:68,x2:298,y2:68 },
-      { x1:374,y1:68,x2:420,y2:68 },
-    ],
-  },
-
-  {
-    id: 'parallel-basic',
-    label: 'PARALLEL CIRCUIT',
-    output: 'bulb',
-    brokenWire: 'signal',
-    wrongWires: ['power', 'neutral'],
-
-    battery: { x: 30, y: 100 },
-    bulb:    { x: 460, y: 60 },
-
-    wires: [
-      {x1:74, y1: 88, x2:200,y2:88, type:'power', broken:false},
-      {x1:200,y1: 88, x2:200,y2:48, type:'power', broken:false},
-      {x1:200,y1: 48, x2:420,y2:48, type:'power', broken:false},
-      {x1:420,y1: 48, x2:420,y2:62, type:'power', broken:false},
-      {x1:200,y1: 88, x2:200,y2:140,type:'signal',broken:false},
-      {x1:200,y1: 140,x2:420,y2:140,type:'signal',broken:true },
-      {x1:420,y1: 100,x2:420,y2:140,type:'signal',broken:false},
-      {x1:30, y1: 112,x2:200,y2:112,type:'ground',broken:false},
-      {x1:460,y1: 80, x2:460,y2:112,type:'ground',broken:false},
-      {x1:460,y1: 112,x2:30, y2:112,type:'ground',broken:false},
-    ],
-
-    dropZone: { x: 270, y: 130, w: 80, h: 24 },
-
-    brokenSegments: [
-      { x1:200,y1:140,x2:268, y2:140 },
-      { x1:352,y1:140,x2:420,y2:140 },
-    ],
-  },
-  {
-    id: 'switch-led',
-    label: 'SWITCH CIRCUIT',
-    output: 'led',
-    brokenWire: 'power',
-    wrongWires: ['signal', 'ground'],
-
-    battery:  { x: 30,  y: 80 },
-    led:      { x: 440, y: 68 },
-    switchComp: { x: 200, y: 58, w: 60, h: 20, label: 'SW1' },
-
-    wires: [
-      {x1:74, y1:68,x2:200,y2:68,type:'power',broken:false},
-      {x1:260,y1:68,x2:320,y2:68,type:'power',broken:true },
-      {x1:320,y1:68,x2:430,y2:68,type:'power',broken:false},
-      {x1:30, y1:112,x2:460,y2:112,type:'ground',broken:false},
-      {x1:460,y1:80, x2:460,y2:112,type:'ground',broken:false},
-      {x1:30, y1:68, x2:30, y2:112,type:'ground',broken:false},
-    ],
-
-    dropZone: { x: 318, y: 58, w: 70, h: 24 },
-
-    brokenSegments: [
-      { x1:260,y1:68,x2:316, y2: 68},
-      { x1:390,y1:68,x2:430,y2: 68},
-    ],
-  },
-];
-
-function getCircuitForLevel() {
-  var lvl = state.level;
-
-  if (lvl <= 2) {
-    return CIRCUITS[0];   
-  } else if (lvl <= 4) {
-    return CIRCUITS[1];   
-  } else if (lvl <= 6) {
-    return CIRCUITS[2];   
-  } else {var CIRCUITS = [
-
-
-  {
-    id: 'series-basic',
-    label: 'SERIES CIRCUIT',
-    output: 'bulb',          
-    brokenWire: 'power',     
-    wrongWires: ['signal', 'neutral'], 
-
+    wrongWires: ['signal', 'neutral'],
     battery: { x: 30, y: 80 },
-    bulb:    { x: 460, y: 80 },
-
+    bulb: { x: 460, y: 80 },
     wires: [
-      {x1:74, y1: 68, x2: 420, y2: 68, type: 'power',  broken: true },
-      {x1:30, y1: 112, x2: 460, y2: 112, type: 'ground', broken: false },
-      {x1:460, y1: 68, x2: 460, y2: 62, type: 'power',  broken: false },
-      {x1:460, y1: 100, x2: 460, y2: 112, type: 'ground', broken: false },
-      {x1:30, y1: 68, x2: 30, y2: 112, type: 'ground', broken: false },
+      { x1: 74, y1: 68, x2: 420, y2: 68, type: 'power', broken: true },
+      { x1: 30, y1: 112, x2: 460, y2: 112, type: 'ground', broken: false },
+      { x1: 460, y1: 68, x2: 460, y2: 62, type: 'power', broken: false },
+      { x1: 460, y1: 100, x2: 460, y2: 112, type: 'ground', broken: false },
+      { x1: 30, y1: 68, x2: 30, y2: 112, type: 'ground', broken: false }
     ],
-
     dropZone: { x: 200, y: 58, w: 80, h: 24 },
-
     brokenSegments: [
-      { x1: 74,  y1: 68, x2: 195, y2: 68 },
-      { x1: 285, y1: 68, x2: 420, y2: 68 },
-    ],
+      { x1: 74, y1: 68, x2: 195, y2: 68 },
+      { x1: 285, y1: 68, x2: 420, y2: 68 }
+    ]
   },
-
-
   {
     id: 'series-resistor',
     label: 'RESISTOR CIRCUIT',
     output: 'bulb',
     brokenWire: 'power',
     wrongWires: ['ground', 'neutral'],
-
-    battery:   { x: 30, y: 80 },
-    bulb:      { x: 460, y: 80 },
-    resistor:  { x: 180, y: 58, w: 60, h: 20, label: '100Ω' },
-
+    battery: { x: 30, y: 80 },
+    bulb: { x: 460, y: 80 },
+    resistor: { x: 180, y: 58, w: 60, h: 20, label: '100Ω' },
     wires: [
-      {x1:74, y1:68,x2:180,y2:68,type:'power', broken:false},
-      {x1:240,y1:68,x2:300,y2:68,type:'power', broken:true },
-      {x1:300,y1:68,x2:420,y2:68,type:'power', broken:false},
-      {x1:30, y1:112,x2:460,y2:112,type:'ground',broken:false},
-      {x1:460,y1:68, x2:460,y2:62, type:'power', broken:false},
-      {x1:460,y1:100,x2:460,y2:112,type:'ground',broken:false},
-      {x1:30, y1:68, x2:30, y2:112,type:'ground',broken:false},
+      { x1: 74, y1: 68, x2: 180, y2: 68, type: 'power', broken: false },
+      { x1: 240, y1: 68, x2: 300, y2: 68, type: 'power', broken: true },
+      { x1: 300, y1: 68, x2: 420, y2: 68, type: 'power', broken: false },
+      { x1: 30, y1: 112, x2: 460, y2: 112, type: 'ground', broken: false },
+      { x1: 460, y1: 68, x2: 460, y2: 62, type: 'power', broken: false },
+      { x1: 460, y1: 100, x2: 460, y2: 112, type: 'ground', broken: false },
+      { x1: 30, y1: 68, x2: 30, y2: 112, type: 'ground', broken: false }
     ],
-
     dropZone: { x: 300, y: 58, w: 70, h: 24 },
-
     brokenSegments: [
-      { x1: 240, y1: 68, x2: 298,  y2: 68 },
-      { x1: 374, y1: 68, x2: 420, y2: 68 },
-    ],
+      { x1: 240, y1: 68, x2: 298, y2: 68 },
+      { x1: 374, y1: 68, x2: 420, y2: 68 }
+    ]
   },
-
-
   {
     id: 'parallel-basic',
     label: 'PARALLEL CIRCUIT',
     output: 'bulb',
     brokenWire: 'signal',
     wrongWires: ['power', 'neutral'],
-
     battery: { x: 30, y: 100 },
-    bulb:    { x: 460, y: 60 },
-
+    bulb: { x: 460, y: 60 },
     wires: [
-      { x1:74,  y1: 88,  x2: 200, y2: 88,  type: 'power',  broken: false },
-      { x1:200, y1: 88,  x2: 200, y2: 48,  type: 'power',  broken: false },
-      { x1:200, y1: 48,  x2: 420, y2: 48,  type: 'power',  broken: false },
-      { x1:420, y1: 48,  x2: 420, y2: 62,  type: 'power',  broken: false },
-      { x1:200, y1: 88,  x2: 200, y2: 140, type: 'signal', broken: false },
-      { x1:200, y1: 140, x2: 420, y2: 140, type: 'signal', broken: true  },
-      { x1:420, y1: 100, x2: 420, y2: 140, type: 'signal', broken: false },
-      { x1:30,  y1: 112, x2: 200, y2: 112, type: 'ground', broken: false },
-      { x1:460, y1: 80,  x2: 460, y2: 112, type: 'ground', broken: false },
-      { x1:460, y1: 112, x2: 30,  y2: 112, type: 'ground', broken: false },
+      { x1: 74, y1: 88, x2: 200, y2: 88, type: 'power', broken: false },
+      { x1: 200, y1: 88, x2: 200, y2: 48, type: 'power', broken: false },
+      { x1: 200, y1: 48, x2: 420, y2: 48, type: 'power', broken: false },
+      { x1: 420, y1: 48, x2: 420, y2: 62, type: 'power', broken: false },
+      { x1: 200, y1: 88, x2: 200, y2: 140, type: 'signal', broken: false },
+      { x1: 200, y1: 140, x2: 420, y2: 140, type: 'signal', broken: true },
+      { x1: 420, y1: 100, x2: 420, y2: 140, type: 'signal', broken: false },
+      { x1: 30, y1: 112, x2: 200, y2: 112, type: 'ground', broken: false },
+      { x1: 460, y1: 80, x2: 460, y2: 112, type: 'ground', broken: false },
+      { x1: 460, y1: 112, x2: 30, y2: 112, type: 'ground', broken: false }
     ],
-
     dropZone: { x: 270, y: 130, w: 80, h: 24 },
-
     brokenSegments: [
-      { x1: 200, y1: 140, x2: 268,  y2: 140 },
-      { x1: 352, y1: 140, x2: 420, y2: 140 },
-    ],
+      { x1: 200, y1: 140, x2: 268, y2: 140 },
+      { x1: 352, y1: 140, x2: 420, y2: 140 }
+    ]
   },
   {
     id: 'switch-led',
@@ -410,44 +267,38 @@ function getCircuitForLevel() {
     output: 'led',
     brokenWire: 'power',
     wrongWires: ['signal', 'ground'],
-
-    battery:  { x: 30,  y: 80 },
-    led:      { x: 440, y: 68 },
+    battery: { x: 30, y: 80 },
+    led: { x: 440, y: 68 },
     switchComp: { x: 200, y: 58, w: 60, h: 20, label: 'SW1' },
-
     wires: [
-      { x1: 74,  y1: 68, x2: 200, y2: 68, type: 'power',  broken: false },
-      { x1: 260, y1: 68, x2: 320, y2: 68, type: 'power',  broken: true  },
-      { x1: 320, y1: 68, x2: 430, y2: 68, type: 'power',  broken: false },
-      { x1: 30,  y1: 112, x2: 460, y2: 112, type: 'ground', broken: false },
-      { x1: 460, y1: 80,  x2: 460, y2: 112, type: 'ground', broken: false },
-      { x1: 30,  y1: 68,  x2: 30,  y2: 112, type: 'ground', broken: false },
+      { x1: 74, y1: 68, x2: 200, y2: 68, type: 'power', broken: false },
+      { x1: 260, y1: 68, x2: 320, y2: 68, type: 'power', broken: true },
+      { x1: 320, y1: 68, x2: 430, y2: 68, type: 'power', broken: false },
+      { x1: 30, y1: 112, x2: 460, y2: 112, type: 'ground', broken: false },
+      { x1: 460, y1: 80, x2: 460, y2: 112, type: 'ground', broken: false },
+      { x1: 30, y1: 68, x2: 30, y2: 112, type: 'ground', broken: false }
     ],
-
     dropZone: { x: 318, y: 58, w: 70, h: 24 },
-
     brokenSegments: [
-      { x1: 260, y1: 68, x2: 316,  y2: 68 },
-      { x1: 390, y1: 68, x2: 430, y2: 68 },
-    ],
-  },
+      { x1: 260, y1: 68, x2: 316, y2: 68 },
+      { x1: 390, y1: 68, x2: 430, y2: 68 }
+    ]
+  }
 ];
+
 function getCircuitForLevel() {
   var lvl = state.level;
-
   if (lvl <= 2) {
-    return CIRCUITS[0];   
+    return CIRCUITS[0];
   } else if (lvl <= 4) {
-    return CIRCUITS[1];  
+    return CIRCUITS[1];
   } else if (lvl <= 6) {
-    return CIRCUITS[2];   
+    return CIRCUITS[2];
   } else {
-    return CIRCUITS[3];   
+    return CIRCUITS[3];
   }
 }
-    return CIRCUITS[3];   
-  }
-}
+
 function drawCircuit(circuit) {
   while (circuitSvg.firstChild) {
     circuitSvg.removeChild(circuitSvg.firstChild);
@@ -461,15 +312,14 @@ function drawCircuit(circuit) {
         var seg = circuit.brokenSegments[s];
         var brokenLine = makeSVG('line', {
           x1: seg.x1, y1: seg.y1, x2: seg.x2, y2: seg.y2,
-          class: 'wire wire-broken',
+          class: 'wire wire-broken'
         });
         circuitSvg.appendChild(brokenLine);
       }
     } else {
-      
       var line = makeSVG('line', {
         x1: w.x1, y1: w.y1, x2: w.x2, y2: w.y2,
-        class: 'wire wire-' + w.type,
+        class: 'wire wire-' + w.type
       });
       circuitSvg.appendChild(line);
     }
@@ -479,20 +329,19 @@ function drawCircuit(circuit) {
   var dropZoneEl = makeSVG('rect', {
     x: dz.x, y: dz.y, width: dz.w, height: dz.h,
     class: 'drop-zone',
-    id: 'drop-zone',
+    id: 'drop-zone'
   });
   circuitSvg.appendChild(dropZoneEl);
 
   var xMark = makeSVG('text', {
     x: dz.x + dz.w / 2,
     y: dz.y - 10,
-    class: 'break-x',
+    class: 'break-x'
   });
   xMark.textContent = '✕';
   circuitSvg.appendChild(xMark);
 
   drawSparks(dz.x + dz.w / 2, dz.y + dz.h / 2);
-
   drawBattery(circuit.battery.x, circuit.battery.y);
 
   if (circuit.resistor) {
@@ -521,7 +370,7 @@ function drawCircuit(circuit) {
     'letter-spacing': '0.1',
     'text-transform': 'uppercase',
     fill: COLORS.ink,
-    opacity: '0.4',
+    opacity: '0.4'
   });
   label.textContent = circuit.label + ' — LEVEL ' + state.level;
   circuitSvg.appendChild(label);
@@ -530,7 +379,7 @@ function drawCircuit(circuit) {
 function drawBattery(x, y) {
   var rect = makeSVG('rect', {
     x: x, y: y - 22, width: 44, height: 44,
-    class: 'component-body',
+    class: 'component-body'
   });
   circuitSvg.appendChild(rect);
 
@@ -550,7 +399,7 @@ function drawBattery(x, y) {
 function drawComponent(x, y, w, h, label) {
   var rect = makeSVG('rect', {
     x: x, y: y, width: w, height: h,
-    class: 'component-body',
+    class: 'component-body'
   });
   circuitSvg.appendChild(rect);
 
@@ -563,19 +412,19 @@ function drawBulb(x, y, lit) {
   var circle = makeSVG('circle', {
     cx: x, cy: y, r: '20',
     class: lit ? 'bulb-glass lit' : 'bulb-glass',
-    id: 'output-device',
+    id: 'output-device'
   });
   circuitSvg.appendChild(circle);
 
   var line1 = makeSVG('line', {
     x1: x - 8, y1: y - 6, x2: x + 8, y2: y + 6,
-    stroke: COLORS.ink, 'stroke-width': '1.5',
+    stroke: COLORS.ink, 'stroke-width': '1.5'
   });
   circuitSvg.appendChild(line1);
 
   var line2 = makeSVG('line', {
     x1: x + 8, y1: y - 6, x2: x - 8, y2: y + 6,
-    stroke: COLORS.ink, 'stroke-width': '1.5',
+    stroke: COLORS.ink, 'stroke-width': '1.5'
   });
   circuitSvg.appendChild(line2);
 
@@ -589,21 +438,21 @@ function drawLED(x, y, lit) {
   var triangle = makeSVG('polygon', {
     points: points,
     class: lit ? 'led-body lit' : 'led-body',
-    id: 'output-device',
+    id: 'output-device'
   });
   circuitSvg.appendChild(triangle);
 
   var ray1 = makeSVG('line', {
     x1: x + 16, y1: y - 10, x2: x + 24, y2: y - 18,
     stroke: lit ? COLORS.green : COLORS.ink,
-    'stroke-width': '1.5', 'stroke-linecap': 'round',
+    'stroke-width': '1.5', 'stroke-linecap': 'round'
   });
   circuitSvg.appendChild(ray1);
 
   var ray2 = makeSVG('line', {
     x1: x + 20, y1: y - 2, x2: x + 30, y2: y - 8,
     stroke: lit ? COLORS.green : COLORS.ink,
-    'stroke-width': '1.5', 'stroke-linecap': 'round',
+    'stroke-width': '1.5', 'stroke-linecap': 'round'
   });
   circuitSvg.appendChild(ray2);
 
@@ -615,8 +464,8 @@ function drawLED(x, y, lit) {
 function drawSparks(cx, cy) {
   var offsets = [
     { dx: -8, dy: -7 },
-    {  dx: 8, dy: -7 },
-    {  dx: 0, dy: -10 },
+    { dx: 8,  dy: -7 },
+    { dx: 0,  dy: -10 }
   ];
 
   for (var i = 0; i < offsets.length; i++) {
@@ -626,14 +475,14 @@ function drawSparks(cx, cy) {
       x2: cx + offsets[i].dx,
       y2: cy + offsets[i].dy,
       class: 'spark-line',
-      style: 'animation-delay: ' + (i * 0.15) + 's',
+      style: 'animation-delay: ' + (i * 0.15) + 's'
     });
     circuitSvg.appendChild(spark);
   }
 }
+
 function lightUpOutput() {
   var circuit = state.currentCircuit;
-
   var old = document.getElementById('output-device');
   if (old) old.parentNode.removeChild(old);
 
@@ -650,8 +499,10 @@ function showFixedWire() {
 
   var dz = document.getElementById('drop-zone');
   if (dz) dz.parentNode.removeChild(dz);
+  
   var sparks = circuitSvg.querySelectorAll('.spark-line');
   sparks.forEach(function(el) { el.parentNode.removeChild(el); });
+  
   var xMark = circuitSvg.querySelector('.break-x');
   if (xMark) xMark.parentNode.removeChild(xMark);
 
@@ -661,38 +512,55 @@ function showFixedWire() {
     var fixedLine = makeSVG('line', {
       x1: segs[0].x1, y1: segs[0].y1,
       x2: segs[segs.length - 1].x2, y2: segs[segs.length - 1].y2,
-      class: 'wire-fixed',
+      class: 'wire-fixed'
     });
     circuitSvg.appendChild(fixedLine);
   }
 }
+
 function buildWireTray(circuit) {
   wireOptions.innerHTML = '';
-  let options = [circuit.brokenWire, ...circuit.wrongWires];
 
-  for (let j = options.length - 1; j > 0; j--) {
-    let k = Math.floor(Math.random() * (j + 1));
-    [options[j], options[k]] = [options[k], options[j]];
+  var options = [circuit.brokenWire];
+  for (var i = 0; i < circuit.wrongWires.length; i++) {
+    options.push(circuit.wrongWires[i]);
   }
 
-  options.forEach(wireType => {
-    wireOptions.appendChild(createWireCard(wireType, wireType === circuit.brokenWire));
-  });
+  for (var j = options.length - 1; j > 0; j--) {
+    var k = Math.floor(Math.random() * (j + 1));
+    var temp = options[j];
+    options[j] = options[k];
+    options[k] = temp;
+  }
+
+  for (var m = 0; m < options.length; m++) {
+    var wireType = options[m];
+    var card = createWireCard(wireType, wireType === circuit.brokenWire);
+    wireOptions.appendChild(card);
+  }
 }
 
 function createWireCard(wireType, isCorrect) {
-  const card = document.createElement('div');
+  var card = document.createElement('div');
   card.className = 'wire-option';
   card.setAttribute('draggable', 'true');
-  Object.assign(card.dataset, { wireType, correct: isCorrect });
+  card.dataset.wireType = wireType;
+  card.dataset.correct = isCorrect ? 'true' : 'false';
 
-  card.innerHTML = `
-    <div class="wire-swatch" style="background: ${WIRE_COLORS[wireType] || COLORS.ink}"></div>
-    <span class="wire-option-label">${wireType.toUpperCase()}</span>
-  `;
+  var swatch = document.createElement('div');
+  swatch.className = 'wire-swatch';
+  swatch.style.background = WIRE_COLORS[wireType] || COLORS.ink;
+
+  var label = document.createElement('span');
+  label.className = 'wire-option-label';
+  label.textContent = wireType.toUpperCase();
+
+  card.appendChild(swatch);
+  card.appendChild(label);
 
   card.addEventListener('dragstart', onDragStart);
   card.addEventListener('dragend', onDragEnd);
+
   return card;
 }
 
@@ -706,23 +574,33 @@ function onDragStart(e) {
 function onDragEnd(e) {
   e.currentTarget.classList.remove('dragging');
   state.dragWire = null;
-  document.getElementById('drop-zone')?.classList.remove('drag-over');
+  var dz = document.getElementById('drop-zone');
+  if (dz) dz.classList.remove('drag-over');
 }
 
 function setupDropZone() {
-  const toggleDropZoneClass = (isOver) => {
-    document.getElementById('drop-zone')?.classList.toggle('drag-over', isOver);
-  };
-
-  circuitSvg.addEventListener('dragover', (e) => { e.preventDefault(); toggleDropZoneClass(true); });
-  circuitSvg.addEventListener('dragleave', () => toggleDropZoneClass(false));
-  
-  circuitSvg.addEventListener('drop', (e) => {
+  circuitSvg.addEventListener('dragover', function(e) {
     e.preventDefault();
-    if (state.answered || !state.running) return;
-    toggleDropZoneClass(false);
+    var dz = document.getElementById('drop-zone');
+    if (dz) dz.classList.add('drag-over');
+  });
 
-    const wireType = e.dataTransfer.getData('text/plain');
+  circuitSvg.addEventListener('dragleave', function() {
+    var dz = document.getElementById('drop-zone');
+    if (dz) dz.classList.remove('drag-over');
+  });
+
+  circuitSvg.addEventListener('drop', function(e) {
+    e.preventDefault();
+
+    if (state.answered) return;
+    if (!state.running) return;
+
+    var dz = document.getElementById('drop-zone');
+    if (dz) dz.classList.remove('drag-over');
+
+    var wireType = e.dataTransfer.getData('text/plain');
+
     if (wireType === state.currentCircuit.brokenWire) {
       handleCorrectDrop();
     } else {
@@ -733,11 +611,12 @@ function setupDropZone() {
 
 function startTimer() {
   stopTimer();
-  const maxTime = getTimeForLevel();
-  state.timeLeft = maxTime;
-  let lastTickSecond = Math.ceil(state.timeLeft);
 
-  state.timerInterval = setInterval(() => {
+  var maxTime = getTimeForLevel();
+  state.timeLeft = maxTime;
+  var lastTickSecond = Math.ceil(state.timeLeft);
+
+  state.timerInterval = setInterval(function() {
     state.timeLeft -= 0.1;
 
     if (state.timeLeft <= 0) {
@@ -747,16 +626,26 @@ function startTimer() {
       return;
     }
 
-    const pct = (state.timeLeft / maxTime) * 100;
+    var pct = (state.timeLeft / maxTime) * 100;
     timerBar.style.width = pct + '%';
     timerSecs.textContent = state.timeLeft.toFixed(1) + 's';
 
-    timerBar.style.background = pct <= 25 ? COLORS.red : (pct <= 50 ? '#ff9a3c' : COLORS.yellow);
-
-    if (state.timeLeft <= 3) {
-      if (Math.round(state.timeLeft * 2) !== Math.round((state.timeLeft + 0.1) * 2)) soundTick(true);
+    if (pct <= 25) {
+      timerBar.style.background = COLORS.red;
+    } else if (pct <= 50) {
+      timerBar.style.background = '#ff9a3c';
     } else {
-      const currentSecond = Math.ceil(state.timeLeft);
+      timerBar.style.background = COLORS.yellow;
+    }
+
+    var currentSecond = Math.ceil(state.timeLeft);
+    var isUrgent = state.timeLeft <= 3;
+
+    if (isUrgent) {
+      if (Math.round(state.timeLeft * 2) !== Math.round((state.timeLeft + 0.1) * 2)) {
+        soundTick(true);
+      }
+    } else {
       if (currentSecond !== lastTickSecond) {
         soundTick(false);
         lastTickSecond = currentSecond;
@@ -766,8 +655,10 @@ function startTimer() {
 }
 
 function stopTimer() {
-  if (state.timerInterval) clearInterval(state.timerInterval);
-  state.timerInterval = null;
+  if (state.timerInterval) {
+    clearInterval(state.timerInterval);
+    state.timerInterval = null;
+  }
 }
 
 function handleCorrectDrop() {
@@ -775,47 +666,75 @@ function handleCorrectDrop() {
   stopTimer();
 
   state.streak++;
-  if (state.streak > state.bestStreak) state.bestStreak = state.streak;
+  if (state.streak > state.bestStreak) {
+    state.bestStreak = state.streak;
+  }
 
-  const maxTime = getTimeForLevel();
-  const timeUsed = maxTime - state.timeLeft;
-  const labels = [ { t: 2, txt: 'PERFECT!' }, { t: 4, txt: 'FAST!' } ];
-  const label = (labels.find(l => timeUsed < l.t)?.txt || 'FIXED!');
+  var maxTime  = getTimeForLevel();
+  var timeUsed = maxTime - state.timeLeft;
+  var speedPct = 1 - (timeUsed / maxTime);
+  var speedBonus = Math.round(speedPct * 50);
 
-  const points = Math.round(100 * state.level * getMultiplier()) + Math.round((1 - (timeUsed / maxTime)) * 50);
+  var label;
+  if (timeUsed < 2) {
+    label = 'PERFECT!';
+  } else if (timeUsed < 4) {
+    label = 'FAST!';
+  } else {
+    label = 'FIXED!';
+  }
+
+  var mult   = getMultiplier();
+  var points = Math.round(100 * state.level * mult) + speedBonus;
   state.score += points;
 
   showFixedWire();
   lightUpOutput();
-  showScorePopup(`${label} +${points}`);
+  showScorePopup(label + ' +' + points);
   soundCorrect();
 
-  setTimeout(nextLevel,1200);
+  setTimeout(function() {
+    nextLevel();
+  }, 1200);
 }
 
 function handleWrongDrop(wireType) {
   soundWrong();
-  const card = wireOptions.querySelector(`.wire-option[data-wire-type="${wireType}"]`);
-  if (card) {
-    card.classList.add('shake');
-    setTimeout(() => card.classList.remove('shake'), 400);
+  var cards = wireOptions.querySelectorAll('.wire-option');
+  for (var i = 0; i < cards.length; i++) {
+    if (cards[i].dataset.wireType === wireType) {
+      cards[i].classList.add('shake');
+      setTimeout(function(card) {
+        card.classList.remove('shake');
+      }, 400, cards[i]);
+      break;
+    }
   }
 }
 
 function handleTimeUp() {
   state.answered = true;
-  state.streak = 0;
+  state.streak   = 0;
   soundLifeLost();
   state.lives--;
 
   updateHUD();
   showFixedWire();
 
-  setTimeout(state.lives <= 0 ? endGame : nextLevel, state.lives <= 0 ? 800 : 1000);
+  if (state.lives <= 0) {
+    setTimeout(function() {
+      endGame();
+    }, 800);
+  } else {
+    setTimeout(function() {
+      nextLevel();
+    }, 1000);
+  }
 }
 
 function nextLevel() {
   if (!state.running) return;
+
   state.level++;
   state.answered = false;
   state.currentCircuit = getCircuitForLevel();
@@ -825,6 +744,7 @@ function nextLevel() {
 
   timerBar.style.width = '100%';
   timerBar.style.background = COLORS.yellow;
+
   if (statusLevel) statusLevel.textContent = 'LEVEL ' + state.level;
 
   updateHUD();
@@ -835,23 +755,30 @@ function showScorePopup(text) {
   if (!scorePopup) return;
   scorePopup.textContent = text;
   scorePopup.classList.remove('hidden', 'visible');
-  void scorePopup.offsetWidth; 
+  void scorePopup.offsetWidth;
   scorePopup.classList.add('visible');
-  setTimeout(() => { scorePopup.classList.replace('visible', 'hidden'); }, 1500);
+
+  setTimeout(function() {
+    scorePopup.classList.remove('visible');
+    scorePopup.classList.add('hidden');
+  }, 1500);
 }
 
 function startGame() {
   resetState();
+
   overlayStart.classList.remove('active');
   overlayGameover.classList.remove('active');
   gameUI.classList.remove('hidden');
 
-  requestAnimationFrame(() => {
+  requestAnimationFrame(function() {
     state.running = true;
     state.currentCircuit = getCircuitForLevel();
+
     drawCircuit(state.currentCircuit);
     buildWireTray(state.currentCircuit);
     setupDropZone();
+
     if (statusLevel) statusLevel.textContent = 'LEVEL 1';
     updateHUD();
     startTimer();
@@ -863,12 +790,17 @@ function endGame() {
   stopTimer();
   soundGameOver();
 
-  const isNewBest = saveBestScore(state.score);
-  if (finalScore)finalScore.textContent =state.score;
-  if (finalBest)finalBest.textContent =getBestScore();
-  if (finalLevel)finalLevel.textContent =state.level;
-  if (finalStreak)finalStreak.textContent =state.bestStreak;
-  if (newBestBanner)newBestBanner.classList.toggle('hidden', !isNewBest);
+  var isNewBest = saveBestScore(state.score);
+  var best      = getBestScore();
+
+  if (finalScore)  finalScore.textContent  = state.score;
+  if (finalBest)   finalBest.textContent   = best;
+  if (finalLevel)  finalLevel.textContent  = state.level;
+  if (finalStreak) finalStreak.textContent = state.bestStreak;
+
+  if (newBestBanner) {
+    newBestBanner.classList.toggle('hidden', !isNewBest);
+  }
 
   gameUI.classList.add('hidden');
   overlayGameover.classList.add('active');
@@ -877,22 +809,33 @@ function endGame() {
 function goToArcade() {
   window.location.href = '../../index.html';
 }
+
 function updateHUD() {
-  if (hudScore) hudScore.textContent = state.score;
-  if (hudLevel) hudLevel.textContent = state.level;
+  if (hudScore)  hudScore.textContent  = state.score;
+  if (hudLevel)  hudLevel.textContent  = state.level;
   if (hudStreak) hudStreak.textContent = state.streak + '×';
-  
-  lifeEls.forEach((el, i) => el?.classList.toggle('lost', i >= state.lives));
+
+  for (var i = 0; i < lifeEls.length; i++) {
+    if (lifeEls[i]) {
+      if (i >= state.lives) {
+        lifeEls[i].classList.add('lost');
+      } else {
+        lifeEls[i].classList.remove('lost');
+      }
+    }
+  }
 }
 
-on('btn-start','click',startGame);
-on('btn-restart','click',startGame);
-on('btn-back-start','click',goToArcade);
-on('btn-back-over','click',goToArcade);
+on('btn-start',      'click', startGame);
+on('btn-restart',    'click', startGame);
+on('btn-back-start', 'click', goToArcade);
+on('btn-back-over',  'click', goToArcade);
 
-on('btn-back-hud', 'click', () => {
+on('btn-back-hud', 'click', function() {
   state.running = false;
   stopTimer();
   gameUI.classList.add('hidden');
   overlayStart.classList.add('active');
 });
+
+window.addEventListener('resize', function() {});

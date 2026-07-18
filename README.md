@@ -43,4 +43,29 @@
 The  main page (for now) only shows a "Enter the game" button through which u get to the waiting room and then play the particular games. Initally my idea was to much more in the main page but for now I have focused on building games more than the design itself. 
 
 ### Waiting Room:
-The waiting room has games list 
+The waiting room has games list where u can click play and head to game's page
+Pretty easy and user frendly
+
+<img width="1366" height="620" alt="WIREFIXER gameplay" src="waiting.png" />
+
+ 
+## NUMSTRIKE game:
+### This game has a canvas API where equations drop randomly in the canavas but i had to make a template type for it as using canvas API was really hard I make different categories and put difficulty as the game increases
+
+## CODECRASH game:
+### This game uses basic web coding to manage the fast-paced game features, like the ticking countdown timer, point multipliers, and player health bars. To make the code snippets look realistic, a custom text-matching setup automatically colors words—like keywords, numbers, and comments—as they load on your screen. Everything runs directly inside your web browser, and it saves your personal all-time high scores on your device so they are ready for your next session.
+ 
+## WIREFIXER game:
+This game works using inline SVG, generated and controlled entirely from JavaScript — no static circuit image. Each round:
+- Renders a battery-to-bulb loop with one wire segment broken (top or bottom side, picked at random).
+- Assigns the broken wire one of four real-world wire types — power, ground, signal, neutral — each with its standard color.
+- Offers three draggable wire cards in the tray: the correct type plus two shuffled distractors.
+- Uses pointer events (not native HTML5 drag-and-drop) so dragging works identically on desktop and mobile/touch.
+- Tracks score, level, streak, and lives in the HUD; timer shrinks and points scale up as levels increase.
+- Stores your best score locally via `localStorage`, independent of the site-wide Supabase leaderboard.
+## Setup Instructions
+### If you want to run this locally, clone the repository:
+```
+git clone https://github.com/SuvamHere/MArc
+```
+### I used AI for js part of Wirefixer because I am in the deadline to submit and i can't learn that fast so i Had to take help of AI to debug my wirefixer as it was not wroking previously
