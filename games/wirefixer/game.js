@@ -47,14 +47,14 @@ var COLORS = {
   blue: '#179ff5',
   purple: '#b39dff',
   green: '#5edd8e',
-  shadow: '#111111',
+  shadow: '#111111'
 };
 
 var WIRE_COLORS = {
   power: '#cc0000',
   ground: '#111111',
   signal: '#007700',
-  neutral: '#888888',
+  neutral: '#888888'
 };
 
 var BASE_TIME= 10;
@@ -68,4 +68,34 @@ var STREAK_TIERS = [
   { min:4, mult:1.5 },
   { min:0, mult:1.0 }
 ];
+
+var state = {
+  running: false,
+  score: 0,
+  lives: LIVES,
+  level: 1,
+  streak: 0,
+  bestStreak: 0,
+  answered: 0,
+  timerInterval: null,
+  timerLeft: BASE_TIME,
+  currentMode: 'wire-repair',
+  currentData: null,
+  dragWire: null
+};
+
+
+function resetState() {
+  state.running = false;
+  state.score = 0;
+  state.lives= LIVES;
+  state.level = 1;
+  state.streak = 0;
+  state.answered = false;
+  state.timerInterval = null;
+  state.timeleft = BASE_TIME;
+  state.currentMode = 'wire-repair';
+  state.currentData = null;
+  state.dragWire = null;
+}
 

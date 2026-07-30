@@ -96,6 +96,23 @@
         </svg>
       </div>
 
+      <div id="question-prompt" class="question-prompt"></div>
+
+      <div id="mc-wrap" class="mc-wrap hidden">
+        <span class="tray-label">choose the answer:</span>
+        <div id="mc-options" class="wire-options-row">
+        </div>
+      </div>
+
+      <div id="numeric-wrap" class="numeric-wrap hidden">
+        <span class="tray-label">type your answer:</span>
+        <div class="numeric-input-row">
+          <input type="number" id="numeric-input" class="numeric-input" step="0.1" placeholder="0">
+          <span id="numeric-unit" class="numeric-unit">ohm</span>
+          <button id="numeric-submit" class="btn-secondary numeric-submit-btn">submit --</button>
+        </div>
+      </div>
+
       <div class="wire-tray">
         <span class="tray-label">REPLACEMENT WIRES:</span>
         <div id="wire-options" class="wire-options-row">
