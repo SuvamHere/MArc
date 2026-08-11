@@ -97,5 +97,4 @@ function resetState() {
   state.currentMode = 'wire-repair';
   state.currentData = null;
   state.dragWire = null;
-}
-
+} 
